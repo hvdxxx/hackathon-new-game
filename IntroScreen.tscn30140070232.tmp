@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://cek10frmitix8"]
+
+[ext_resource type="Script" uid="uid://bngwqns2vhf7k" path="res://intro_screen.gd" id="1_5fu17"]
+[ext_resource type="Texture2D" uid="uid://dqpimpwgmaftr" path="res://Assets/Intro/Moutain.jpg" id="2_66135"]
+
+[node name="UI" type="CanvasLayer" unique_id=2014158742]
+script = ExtResource("1_5fu17")
+backgrounds = Array[Texture2D]([ExtResource("2_66135"), ExtResource("2_66135"), ExtResource("2_66135"), ExtResource("2_66135")])
+speakers = Array[String](["Yoy"])
+
+[node name="Background" type="TextureRect" parent="." unique_id=852550212]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Background" unique_id=1234107985]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Illustration" type="TextureRect" parent="." unique_id=1341742618]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
+
+[node name="DialoguePanel" type="Panel" parent="." unique_id=1206573697]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="DialoguePanel" unique_id=1309899660]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DialoguePanel/MarginContainer" unique_id=1090836488]
+layout_mode = 2
+
+[node name="SpeakerLabel" type="Label" parent="DialoguePanel/MarginContainer/VBoxContainer" unique_id=1180399146]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TextLabel" type="RichTextLabel" parent="DialoguePanel/MarginContainer/VBoxContainer" unique_id=1503660970]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SkipHint" type="Label" parent="." unique_id=365588145]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 23.0
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2072907195]
+root_node = NodePath("../..")

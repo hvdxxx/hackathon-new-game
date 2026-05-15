@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://4igjr3k3bd0m"]
+
+[ext_resource type="Script" uid="uid://de8d24lm3tcq2" path="res://intro_sequence.gd" id="1_5bls8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5bls8"]
+
+[node name="IntroSequence" type="Node2D" unique_id=1816544821]
+script = ExtResource("1_5bls8")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=837236998]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1608952198]
+sprite_frames = SubResource("SpriteFrames_5bls8")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1693829646]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1301360177]
+
+[node name="Control" type="Control" parent="." unique_id=1968325903]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=2008989181]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=103511965]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Control/MarginContainer" unique_id=1797400956]
+layout_mode = 2
+
+[node name="Text" type="Label" parent="." unique_id=670132845]
+offset_right = 363.0
+offset_bottom = 49.0
+text = "Большой поток мыслей трахните меня в уши пж"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
