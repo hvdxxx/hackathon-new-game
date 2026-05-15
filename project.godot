@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="хакатон"
-run/main_scene="uid://dfec0bs283d3x"
+run/main_scene="uid://5d5ipxubg1cc"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,7 +22,8 @@ Dialogic="*uid://ds2q0uclmolvu"
 [dialogic]
 
 directories/dch_directory={
-"MainHero": "res://MainHero.dch"
+"MainHero": "res://MainHero.dch",
+"hackathon new game/MainHero": "res://hackathon new game/MainHero.dch"
 }
 directories/dtl_directory={
 "timeline": "res://Assets/Sprites/timeline.dtl"
@@ -71,8 +72,6 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=4
 window/size/borderless=true
-window/size/window_width_override=1280
-window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 
 [editor_plugins]

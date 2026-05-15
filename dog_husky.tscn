@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://o37dqsnqilm0"]
+[gd_scene format=3 uid="uid://u0nxg470r1op"]
 
-[ext_resource type="Script" uid="uid://ba1c6abc6d8g2" path="res://dog_husky.gd" id="1_2cys5"]
+[ext_resource type="Script" path="res://dog_husky.gd" id="1_2cys5"]
 [ext_resource type="Texture2D" uid="uid://l87bar1ibeng" path="res://Assets/Sprites/dogs/juski.png" id="1_yuda6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yuda6"]

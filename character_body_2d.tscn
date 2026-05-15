@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dck327r3yw32o"]
+[gd_scene format=3 uid="uid://bo63hnjbk06rb"]
 
 [ext_resource type="Script" uid="uid://2u3xnca75ug4" path="res://character_body_2d.gd" id="1_f50pn"]
 [ext_resource type="Texture2D" uid="uid://ljrrnqydbdgp" path="res://GirlSampleReadyIdle/GirlSample_ReadyIdle_Down.png" id="2_ij6vw"]
@@ -1730,6 +1730,11 @@ animations = [{
 z_index = 3
 y_sort_enabled = true
 script = ExtResource("1_f50pn")
+max_speed = null
+run_speed = null
+acceleration = null
+friction = null
+y_squash = null
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=324593262]
 visible = false

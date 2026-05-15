@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://kwxufi8efva6"]
+
+[ext_resource type="Script" uid="uid://bmkp5610qpjj5" path="res://main_menu.gd" id="1_eiy7p"]
+[ext_resource type="FontFile" uid="uid://pw81o4lcxm20" path="res://fonts/FirstTimeWriting!.ttf" id="1_i26rj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_eiy7p"]
+font = ExtResource("1_i26rj")
+font_size = 25
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 3
+shadow_color = Color(0.18717614, 0.18717614, 0.18717614, 0)
+stacked_outline_count = 1
+stacked_outline_0/size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_i26rj"]
+font = ExtResource("1_i26rj")
+font_size = 160
+outline_color = Color(0, 0, 0, 1)
+stacked_outline_count = 1
+stacked_outline_0/size = 20
+
+[node name="Menu" type="Node2D" unique_id=1850380961]
+script = ExtResource("1_eiy7p")
+
+[node name="Play" type="Button" parent="." unique_id=1751125035]
+offset_left = 611.0
+offset_top = 509.0
+offset_right = 1341.0
+offset_bottom = 711.0
+pivot_offset = Vector2(366, 95)
+theme_override_fonts/font = ExtResource("1_i26rj")
+theme_override_font_sizes/font_size = 80
+text = "Начать новую игру"
+
+[node name="Exit" type="Button" parent="." unique_id=1856961141]
+offset_left = 723.0
+offset_top = 764.0
+offset_right = 1202.0
+offset_bottom = 918.0
+theme_override_fonts/font = ExtResource("1_i26rj")
+theme_override_font_sizes/font_size = 50
+text = "Выйти нахуй
+"
+
+[node name="Createdby" type="Label" parent="." unique_id=1622406106]
+offset_left = 685.0
+offset_top = 1008.0
+offset_right = 1281.0
+offset_bottom = 1071.0
+text = "Сделано в рамках хакатона \"Новая игра\", Якутск, 2025 г.
+"
+label_settings = SubResource("LabelSettings_eiy7p")
+horizontal_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2055794127]
+position = Vector2(960, 539)
+
+[node name="GameName" type="Label" parent="." unique_id=1692086685]
+offset_left = 379.0
+offset_top = 202.0
+offset_right = 1585.0
+offset_bottom = 385.0
+text = "Остановка ебаная"
+label_settings = SubResource("LabelSettings_i26rj")
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

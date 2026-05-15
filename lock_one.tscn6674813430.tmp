@@ -3,9 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cy2pqn42pmupk" path="res://Assets/Sprites/spritesheet(1).png" id="1_ins1s"]
 [ext_resource type="Script" path="res://lock_one.gd" id="1_mvlso"]
 [ext_resource type="Texture2D" uid="uid://8b7s0gvtryj1" path="res://Assets/Sprites/grass8.png" id="2_dnxor"]
-[ext_resource type="AudioStream" uid="uid://dpxovfjj36kt" path="res://Assets/Audio/MainTheme.mp3" id="2_lbp2f"]
 [ext_resource type="PackedScene" uid="uid://bo63hnjbk06rb" path="res://character_body_2d.tscn" id="3_8fer4"]
-[ext_resource type="AudioStream" uid="uid://djpxpagdub1rx" path="res://Assets/Audio/GavDog.wav" id="3_mvlso"]
 [ext_resource type="Texture2D" uid="uid://calrb03gfq6a" path="res://Assets/Sprites/winterassphalt.png" id="4_opdir"]
 [ext_resource type="Script" path="res://CameraFollow.gd" id="6_47c1j"]
 [ext_resource type="PackedScene" uid="uid://dmv3j8rb76g7r" path="res://Assets/Theme/Ostanovka.tscn" id="6_opdir"]
@@ -966,16 +964,8 @@ texture_filter = 1
 position = Vector2(1.5258789e-05, 2.857153)
 scale = Vector2(1.4714284, 1.4714284)
 
-[node name="Soundtrack Main" type="AudioStreamPlayer2D" parent="MainHero" unique_id=1730557057]
-position = Vector2(-214.2857, -268.5714)
-scale = Vector2(1.4285713, 1.4285713)
-stream = ExtResource("2_lbp2f")
-volume_db = -25.271
-autoplay = true
-
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1474227227 node_paths=PackedStringArray("target")]
 y_sort_enabled = true
-position = Vector2(153, 185)
 zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 12.0
@@ -987,18 +977,11 @@ target = NodePath("../MainHero")
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1074620981]
 color = Color(0.23078632, 0.23133186, 0.438262, 1)
 
-[node name="LittleDog_one" parent="." unique_id=1660775309 node_paths=PackedStringArray("player") groups=["dog"] instance=ExtResource("10_pu2d0")]
+[node name="LittleDog_one" parent="." unique_id=1660775309 node_paths=PackedStringArray("player") instance=ExtResource("10_pu2d0")]
 y_sort_enabled = true
 position = Vector2(-101, 86)
 follow_distance = 70.0
-dash_speed = 550.0
-dash_duration = 0.25
 player = NodePath("../MainHero")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="LittleDog_one" unique_id=1801141321]
 occluder = SubResource("OccluderPolygon2D_lbp2f")
-
-[node name="BarkDog" type="AudioStreamPlayer2D" parent="LittleDog_one" unique_id=728741958]
-position = Vector2(101, -86)
-stream = ExtResource("3_mvlso")
-volume_db = -10.691

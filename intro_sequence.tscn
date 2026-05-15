@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://4igjr3k3bd0m"]
+[gd_scene format=3 uid="uid://hax2xvmnx84r"]
 
-[ext_resource type="Script" uid="uid://de8d24lm3tcq2" path="res://intro_sequence.gd" id="1_5bls8"]
-[ext_resource type="Shader" uid="uid://bdqb6x581cbh1" path="res://darkness_background.gdshader" id="2_5847j"]
+[ext_resource type="Script" path="res://intro_sequence.gd" id="1_5bls8"]
+[ext_resource type="Shader" path="res://darkness_background.gdshader" id="2_5847j"]
 [ext_resource type="Texture2D" uid="uid://dqpimpwgmaftr" path="res://Assets/Intro/Moutain.jpg" id="2_uq1bg"]
 [ext_resource type="FontFile" uid="uid://pw81o4lcxm20" path="res://fonts/FirstTimeWriting!.ttf" id="4_jfp5o"]
 
@@ -51,8 +51,7 @@ sprite_frames = SubResource("SpriteFrames_5bls8")
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1693829646]
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1301360177]
-visible = false
-position = Vector2(969, 96.00001)
+position = Vector2(971.00006, -14.999996)
 scale = Vector2(6.5999947, 3.639999)
 amount = 1000
 sub_emitter = NodePath(".")

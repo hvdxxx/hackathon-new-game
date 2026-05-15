@@ -4,27 +4,38 @@ extends CharacterBody2D
 
 @export var max_speed: float = 120.0
 @export var run_speed: float = 220.0
-@export var acceleration: float = 600.0 
-@export var friction: float = 1100.0    
-
+@export var acceleration: float = 600.0
+@export var friction: float = 1100.0
 @export var y_squash: float = 0.5
+
+var dog = null
 
 var walk_anim = ["walk_d", "walk_ds", "walk_s", "walk_sa", "walk_a", "walk_aw", "walk_w", "walk_wd"]
 var idle_anim = ["idle_d", "idle_ds", "idle_s", "idle_sa", "idle_a", "idle_aw", "idle_w", "idle_wd"]
-var run_anim = ["run_d", "run_ds", "run_s", "run_sa", "run_a", "run_aw", "run_w", "run_wd"] 
+var run_anim = ["run_d", "run_ds", "run_s", "run_sa", "run_a", "run_aw", "run_w", "run_wd"]
+
 var last_direction_index: int = 0
+
+func _ready():
+	dog = get_tree().get_first_node_in_group("dog")
+	if not dog:
+		push_warning("Собака не найдена! Добавь её в группу 'dog'")
+
+# ←←← ВСЁ УПРАВЛЕНИЕ КЛИКАМИ ТОЛЬКО ЗДЕСЬ
+func _input(event: InputEvent):
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if dog and dog.current_state != dog.State.DASH:
+			dog.start_dash(get_global_mouse_position())
 
 func _physics_process(_delta: float) -> void:
 	var input := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
 	if input != Vector2.ZERO:
 		var move_dir = Vector2(input.x, input.y * y_squash).normalized()
-		
 		var is_running = Input.is_action_pressed("run")
-		
 		var current_speed = run_speed if is_running else max_speed
 		
-		velocity = move_dir * current_speed
+		velocity = move_dir * current_speed          # для игрока можно напрямую
 		update_animation(is_running)
 	else:
 		velocity = Vector2.ZERO
@@ -32,6 +43,7 @@ func _physics_process(_delta: float) -> void:
 	
 	move_and_slide()
 	global_position = global_position.round()
+
 
 func update_animation(running: bool = false):
 	if velocity.length() > 10:
