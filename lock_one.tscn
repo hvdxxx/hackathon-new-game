@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://djpxpagdub1rx" path="res://Assets/Audio/GavDog.wav" id="3_mvlso"]
 [ext_resource type="Texture2D" uid="uid://calrb03gfq6a" path="res://Assets/Sprites/winterassphalt.png" id="4_opdir"]
 [ext_resource type="Texture2D" uid="uid://cdipvel5b4k21" path="res://Assets/Sprites/Isometric_Winter_Biome_Pack/Sprite-0001.png" id="5_qgen4"]
-[ext_resource type="Script" path="res://CameraFollow.gd" id="6_47c1j"]
+[ext_resource type="Script" uid="uid://8r75c7au5qik" path="res://CameraFollow.gd" id="6_47c1j"]
 [ext_resource type="PackedScene" uid="uid://dmv3j8rb76g7r" path="res://Assets/Theme/Ostanovka.tscn" id="6_opdir"]
 [ext_resource type="PackedScene" uid="uid://banqciabtl8nd" path="res://light.tscn" id="9_bd47j"]
 [ext_resource type="PackedScene" uid="uid://u0nxg470r1op" path="res://dog_husky.tscn" id="10_pu2d0"]
@@ -1022,6 +1022,8 @@ color = Color(0.23078632, 0.23133186, 0.438262, 1)
 [node name="Enemy" parent="." unique_id=2036560719 node_paths=PackedStringArray("player") groups=["boss"] instance=ExtResource("14_d5ec3")]
 position = Vector2(-164, 231)
 player = NodePath("../MainHero")
-ideal_distance = 400.0
-min_distance = 300.0
+ideal_distance = 420.0
+min_distance = 220.0
+orbit_speed_multiplier = 1.15
 projectile_scene = ExtResource("15_r7igj")
+attack_distance = 400.0

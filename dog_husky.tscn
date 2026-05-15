@@ -482,7 +482,9 @@ script = ExtResource("1_2cys5")
 sprite_frames = SubResource("SpriteFrames_sgeyn")
 animation = &"walk_wd"
 
-[node name="HitArea" type="Area2D" parent="." unique_id=1056293809]
+[node name="HitArea" type="Area2D" parent="." unique_id=1858379651]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea" unique_id=1795333369]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea" unique_id=458927897]
 shape = SubResource("CircleShape2D_2cys5")
+
+[connection signal="area_entered" from="HitArea" to="." method="_on_hit_area_area_entered"]

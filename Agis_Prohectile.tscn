@@ -6,6 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_kirhr"]
 
 [node name="Area2D" type="Area2D" unique_id=358943245]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_xj1rt")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2007543157]

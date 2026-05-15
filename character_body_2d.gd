@@ -8,6 +8,8 @@ extends CharacterBody2D
 @export var friction: float = 1100.0
 @export var y_squash: float = 0.5
 
+var health: int = 200
+var max_health: int = 200
 var dog = null
 
 var walk_anim = ["walk_d", "walk_ds", "walk_s", "walk_sa", "walk_a", "walk_aw", "walk_w", "walk_wd"]
@@ -16,7 +18,31 @@ var run_anim = ["run_d", "run_ds", "run_s", "run_sa", "run_a", "run_aw", "run_w"
 
 var last_direction_index: int = 0
 
+func die():
+	print("ИГРОК ПОГИБ!")
+	# queue_free() или переход на Game Over
+	# get_tree().reload_current_scene() — для теста
+
+func take_damage(damage: int, hit_direction: Vector2 = Vector2.ZERO):
+	health -= damage
+	print("Игрок получил ", damage, " урона! HP: ", health, "/", max_health)
+	
+	# === ТРЯСКА КАМЕРЫ ===
+	var camera = get_viewport().get_camera_2d()   # находим камеру
+	if camera and camera.has_method("shake"):
+		# Сильнее трясёт при большем уроне
+		var intensity = 6.0 + (damage * 0.35)
+		camera.shake(intensity, 14.0)
+	
+	# Можно добавить knockback потом
+	if hit_direction != Vector2.ZERO:
+		velocity += hit_direction * 250   # пример отталкивания
+	
+	if health <= 0:
+		die()
+
 func _ready():
+	add_to_group("player")
 	dog = get_tree().get_first_node_in_group("dog")
 	if not dog:
 		push_warning("Собака не найдена! Добавь её в группу 'dog'")

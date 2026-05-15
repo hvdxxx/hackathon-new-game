@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var bark_sound: AudioStreamPlayer2D = $BarkDog
+@onready var hit_area: Area2D = $HitArea
 
 @export var max_speed: float = 180.0
 @export var acceleration: float = 800.0
@@ -24,11 +25,27 @@ var current_state: State = State.FOLLOW
 var dash_timer: float = 0.0
 var dash_direction: Vector2 = Vector2.ZERO
 
+func _on_hit_area_body_entered(body: Node2D):
+	if current_state != State.DASH:
+		return
+	
+	print("HitArea задел: ", body.name, " | Группы: ", body.get_groups())  # ← ОТЛАДКА
+	
+	if body.is_in_group("boss") and body.has_method("take_damage"):
+		print("✅ Попали по боссу! Наносим 120 урона")
+		var hit_dir = (body.global_position - global_position).normalized()
+		body.take_damage(120, hit_dir)
+		start_return()
+	else:
+		print("❌ Это не босс или у него нет take_damage")
+
 func _ready():
 	if not player:
 		player = get_tree().get_first_node_in_group("player")
 		if not player:
 			push_warning("Добавь героя в группу 'player'")
+	if hit_area:
+		hit_area.body_entered.connect(_on_hit_area_body_entered)
 
 func _physics_process(delta: float) -> void:
 	if not player:
@@ -83,12 +100,7 @@ func return_to_player(delta: float):
 func start_dash(target_global_pos: Vector2):
 
 	if current_state == State.DASH:
-		for body in $HitArea.get_overlapping_bodies():   # сделай Area2D с именем HitArea
-			if body.is_in_group("boss"):
-				var hit_dir = (body.global_position - global_position).normalized()
-				body.take_damage(120, hit_dir)   # ← теперь с направлением
-				start_return()
-				break
+		return
 	
 	# ←←← Воспроизводим лай
 	if bark_sound and not bark_sound.playing:
