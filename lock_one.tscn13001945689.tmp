@@ -1019,9 +1019,6 @@ target = NodePath("../MainHero")
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1074620981]
 color = Color(0.23078632, 0.23133186, 0.438262, 1)
 
-[node name="Enemy" parent="." unique_id=2036560719 node_paths=PackedStringArray("player") groups=["boss"] instance=ExtResource("14_d5ec3")]
-position = Vector2(-164, 231)
-player = NodePath("../MainHero")
-ideal_distance = 400.0
-min_distance = 300.0
+[node name="Enemy" parent="." unique_id=2036560719 groups=["boss"] instance=ExtResource("14_d5ec3")]
+position = Vector2(-164, 232)
 projectile_scene = ExtResource("15_r7igj")

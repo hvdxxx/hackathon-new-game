@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://u81pgmgxwhtu"]
+
+[ext_resource type="Texture2D" uid="uid://dbkbtmnmvu6eo" path="res://Assets/Sprites/Enemies/Agis/Projectile_Agis.png" id="1_kirhr"]
+[ext_resource type="Script" uid="uid://c6rfij5ul6gm8" path="res://agis_prohectile.gd" id="1_xj1rt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kirhr"]
+
+[node name="Area2D" type="Area2D" unique_id=358943245]
+script = ExtResource("1_xj1rt")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2007543157]
+texture = ExtResource("1_kirhr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1779299498]
+shape = SubResource("CircleShape2D_kirhr")

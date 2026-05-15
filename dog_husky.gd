@@ -81,8 +81,14 @@ func return_to_player(delta: float):
 # ==================== ЗАПУСК БРОСКА ====================
 
 func start_dash(target_global_pos: Vector2):
+
 	if current_state == State.DASH:
-		return
+		for body in $HitArea.get_overlapping_bodies():   # сделай Area2D с именем HitArea
+			if body.is_in_group("boss"):
+				var hit_dir = (body.global_position - global_position).normalized()
+				body.take_damage(120, hit_dir)   # ← теперь с направлением
+				start_return()
+				break
 	
 	# ←←← Воспроизводим лай
 	if bark_sound and not bark_sound.playing:
