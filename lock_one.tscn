@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://5d5ipxubg1cc"]
 
 [ext_resource type="Texture2D" uid="uid://cy2pqn42pmupk" path="res://Assets/Sprites/spritesheet(1).png" id="1_ins1s"]
-[ext_resource type="Script" path="res://lock_one.gd" id="1_mvlso"]
+[ext_resource type="Script" uid="uid://c8qb27h0o3emq" path="res://lock_one.gd" id="1_mvlso"]
 [ext_resource type="Texture2D" uid="uid://8b7s0gvtryj1" path="res://Assets/Sprites/grass8.png" id="2_dnxor"]
 [ext_resource type="AudioStream" uid="uid://dpxovfjj36kt" path="res://Assets/Audio/MainTheme.mp3" id="2_lbp2f"]
 [ext_resource type="PackedScene" uid="uid://bo63hnjbk06rb" path="res://character_body_2d.tscn" id="3_8fer4"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://calrb03gfq6a" path="res://Assets/Sprites/winterassphalt.png" id="4_opdir"]
 [ext_resource type="Texture2D" uid="uid://cdipvel5b4k21" path="res://Assets/Sprites/Isometric_Winter_Biome_Pack/Sprite-0001.png" id="5_qgen4"]
 [ext_resource type="Script" uid="uid://8r75c7au5qik" path="res://CameraFollow.gd" id="6_47c1j"]
+[ext_resource type="PackedScene" uid="uid://b5op4jpnepvsb" path="res://trashbox.tscn" id="6_fpulj"]
 [ext_resource type="PackedScene" uid="uid://dmv3j8rb76g7r" path="res://Assets/Theme/Ostanovka.tscn" id="6_opdir"]
 [ext_resource type="PackedScene" uid="uid://banqciabtl8nd" path="res://light.tscn" id="9_bd47j"]
 [ext_resource type="PackedScene" uid="uid://u0nxg470r1op" path="res://dog_husky.tscn" id="10_pu2d0"]
@@ -874,10 +875,6 @@ sources/7 = SubResource("TileSetAtlasSource_d5ec3")
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_bd47j"]
 polygon = PackedVector2Array(-91.66676, 40.000008, -90.0001, -60.833336, -77.500084, -81.66667, -54.166725, -102.5, -39.166702, -110, 88.333435, -43.333332, 90.00011, 78.333336, 39.166718, 108.333336, 35.833374, 54.166664, -39.166702, 11.666672)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mvlso"]
-radius = 16.0
-height = 138.0
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_qgen4"]
 atlas = ExtResource("11_lbp2f")
 region = Rect2(286, 100, 51, 141)
@@ -885,18 +882,14 @@ region = Rect2(286, 100, 51, 141)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qgen4"]
 polygon = PackedVector2Array(-3, 36, -25, 49, -25, 54, 1, 70, 25, 55, 25, 50, 4, 37, 3, -10, 14, -5, 16, -7, 16, -58, -7, -70, -12, -70, -12, -21, -2, -14)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lbp2f"]
-atlas = ExtResource("11_lbp2f")
-region = Rect2(158, 197, 50, 87)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mvlso"]
-size = Vector2(20, 25)
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_mvlso"]
-polygon = PackedVector2Array(-9, 12, 0, 17, 10, 12, 10, -11, 0, -17, -10, -11)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r7igj"]
+size = Vector2(49, 19)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_lbp2f"]
 polygon = PackedVector2Array(-6, 5, -5, 11, 10, 11, 7, 0, 1, 0, -4, 1)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_r7igj"]
+polygon = PackedVector2Array(-20, 8, -12, 24, -17, 48, -18, 97, -1, 107, 19, 101, 16, 85, 20, 66, 14, 25, 17, -12, 31, -28, 29, -46, 11, -61, -11, -61, -24, -51, -29, -35, -26, -21, -20, -10)
 
 [node name="Node2D" type="Node2D" unique_id=1695581342]
 y_sort_enabled = true
@@ -906,7 +899,7 @@ script = ExtResource("1_mvlso")
 z_index = -2
 y_sort_enabled = true
 texture_filter = 1
-tile_map_data = PackedByteArray("AAAAAAUABwAAAAAAAAABAAYABwAAAAAAAAABAAUABwAAAAAAAAABAAQABwAAAAAAAAAAAAMABwAAAAAAAAAAAAQABwAAAAAAAAD//wMABwAAAAAAAAD//wIABwAAAAAAAAD+/wEABwAAAAAAAAD+/wAABwAAAAAAAAAAAAIABwAAAAAAAAD//wEABwAAAAAAAAD//wAABwAAAAAAAAD+////BwAAAAAAAAAAAAAABwAAAAAAAAAAAAEABwAAAAAAAAABAAIABwAAAAAAAAD/////BwAAAAAAAAD///7/BwAAAAAAAAABAAAABwAAAAAAAAABAAEABwAAAAAAAAACAAIABwAAAAAAAAABAAMABwAAAAAAAAACAAQABwAAAAAAAAACAAUABwAAAAAAAAADAAYABwAAAAAAAAAEAAgABwAAAAAAAAADAAUABwAAAAAAAAADAAQABwAAAAAAAAACAAMABwAAAAAAAAAEAAYABwAAAAAAAAAEAAcABwAAAAAAAAADAAkABwAAAAAAAAACAAYABwAAAAAAAAABAAcABwAAAAAAAAACAAgABwAAAAAAAAACAAkABwAAAAAAAAADAAoABwAAAAAAAAACAAcABwAAAAAAAAADAAgABwAAAAAAAAADAAcABwAAAAAAAAD///3/BwAAAAAAAAAAAP7/BwAAAAAAAAAAAP//BwAAAAAAAAADAAsABwAAAAAAAAAEAAoABwAAAAAAAAAEAAkABwAAAAAAAAAFAAgABwAAAAAAAAADAAwABwABAAAAAAACAAsABwABAAAAAAACAAoABwABAAAAAAABAAkABwABAAAAAAABAAgABwABAAAAAAAAAAcABwABAAAAAAAAAAYABwABAAAAAAD//wUABwABAAAAAAD//wQABwABAAAAAAD+/wMABwABAAAAAAD+/wIABwABAAAAAAD9/wEABwABAAAAAAD9/wIABwABAAAAAAD9/wMABwABAAAAAAD+/wQABwABAAAAAAD+/wUABwABAAAAAAD//wYABwABAAAAAAD//wcABwABAAAAAAAAAAgABwABAAAAAAAAAAkABwABAAAAAAABAAoABwABAAAAAAABAAsABwABAAAAAAACAAwABwABAAAAAAACAA0ABwABAAAAAAACAA4ABwAAAAAAAAABAA0ABwAAAAAAAAABAAwABwAAAAAAAAAAAAsABwAAAAAAAAAAAAoABwAAAAAAAAD//wkABwAAAAAAAAD//wgABwAAAAAAAAD+/wcABwAAAAAAAAD+/wYABwAAAAAAAAD9/wUABwAAAAAAAAD9/wQABwAAAAAAAAD8/wMABwAAAAAAAAD8/wQABwAAAAAAAAD8/wUABwAAAAAAAAD9/wYABwAAAAAAAAD9/wcABwAAAAAAAAD+/wgABwAAAAAAAAD9/wkABwAAAAAAAAD+/woABwAAAAAAAAD+/wsABwAAAAAAAAD//wwABwAAAAAAAAD//w0ABwAAAAAAAAAAAAwABwAAAAAAAAAAAA0ABwAAAAAAAAABAA4ABwAAAAAAAAABAA8ABwAAAAAAAAD//wsABwAAAAAAAAD//woABwAAAAAAAAD+/wkABwAAAAAAAAAAAA4ABwAAAAAAAAAAAA8ABwAAAAAAAAABABAABwAAAAAAAAD9/wgABwAAAAAAAAD8/wcABwAAAAAAAAD8/wYABwAAAAAAAAD7/wUABwAAAAAAAAD7/wYABwAAAAAAAAD7/wcABwAAAAAAAAD8/wgABwAAAAAAAAD8/wkABwAAAAAAAAD9/woABwAAAAAAAAD9/wsABwAAAAAAAAD+/wwABwAAAAAAAAD+/w0ABwAAAAAAAAD//w4ABwAAAAAAAAD//w8ABwAAAAAAAAAAABAABwAAAAAAAAAAABEABwAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAUABwAAAAAAAAABAAYABwAAAAAAAAABAAUABwAAAAAAAAABAAQABwAAAAAAAAAAAAMABwAAAAAAAAAAAAQABwAAAAAAAAD//wMABwAAAAAAAAD//wIABwAAAAAAAAD+/wEABwAAAAAAAAD+/wAABwAAAAAAAAAAAAIABwAAAAAAAAD//wEABwAAAAAAAAD//wAABwAAAAAAAAD+////BwAAAAAAAAAAAAAABwAAAAAAAAAAAAEABwAAAAAAAAABAAIABwAAAAAAAAD/////BwAAAAAAAAD///7/BwAAAAAAAAABAAAABwAAAAAAAAABAAEABwAAAAAAAAACAAIABwAAAAAAAAABAAMABwAAAAAAAAACAAQABwAAAAAAAAACAAUABwAAAAAAAAADAAYABwAAAAAAAAAEAAgABwAAAAAAAAADAAUABwAAAAAAAAADAAQABwAAAAAAAAACAAMABwAAAAAAAAAEAAYABwAAAAAAAAAEAAcABwAAAAAAAAADAAkABwAAAAAAAAACAAYABwAAAAAAAAABAAcABwAAAAAAAAACAAgABwAAAAAAAAACAAkABwAAAAAAAAADAAoABwAAAAAAAAACAAcABwAAAAAAAAADAAgABwAAAAAAAAADAAcABwAAAAAAAAD///3/BwAAAAAAAAAAAP//BwAAAAAAAAADAAsABwAAAAAAAAAEAAoABwAAAAAAAAAEAAkABwAAAAAAAAAFAAgABwAAAAAAAAADAAwABwABAAAAAAACAAsABwABAAAAAAACAAoABwABAAAAAAABAAkABwABAAAAAAABAAgABwABAAAAAAAAAAcABwABAAAAAAAAAAYABwABAAAAAAD//wUABwABAAAAAAD//wQABwABAAAAAAD+/wMABwABAAAAAAD+/wIABwABAAAAAAD9/wEABwABAAAAAAD9/wIABwABAAAAAAD9/wMABwABAAAAAAD+/wQABwABAAAAAAD+/wUABwABAAAAAAD//wYABwABAAAAAAD//wcABwABAAAAAAAAAAgABwABAAAAAAAAAAkABwABAAAAAAABAAoABwABAAAAAAABAAsABwABAAAAAAACAAwABwABAAAAAAACAA0ABwABAAAAAAACAA4ABwAAAAAAAAABAA0ABwAAAAAAAAABAAwABwAAAAAAAAAAAAsABwAAAAAAAAAAAAoABwAAAAAAAAD//wkABwAAAAAAAAD//wgABwAAAAAAAAD+/wcABwAAAAAAAAD+/wYABwAAAAAAAAD9/wUABwAAAAAAAAD9/wQABwAAAAAAAAD8/wMABwAAAAAAAAD8/wQABwAAAAAAAAD8/wUABwAAAAAAAAD9/wYABwAAAAAAAAD9/wcABwAAAAAAAAD+/wgABwAAAAAAAAD9/wkABwAAAAAAAAD+/woABwAAAAAAAAD+/wsABwAAAAAAAAD//wwABwAAAAAAAAD//w0ABwAAAAAAAAAAAAwABwAAAAAAAAAAAA0ABwAAAAAAAAABAA4ABwAAAAAAAAABAA8ABwAAAAAAAAD//wsABwAAAAAAAAD//woABwAAAAAAAAD+/wkABwAAAAAAAAAAAA4ABwAAAAAAAAAAAA8ABwAAAAAAAAABABAABwAAAAAAAAD9/wgABwAAAAAAAAD8/wcABwAAAAAAAAD8/wYABwAAAAAAAAD7/wUABwAAAAAAAAD7/wYABwAAAAAAAAD7/wcABwAAAAAAAAD8/wgABwAAAAAAAAD8/wkABwAAAAAAAAD9/woABwAAAAAAAAD9/wsABwAAAAAAAAD+/wwABwAAAAAAAAD+/w0ABwAAAAAAAAD//w4ABwAAAAAAAAD//w8ABwAAAAAAAAAAABAABwAAAAAAAAAAABEABwAAAAAAAAAAAP7/BwAAAAAAAAD8/wEABwABAAAAAAD8/wAABwABAAAAAAD8////BwABAAAAAAD8//7/BwABAAAAAAD7//3/BwABAAAAAAD7//7/BwABAAAAAAD7////BwABAAAAAAD9/wAABwABAAAAAAADAA4ABwABAAAAAAADAA8ABwABAAAAAAAEABAABwABAAAAAAAEABEABwABAAAAAAAFABIABwABAAAAAAAFABMABwABAAAAAAADAA0ABwABAAAAAAAEAA4ABwABAAAAAAAEAA8ABwABAAAAAAAFABAABwABAAAAAAAFABEABwABAAAAAAAGABIABwABAAAAAAD7//z/BwABAAAAAAD6//3/BwABAAAAAAA=")
 tile_set = SubResource("TileSet_8fer4")
 occlusion_enabled = false
 collision_enabled = false
@@ -914,116 +907,103 @@ collision_enabled = false
 [node name="Tile" type="TileMapLayer" parent="." unique_id=324118062]
 z_index = -3
 y_sort_enabled = true
+tile_map_data = PackedByteArray("AAD+/wEABwAAAAEAAAADAAcABwABAAEAAAD//wwABwABAAEAAAABAA8ABwABAAEAAAD8/wYABwAAAAEAAAD+/wYABwAAAAEAAAA=")
 tile_set = SubResource("TileSet_8fer4")
 occlusion_enabled = false
 collision_enabled = false
 
+[node name="Trashbox" parent="." unique_id=1463786035 instance=ExtResource("6_fpulj")]
+y_sort_enabled = true
+position = Vector2(57, 161)
+scale = Vector2(0.6, 0.6)
+
 [node name="abuss" parent="." unique_id=1904884175 instance=ExtResource("6_opdir")]
-z_index = 1
 y_sort_enabled = true
 texture_filter = 1
-position = Vector2(196, 115)
+position = Vector2(253, 149)
 scale = Vector2(1.1999987, 1.2)
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="abuss" unique_id=1062032529]
+position = Vector2(-35.00004, -40.000008)
 occluder = SubResource("OccluderPolygon2D_bd47j")
 
 [node name="znak" type="StaticBody2D" parent="." unique_id=772890856]
-z_index = 1
 y_sort_enabled = true
-texture_filter = 1
-position = Vector2(255, 224)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="znak" unique_id=379265208]
-position = Vector2(0, -4)
-shape = SubResource("CapsuleShape2D_mvlso")
+position = Vector2(305, 284)
 
 [node name="Sprite2D" type="Sprite2D" parent="znak" unique_id=1803959405]
-z_index = 3
 y_sort_enabled = true
 position = Vector2(-1, -1)
 texture = SubResource("AtlasTexture_qgen4")
+offset = Vector2(0, -64.415)
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="znak" unique_id=402314375]
+position = Vector2(0, -64)
 occluder = SubResource("OccluderPolygon2D_qgen4")
 
-[node name="Musorka" type="StaticBody2D" parent="." unique_id=61100583]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="znak" unique_id=379265208]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(69, 144)
-
-[node name="Sprite2D" type="Sprite2D" parent="Musorka" unique_id=1091074082]
-position = Vector2(3.8146973e-06, 1.5258789e-05)
-scale = Vector2(0.4, 0.4)
-texture = SubResource("AtlasTexture_lbp2f")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Musorka" unique_id=1469160527]
-position = Vector2(0, 0.5)
-shape = SubResource("RectangleShape2D_mvlso")
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Musorka" unique_id=2047010398]
-occluder = SubResource("OccluderPolygon2D_mvlso")
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_r7igj")
 
 [node name="MainHero" parent="." unique_id=526832582 instance=ExtResource("3_8fer4")]
-z_index = 2
-texture_filter = 1
-position = Vector2(150, 188)
-scale = Vector2(0.7, 0.7)
-max_speed = 100.0
-run_speed = 220.0
-acceleration = 600.0
-friction = 1100.0
-y_squash = 0.6
-
-[node name="Light" parent="MainHero" unique_id=2027389087 instance=ExtResource("9_bd47j")]
-z_index = 4
-y_sort_enabled = true
-texture_filter = 1
-position = Vector2(1.5258789e-05, 2.857153)
-scale = Vector2(1.4714284, 1.4714284)
+z_index = 0
+position = Vector2(183, 218)
+scale = Vector2(0.6, 0.6)
 
 [node name="Soundtrack Main" type="AudioStreamPlayer2D" parent="MainHero" unique_id=1730557057]
-position = Vector2(-214.2857, -268.5714)
-scale = Vector2(1.4285713, 1.4285713)
+position = Vector2(1.6666641, -36.66667)
+scale = Vector2(0.59999996, 0.59999996)
 stream = ExtResource("2_lbp2f")
 volume_db = -25.271
 autoplay = true
 
-[node name="LittleDog_one" parent="." unique_id=1660775309 node_paths=PackedStringArray("player") groups=["dog"] instance=ExtResource("10_pu2d0")]
+[node name="Light" parent="MainHero" unique_id=2027389087 instance=ExtResource("9_bd47j")]
+position = Vector2(0, -28.333332)
+
+[node name="LittleDog_one" parent="." unique_id=1660775309 groups=["dog"] instance=ExtResource("10_pu2d0")]
 y_sort_enabled = true
-position = Vector2(-101, 86)
+position = Vector2(333, 214)
+max_speed = 180.0
+acceleration = 800.0
+friction = 1200.0
 follow_distance = 70.0
 dash_speed = 550.0
-dash_duration = 0.25
-player = NodePath("../MainHero")
+dash_duration = 0.45
+y_squash = 0.5
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="LittleDog_one" unique_id=1801141321]
 occluder = SubResource("OccluderPolygon2D_lbp2f")
 
 [node name="BarkDog" type="AudioStreamPlayer2D" parent="LittleDog_one" unique_id=728741958]
-position = Vector2(101, -86)
+position = Vector2(1, -1)
 stream = ExtResource("3_mvlso")
 volume_db = -10.691
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1474227227 node_paths=PackedStringArray("target")]
-y_sort_enabled = true
-position = Vector2(153, 185)
-zoom = Vector2(1.5, 1.5)
-position_smoothing_enabled = true
-position_smoothing_speed = 12.0
-script = ExtResource("6_47c1j")
-target = NodePath("../MainHero")
 
 [node name="ShaderGlobalsOverride" type="ShaderGlobalsOverride" parent="." unique_id=1629774133]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1074620981]
 color = Color(0.23078632, 0.23133186, 0.438262, 1)
 
-[node name="Enemy" parent="." unique_id=2036560719 node_paths=PackedStringArray("player") groups=["boss"] instance=ExtResource("14_d5ec3")]
-position = Vector2(-164, 231)
-player = NodePath("../MainHero")
+[node name="Enemy" parent="." unique_id=2036560719 groups=["boss"] instance=ExtResource("14_d5ec3")]
+position = Vector2(-38, 228)
 ideal_distance = 420.0
 min_distance = 220.0
 orbit_speed_multiplier = 1.15
 projectile_scene = ExtResource("15_r7igj")
 attack_distance = 400.0
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Enemy" unique_id=736662261]
+visible = false
+occluder = SubResource("OccluderPolygon2D_r7igj")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1474227227]
+y_sort_enabled = true
+position = Vector2(115, 213)
+zoom = Vector2(2, 2)
+limit_enabled = false
+position_smoothing_enabled = true
+position_smoothing_speed = 50.0
+script = ExtResource("6_47c1j")
+smoothing_speed = 5.0

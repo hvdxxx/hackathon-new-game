@@ -3,6 +3,7 @@ extends CharacterBody2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_sound: AudioStreamPlayer2D = $AttackSound
 @onready var hit_area: Area2D = $HitArea
+@onready var proj_sound: AudioStreamPlayer2D = $Blast
 
 @export var player: Node = null
 @export var max_speed: float = 160.0
@@ -14,10 +15,20 @@ extends CharacterBody2D
 @export var min_distance: float = 130.0
 @export var orbit_speed_multiplier: float = 0.85
 
+# === ПАРЕНИЕ ===
+@export var hover_amplitude: float = 12.0
+@export var hover_speed: float = 3.5
+
+# === ТРЯСКА ПРИ УРОНЕ ===
+@export var hit_shake_intensity: float = 8.0      # Сила тряски
+@export var hit_shake_duration: float = 0.35      # Длительность тряски
+
 # === АТАКА ===
 @export var projectile_scene: PackedScene
 @export var attack_cooldown: float = 2.5
 @export var attack_distance: float = 220.0
+
+
 
 var health: int = 800
 var knockback_velocity: Vector2 = Vector2.ZERO
@@ -31,17 +42,31 @@ var attack_timer: float = 0.0
 var orbit_direction: float = 1.0
 var time_since_last_change: float = 0.0
 
+# Для парения
+var hover_time: float = 0.0
+var base_position: Vector2 = Vector2.ZERO
+
+# Для тряски при уроне
+var shake_time: float = 0.0
+var shake_intensity: float = 0.0
+
 func _ready():
 	if not player:
 		player = get_tree().get_first_node_in_group("player")
 	
 	add_to_group("boss")
 	orbit_direction = 1 if randf() > 0.5 else -1
-	print("Босс готов. Кружение:", "по часовой" if orbit_direction > 0 else "против часовой")
+	base_position = global_position
+	sprite.play("walk")
+	
+	print("Босс готов → Кружение + Парение + Hit Shake")
 
 func _physics_process(delta: float) -> void:
 	if not player:
 		return
+	
+	hover_time += delta * hover_speed
+	shake_time -= delta
 	
 	knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, knockback_friction * delta)
 	
@@ -54,23 +79,44 @@ func _physics_process(delta: float) -> void:
 	match current_state:
 		State.IDLE:
 			handle_orbiting_movement(dir_to_player, distance, delta)
-			try_to_attack(distance, dir_to_player)     # ← вот она!
+			try_to_attack(distance, dir_to_player)
 		
 		State.KNOCKBACK:
 			if knockback_velocity.length() < 50:
 				current_state = State.IDLE
 		
 		State.ATTACKING:
-			velocity = velocity.move_toward(Vector2.ZERO, acceleration * delta * 2) # замедляемся при атаке
+			velocity = velocity.move_toward(Vector2.ZERO, acceleration * delta * 2)
 	
 	move_and_slide()
-	global_position = global_position.round()
+	
+	apply_hover_effect()
+	apply_hit_shake()
+	
+	global_position.x = round(global_position.x)
 
-# ====================== КРУЖЕНИЕ ВОКРУГ ГЕРОЯ ======================
+# ====================== ПАРЕНИЕ ======================
+func apply_hover_effect():
+	var hover_offset = sin(hover_time) * hover_amplitude
+	var extra_wave = sin(hover_time * 1.7) * (hover_amplitude * 0.35)
+	global_position.y = base_position.y + hover_offset + extra_wave
+
+# ====================== ТРЯСКА ПРИ УРОНЕ ======================
+func apply_hit_shake():
+	if shake_time > 0:
+		var offset_x = randf_range(-shake_intensity, shake_intensity)
+		var offset_y = randf_range(-shake_intensity * 0.6, shake_intensity * 0.6)
+		sprite.offset = Vector2(offset_x, offset_y)
+	else:
+		sprite.offset = Vector2.ZERO
+
+func start_hit_shake(intensity: float = 0.0):
+	shake_intensity = max(hit_shake_intensity, intensity)
+	shake_time = hit_shake_duration
+
+# ====================== КРУЖЕНИЕ ======================
 func handle_orbiting_movement(dir_to_player: Vector2, distance: float, delta: float):
 	time_since_last_change += delta
-	
-	# Меняем направление кружения иногда
 	if time_since_last_change > randf_range(6.0, 12.0):
 		orbit_direction *= -1
 		time_since_last_change = 0.0
@@ -79,20 +125,15 @@ func handle_orbiting_movement(dir_to_player: Vector2, distance: float, delta: fl
 	
 	if distance < min_distance:
 		desired_velocity = -dir_to_player.normalized() * max_speed * 1.1
-		
 	elif distance > ideal_distance + 60:
 		desired_velocity = dir_to_player.normalized() * max_speed * 0.9
-		
 	else:
-		# Основное кружение
 		var to_player_norm = dir_to_player.normalized()
 		var perpendicular = Vector2(-to_player_norm.y, to_player_norm.x) * orbit_direction
-		
 		var radial_component = (distance - ideal_distance) * -0.45
 		
 		desired_velocity = perpendicular * max_speed * orbit_speed_multiplier + \
 						  to_player_norm * radial_component
-		
 		desired_velocity = desired_velocity.rotated(randf_range(-0.5, 0.5))
 	
 	velocity = velocity.move_toward(desired_velocity, acceleration * delta)
@@ -102,13 +143,10 @@ func handle_orbiting_movement(dir_to_player: Vector2, distance: float, delta: fl
 func try_to_attack(distance: float, dir_to_player: Vector2):
 	if attack_timer > 0 or distance > attack_distance or not projectile_scene:
 		return
-	
 	current_state = State.ATTACKING
 	attack_timer = attack_cooldown
-	
 	shoot_projectile(dir_to_player.normalized())
 	
-	# Небольшая пауза после выстрела
 	await get_tree().create_timer(0.4).timeout
 	if current_state == State.ATTACKING:
 		current_state = State.IDLE
@@ -119,6 +157,9 @@ func shoot_projectile(direction: Vector2):
 	projectile.global_position = global_position + direction * 45
 	
 	if projectile.has_method("setup"):
+		if proj_sound and not proj_sound.playing:
+			proj_sound.pitch_scale = randf_range(0.85, 1.15)  # чуть разный тон каждый раз
+			proj_sound.play()
 		projectile.setup(direction)
 	elif projectile.has_method("launch"):
 		projectile.launch(direction)
@@ -138,6 +179,9 @@ func apply_knockback(direction: Vector2, strength: float = 400.0):
 func take_damage(damage: int, hit_direction: Vector2 = Vector2.ZERO):
 	health -= damage
 	print("Босс получил ", damage, " урона! HP осталось: ", health)
+	
+	# Тряска при получении урона
+	start_hit_shake(damage * 0.15)
 	
 	if hit_direction != Vector2.ZERO:
 		apply_knockback(hit_direction, 380)

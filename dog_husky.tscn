@@ -473,10 +473,17 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2cys5"]
-radius = 6.0
+radius = 12.0415945
 
 [node name="Dog_one" type="CharacterBody2D" unique_id=1660775309]
 script = ExtResource("1_2cys5")
+max_speed = null
+acceleration = null
+friction = null
+follow_distance = null
+dash_speed = null
+dash_duration = null
+y_squash = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1906402616]
 sprite_frames = SubResource("SpriteFrames_sgeyn")

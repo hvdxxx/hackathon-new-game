@@ -1,5 +1,7 @@
 extends Area2D
 
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
 @export var speed: float = 320.0
 @export var lifetime: float = 4.0
 @export var damage: int = 25
@@ -10,6 +12,8 @@ var timer: float = 0.0
 func _ready():
 	# Подключаем сигнал
 	body_entered.connect(_on_body_entered)
+	
+	sprite.play("default")
 	
 	# Автоуничтожение
 	await get_tree().create_timer(lifetime).timeout

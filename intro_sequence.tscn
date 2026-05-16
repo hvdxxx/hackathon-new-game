@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://hax2xvmnx84r"]
 
-[ext_resource type="Script" path="res://intro_sequence.gd" id="1_5bls8"]
-[ext_resource type="Shader" path="res://darkness_background.gdshader" id="2_5847j"]
+[ext_resource type="Script" uid="uid://de8d24lm3tcq2" path="res://intro_sequence.gd" id="1_5bls8"]
+[ext_resource type="Shader" uid="uid://bdqb6x581cbh1" path="res://darkness_background.gdshader" id="2_5847j"]
 [ext_resource type="Texture2D" uid="uid://dqpimpwgmaftr" path="res://Assets/Intro/Moutain.jpg" id="2_uq1bg"]
 [ext_resource type="FontFile" uid="uid://pw81o4lcxm20" path="res://fonts/FirstTimeWriting!.ttf" id="4_jfp5o"]
 
@@ -40,7 +40,7 @@ script = ExtResource("1_5bls8")
 
 [node name="Background" type="TextureRect" parent="." unique_id=837236998]
 material = SubResource("ShaderMaterial_c7h2q")
-offset_right = 1917.0
+offset_right = 1920.0
 offset_bottom = 1080.0
 theme = SubResource("Theme_jfp5o")
 texture = ExtResource("2_uq1bg")

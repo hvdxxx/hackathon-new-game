@@ -56,6 +56,11 @@ func _input(event: InputEvent):
 func _physics_process(_delta: float) -> void:
 	var input := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
+	if velocity.length() > 0:
+		$GPUParticles2D.emitting = true
+	else:
+		$GPUParticles2D.emitting = false
+	
 	if input != Vector2.ZERO:
 		var move_dir = Vector2(input.x, input.y * y_squash).normalized()
 		var is_running = Input.is_action_pressed("run")

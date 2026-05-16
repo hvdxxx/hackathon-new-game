@@ -8,48 +8,43 @@ extends CharacterBody2D
 @export var acceleration: float = 800.0
 @export var friction: float = 1200.0
 @export var follow_distance: float = 45.0
-@export var dash_speed: float = 450.0      # скорость броска
-@export var dash_duration: float = 0.45    # сколько секунд летит вперёд
+@export var dash_speed: float = 450.0
+@export var dash_duration: float = 0.45
 @export var y_squash: float = 0.5
 
-@export var player: Node = null
+var player: CharacterBody2D = null
 
-var walk_anim = ["walk_d", "walk_ds", "walk_s", "walk_sa", "walk_a", "walk_aw", "walk_w", "walk_wd"]
-var idle_anim = ["idle_d", "idle_ds", "idle_s", "idle_sa", "idle_a", "idle_aw", "idle_w", "idle_wd"]
-
-var last_direction_index: int = 0
-
-# Новые переменные для броска
 enum State { FOLLOW, DASH, RETURN }
 var current_state: State = State.FOLLOW
+
 var dash_timer: float = 0.0
 var dash_direction: Vector2 = Vector2.ZERO
 
-func _on_hit_area_body_entered(body: Node2D):
-	if current_state != State.DASH:
-		return
-	
-	print("HitArea задел: ", body.name, " | Группы: ", body.get_groups())  # ← ОТЛАДКА
-	
-	if body.is_in_group("boss") and body.has_method("take_damage"):
-		print("✅ Попали по боссу! Наносим 120 урона")
-		var hit_dir = (body.global_position - global_position).normalized()
-		body.take_damage(120, hit_dir)
-		start_return()
-	else:
-		print("❌ Это не босс или у него нет take_damage")
+var walk_anim = ["walk_d", "walk_ds", "walk_s", "walk_sa", "walk_a", "walk_aw", "walk_w", "walk_wd"]
+var idle_anim = ["idle_d", "idle_ds", "idle_s", "idle_sa", "idle_a", "idle_aw", "idle_w", "idle_wd"]
+var last_direction_index: int = 0
 
-func _ready():
-	if not player:
-		player = get_tree().get_first_node_in_group("player")
-		if not player:
-			push_warning("Добавь героя в группу 'player'")
+func _ready() -> void:
+	find_player()
+	
 	if hit_area:
 		hit_area.body_entered.connect(_on_hit_area_body_entered)
 
-func _physics_process(delta: float) -> void:
+
+func find_player() -> void:
+	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
+	
 	if not player:
-		return
+		push_warning("Собака не нашла игрока! Убедись, что герой добавлен в группу 'player'")
+
+
+func _physics_process(delta: float) -> void:
+	if not player or not is_instance_valid(player):
+		find_player()
+		if not player:
+			velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
+			move_and_slide()
+			return
 	
 	match current_state:
 		State.FOLLOW:
@@ -63,9 +58,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	global_position = global_position.round()
 
-# ==================== СОСТОЯНИЯ ====================
 
-func follow_player(delta: float):
+# ==================== СОСТОЯНИЯ ====================
+func follow_player(delta: float) -> void:
 	var dir = player.global_position - global_position
 	var dist = dir.length()
 	
@@ -76,49 +71,58 @@ func follow_player(delta: float):
 		move_dir = Vector2(move_dir.x, move_dir.y * y_squash).normalized()
 		velocity = velocity.move_toward(move_dir * max_speed, acceleration * delta)
 
-func do_dash(delta: float):
+
+func do_dash(delta: float) -> void:
 	dash_timer -= delta
 	velocity = velocity.move_toward(dash_direction * dash_speed, acceleration * delta * 2)
 	
 	if dash_timer <= 0:
 		start_return()
 
-func return_to_player(delta: float):
+
+func return_to_player(delta: float) -> void:
 	var dir = player.global_position - global_position
 	var dist = dir.length()
 	
 	if dist < follow_distance + 20:
 		current_state = State.FOLLOW
-		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 	else:
 		var move_dir = dir.normalized()
 		move_dir = Vector2(move_dir.x, move_dir.y * y_squash).normalized()
-		velocity = velocity.move_toward(move_dir * max_speed * 1.4, acceleration * delta)  # чуть быстрее при возврате
+		velocity = velocity.move_toward(move_dir * max_speed * 1.4, acceleration * delta)
 
-# ==================== ЗАПУСК БРОСКА ====================
 
-func start_dash(target_global_pos: Vector2):
-
+# ==================== ДЭШ ====================
+func start_dash(target_global_pos: Vector2) -> void:
 	if current_state == State.DASH:
 		return
 	
-	# ←←← Воспроизводим лай
 	if bark_sound and not bark_sound.playing:
-		bark_sound.pitch_scale = randf_range(0.85, 1.15)  # чуть разный тон каждый раз
+		bark_sound.pitch_scale = randf_range(0.85, 1.15)
 		bark_sound.play()
 	
 	dash_direction = (target_global_pos - global_position).normalized()
 	dash_timer = dash_duration
 	current_state = State.DASH
-	
-	# Можно добавить звук и эффекты позже
 
-func start_return():
+
+func start_return() -> void:
 	current_state = State.RETURN
 
-# ==================== АНИМАЦИЯ ====================
 
-func update_animation():
+# ==================== УРОН ====================
+func _on_hit_area_body_entered(body: Node2D) -> void:
+	if current_state != State.DASH:
+		return
+	
+	if body.is_in_group("boss") and body.has_method("take_damage"):
+		var hit_dir = (body.global_position - global_position).normalized()
+		body.take_damage(120, hit_dir)
+		start_return()
+
+
+# ==================== АНИМАЦИЯ ====================
+func update_animation() -> void:
 	if velocity.length() > 15:
 		var angle = velocity.angle()
 		var angle_normalized = fposmod(angle, TAU)
