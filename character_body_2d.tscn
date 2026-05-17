@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://cpl27ga8yquvl" path="res://Assets/GirlWalk/GirlSample_Walk_DownLeft.png" id="23_el80s"]
 [ext_resource type="Texture2D" uid="uid://cptkvfavf8b01" path="res://Assets/GirlWalk/GirlSample_Walk_Up.png" id="24_75u2t"]
 [ext_resource type="Texture2D" uid="uid://bw7fl8mt3cgll" path="res://Assets/GirlWalk/GirlSample_Walk_UpRight.png" id="24_oxcm1"]
+[ext_resource type="AudioStream" uid="uid://rtomucg3pcew" path="res://Assets/Audio/walk sound/snow2.wav" id="26_7qa1u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_75u2t"]
 radius = 17.088007
@@ -1758,14 +1759,14 @@ y_sort_enabled = true
 script = ExtResource("1_f50pn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1058259293]
-position = Vector2(1, -19)
+position = Vector2(1, -13)
 shape = SubResource("CircleShape2D_75u2t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1938494257]
 position = Vector2(2, -5)
 sprite_frames = SubResource("SpriteFrames_76bt2")
 animation = &"walk_w"
-offset = Vector2(0, -26.095)
+offset = Vector2(0, -2.425)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1546842461]
 
@@ -1777,3 +1778,9 @@ texture = SubResource("GradientTexture2D_7qa1u")
 lifetime = 0.5
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_7qa1u")
+
+[node name="footstep" type="AudioStreamPlayer2D" parent="." unique_id=371942767]
+stream = ExtResource("26_7qa1u")
+volume_db = -30.13
+pitch_scale = 1.52
+max_polyphony = 2

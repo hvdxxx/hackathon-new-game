@@ -477,13 +477,6 @@ radius = 12.0415945
 
 [node name="Dog_one" type="CharacterBody2D" unique_id=1660775309]
 script = ExtResource("1_2cys5")
-max_speed = null
-acceleration = null
-friction = null
-follow_distance = null
-dash_speed = null
-dash_duration = null
-y_squash = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1906402616]
 sprite_frames = SubResource("SpriteFrames_sgeyn")
@@ -495,3 +488,5 @@ animation = &"walk_wd"
 shape = SubResource("CircleShape2D_2cys5")
 
 [connection signal="area_entered" from="HitArea" to="." method="_on_hit_area_area_entered"]
+[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]
+[connection signal="body_shape_exited" from="HitArea" to="." method="_on_hit_area_body_shape_exited"]

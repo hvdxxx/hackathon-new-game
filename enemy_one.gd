@@ -45,6 +45,7 @@ var time_since_last_change: float = 0.0
 # Для парения
 var hover_time: float = 0.0
 var base_position: Vector2 = Vector2.ZERO
+var base_hover_y: float = 0.0   # ← новое
 
 # Для тряски при уроне
 var shake_time: float = 0.0
@@ -59,23 +60,24 @@ func _ready():
 	base_position = global_position
 	sprite.play("walk")
 	
+	base_hover_y = sprite.position.y   # запоминаем исходную позицию спрайта
+	base_position = global_position
+	
 	print("Босс готов → Кружение + Парение + Hit Shake")
 
 func _physics_process(delta: float) -> void:
-	if not player:
-		return
+	if not player: return
 	
 	hover_time += delta * hover_speed
 	shake_time -= delta
-	
 	knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, knockback_friction * delta)
-	
+
 	var dir_to_player = player.global_position - global_position
 	var distance = dir_to_player.length()
-	
+
 	if attack_timer > 0:
 		attack_timer -= delta
-	
+
 	match current_state:
 		State.IDLE:
 			handle_orbiting_movement(dir_to_player, distance, delta)
@@ -84,22 +86,29 @@ func _physics_process(delta: float) -> void:
 		State.KNOCKBACK:
 			if knockback_velocity.length() < 50:
 				current_state = State.IDLE
+			# Можно дополнительно замедлять velocity
+			velocity = velocity.move_toward(knockback_velocity, acceleration * delta * 1.5)
 		
 		State.ATTACKING:
-			velocity = velocity.move_toward(Vector2.ZERO, acceleration * delta * 2)
-	
-	move_and_slide()
-	
+			velocity = velocity.move_toward(Vector2.ZERO, acceleration * delta * 3)
+
+	# Применяем knockback
+	velocity += knockback_velocity
+
+	move_and_slide()          # ← ВСЕГДА в конце!
+
 	apply_hover_effect()
 	apply_hit_shake()
-	
-	global_position.x = round(global_position.x)
+
+	# округление
+	global_position = global_position.round()
 
 # ====================== ПАРЕНИЕ ======================
 func apply_hover_effect():
 	var hover_offset = sin(hover_time) * hover_amplitude
 	var extra_wave = sin(hover_time * 1.7) * (hover_amplitude * 0.35)
-	global_position.y = base_position.y + hover_offset + extra_wave
+	
+	sprite.position.y = base_hover_y + hover_offset + extra_wave
 
 # ====================== ТРЯСКА ПРИ УРОНЕ ======================
 func apply_hit_shake():
@@ -176,19 +185,21 @@ func apply_knockback(direction: Vector2, strength: float = 400.0):
 	knockback_velocity += direction.normalized() * strength
 	current_state = State.KNOCKBACK
 
-func take_damage(damage: int, hit_direction: Vector2 = Vector2.ZERO):
+func take_damage(damage: int, hit_direction: Vector2 = Vector2.ZERO, apply_kb: bool = true):
 	health -= damage
-	print("Босс получил ", damage, " урона! HP осталось: ", health)
 	
-	# Тряска при получении урона
 	start_hit_shake(damage * 0.15)
 	
 	if hit_direction != Vector2.ZERO:
-		apply_knockback(hit_direction, 380)
+		if apply_kb:
+			apply_knockback(hit_direction, 380)
+		else:
+			# лёгкий импульс даже без полного knockback
+			velocity += hit_direction * 120.0
 	elif player:
 		var dir = (global_position - player.global_position).normalized()
-		apply_knockback(dir, 350)
-	
+		apply_knockback(dir, 280)
+
 	if health <= 0:
 		die()
 

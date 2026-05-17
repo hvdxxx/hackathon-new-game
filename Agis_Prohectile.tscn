@@ -99,9 +99,6 @@ gravity = Vector3(0, 0, 0)
 
 [node name="Area2D" type="Area2D" unique_id=358943245]
 script = ExtResource("1_xj1rt")
-speed = null
-lifetime = null
-damage = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2100385838]
 sprite_frames = SubResource("SpriteFrames_1q8ax")

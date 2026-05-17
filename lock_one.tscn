@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b5op4jpnepvsb" path="res://trashbox.tscn" id="6_fpulj"]
 [ext_resource type="PackedScene" uid="uid://dmv3j8rb76g7r" path="res://Assets/Theme/Ostanovka.tscn" id="6_opdir"]
 [ext_resource type="PackedScene" uid="uid://banqciabtl8nd" path="res://light.tscn" id="9_bd47j"]
+[ext_resource type="PackedScene" uid="uid://7vpopep3w8de" path="res://power_slash.tscn" id="10_hlssn"]
 [ext_resource type="PackedScene" uid="uid://u0nxg470r1op" path="res://dog_husky.tscn" id="10_pu2d0"]
 [ext_resource type="Texture2D" uid="uid://buddwndkypvib" path="res://Assets/Sprites/ostanovka/Sprite-0001.png" id="11_lbp2f"]
 [ext_resource type="PackedScene" uid="uid://cn20433w5e674" path="res://enemy_one.tscn" id="14_d5ec3"]
@@ -872,9 +873,6 @@ sources/2 = SubResource("TileSetAtlasSource_8fer4")
 sources/0 = SubResource("TileSetAtlasSource_dnxor")
 sources/7 = SubResource("TileSetAtlasSource_d5ec3")
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_bd47j"]
-polygon = PackedVector2Array(-91.66676, 40.000008, -90.0001, -60.833336, -77.500084, -81.66667, -54.166725, -102.5, -39.166702, -110, 88.333435, -43.333332, 90.00011, 78.333336, 39.166718, 108.333336, 35.833374, 54.166664, -39.166702, 11.666672)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_qgen4"]
 atlas = ExtResource("11_lbp2f")
 region = Rect2(286, 100, 51, 141)
@@ -887,9 +885,6 @@ size = Vector2(49, 19)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_lbp2f"]
 polygon = PackedVector2Array(-6, 5, -5, 11, 10, 11, 7, 0, 1, 0, -4, 1)
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_r7igj"]
-polygon = PackedVector2Array(-20, 8, -12, 24, -17, 48, -18, 97, -1, 107, 19, 101, 16, 85, 20, 66, 14, 25, 17, -12, 31, -28, 29, -46, 11, -61, -11, -61, -24, -51, -29, -35, -26, -21, -20, -10)
 
 [node name="Node2D" type="Node2D" unique_id=1695581342]
 y_sort_enabled = true
@@ -923,10 +918,6 @@ texture_filter = 1
 position = Vector2(253, 149)
 scale = Vector2(1.1999987, 1.2)
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="abuss" unique_id=1062032529]
-position = Vector2(-35.00004, -40.000008)
-occluder = SubResource("OccluderPolygon2D_bd47j")
-
 [node name="znak" type="StaticBody2D" parent="." unique_id=772890856]
 y_sort_enabled = true
 position = Vector2(305, 284)
@@ -949,8 +940,10 @@ shape = SubResource("RectangleShape2D_r7igj")
 
 [node name="MainHero" parent="." unique_id=526832582 instance=ExtResource("3_8fer4")]
 z_index = 0
-position = Vector2(183, 218)
+position = Vector2(241, 163)
 scale = Vector2(0.6, 0.6)
+power_slash_scene = ExtResource("10_hlssn")
+wave_damage = 100.0
 
 [node name="Soundtrack Main" type="AudioStreamPlayer2D" parent="MainHero" unique_id=1730557057]
 position = Vector2(1.6666641, -36.66667)
@@ -964,14 +957,9 @@ position = Vector2(0, -28.333332)
 
 [node name="LittleDog_one" parent="." unique_id=1660775309 groups=["dog"] instance=ExtResource("10_pu2d0")]
 y_sort_enabled = true
-position = Vector2(333, 214)
-max_speed = 180.0
-acceleration = 800.0
-friction = 1200.0
-follow_distance = 70.0
-dash_speed = 550.0
-dash_duration = 0.45
-y_squash = 0.5
+position = Vector2(148, 189)
+max_speed = 140.0
+follow_distance = 50.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="LittleDog_one" unique_id=1801141321]
 occluder = SubResource("OccluderPolygon2D_lbp2f")
@@ -986,18 +974,6 @@ volume_db = -10.691
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1074620981]
 color = Color(0.23078632, 0.23133186, 0.438262, 1)
 
-[node name="Enemy" parent="." unique_id=2036560719 groups=["boss"] instance=ExtResource("14_d5ec3")]
-position = Vector2(-38, 228)
-ideal_distance = 420.0
-min_distance = 220.0
-orbit_speed_multiplier = 1.15
-projectile_scene = ExtResource("15_r7igj")
-attack_distance = 400.0
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Enemy" unique_id=736662261]
-visible = false
-occluder = SubResource("OccluderPolygon2D_r7igj")
-
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1474227227]
 y_sort_enabled = true
 position = Vector2(115, 213)
@@ -1007,3 +983,7 @@ position_smoothing_enabled = true
 position_smoothing_speed = 50.0
 script = ExtResource("6_47c1j")
 smoothing_speed = 5.0
+
+[node name="CharacterBody2D" parent="." unique_id=2036560719 node_paths=PackedStringArray("player") instance=ExtResource("14_d5ec3")]
+player = NodePath("../MainHero")
+projectile_scene = ExtResource("15_r7igj")
