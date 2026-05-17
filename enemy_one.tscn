@@ -6,7 +6,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_py3q2"]
 radius = 21.0
-height = 70.0
+height = 66.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xku0h"]
 atlas = ExtResource("1_g0dpv")
@@ -121,16 +121,21 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=2036560719]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=2036560719 groups=["enemy"]]
+collision_layer = 4
+collision_mask = 11
 script = ExtResource("1_xku0h")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=790780227]
-position = Vector2(-1, 65)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=790780227 groups=["enemy"]]
+y_sort_enabled = true
+position = Vector2(1, -20)
 shape = SubResource("CapsuleShape2D_py3q2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=45955265]
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_dqq76")
 animation = &"walk"
+offset = Vector2(0, -97.055)
 
 [node name="Blast" type="AudioStreamPlayer2D" parent="." unique_id=45361805]
 stream = ExtResource("3_5htc5")

@@ -1,34 +1,34 @@
 [gd_scene format=3 uid="uid://7vpopep3w8de"]
 
 [ext_resource type="Script" uid="uid://b8xpm6j1uma72" path="res://power_slash.gd" id="1_b02ml"]
-[ext_resource type="Texture2D" uid="uid://t3hgwck4pbip" path="res://Assets/Sprites/Projectiles/500 Bullet 24x24 Free/Bullet 24x24 Part 7C Free.png" id="2_b02ml"]
+[ext_resource type="Texture2D" uid="uid://c2h32phbnn62l" path="res://Assets/Sprites/Projectiles/power_slash.png" id="2_b02ml"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g5uuv"]
 radius = 17.029387
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_v34dv"]
+atlas = ExtResource("2_b02ml")
+region = Rect2(0, 0, 436, 1024)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_g5uuv"]
 atlas = ExtResource("2_b02ml")
-region = Rect2(0, 312, 24, 24)
+region = Rect2(436, 0, 436, 1024)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nwm0c"]
 atlas = ExtResource("2_b02ml")
-region = Rect2(0, 336, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v34dv"]
-atlas = ExtResource("2_b02ml")
-region = Rect2(0, 288, 24, 24)
+region = Rect2(872, 0, 436, 1024)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nwm0c"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_v34dv")
+}, {
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_g5uuv")
 }, {
-"duration": 1.0,
+"duration": 0.3,
 "texture": SubResource("AtlasTexture_nwm0c")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_v34dv")
 }],
 "loop": true,
 "name": &"default",
@@ -63,17 +63,20 @@ scale_min = 0.0
 scale_max = 2.0
 
 [node name="Area2D" type="Area2D" unique_id=948509570]
+y_sort_enabled = true
+collision_layer = 8
+collision_mask = 4
 script = ExtResource("1_b02ml")
 speed = 750.0
-lifetime = 0.2
+lifetime = 0.1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1322469637]
 shape = SubResource("CircleShape2D_g5uuv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2045510312]
-scale = Vector2(2, 2)
+position = Vector2(-27, -1)
+scale = Vector2(0.4, 0.248)
 sprite_frames = SubResource("SpriteFrames_nwm0c")
-frame_progress = 0.7203071
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=385957851]
 amount = 30

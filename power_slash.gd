@@ -16,8 +16,7 @@ func _ready() -> void:
 	if not body_entered.is_connected(_on_body_entered):
 		body_entered.connect(_on_body_entered)
 	
-	if sprite:
-		sprite.play("default")
+	sprite.play("default")
 	
 	# Автоудаление
 	await get_tree().create_timer(lifetime).timeout
@@ -39,12 +38,6 @@ func setup(dir: Vector2, dmg: int = -1, player_node: Node2D = null) -> void:
 	
 	rotation = direction.angle()
 	scale = Vector2(1.4, 0.7)
-	
-	# Небольшая задержка, чтобы волна не ударила сразу по игроку
-	collision.set_deferred("disabled", true)
-	await get_tree().create_timer(0.05).timeout
-	collision.set_deferred("disabled", false)
-
 
 func _on_body_entered(body: Node2D) -> void:
 	if has_hit:

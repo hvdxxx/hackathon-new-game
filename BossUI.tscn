@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://c3x7coievi2r1"]
+
+[ext_resource type="Texture2D" uid="uid://ch5rpf8aknmv" path="res://Assets/Sprites/HP_Bar/bg.png" id="1_a0vjj"]
+[ext_resource type="Texture2D" uid="uid://dy2smta03tv3" path="res://Assets/Sprites/HP_Bar/red.png" id="2_prhoy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_a0vjj"]
+font_size = 35
+
+[node name="Node2D" type="Node2D" unique_id=911176392]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=416146420]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1192353182]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 532.0
+offset_top = 701.0
+offset_right = 572.0
+offset_bottom = 741.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control" unique_id=244738053]
+visible = false
+layout_mode = 0
+offset_left = -532.0
+offset_top = 27.0
+offset_right = -271.0
+offset_bottom = 67.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer/Control" unique_id=1574103448]
+layout_mode = 0
+offset_left = -429.0
+offset_top = -35.0
+offset_right = 632.0
+offset_bottom = 66.0
+max_value = 800.0
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("1_a0vjj")
+texture_progress = ExtResource("2_prhoy")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=541856581]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -89.0
+offset_right = 202.0
+offset_bottom = -40.0
+text = "Boss Health"
+label_settings = SubResource("LabelSettings_a0vjj")

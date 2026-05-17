@@ -31,6 +31,7 @@ extends CharacterBody2D
 
 
 var health: int = 800
+@export var max_health: int = 800
 var knockback_velocity: Vector2 = Vector2.ZERO
 
 enum State { IDLE, KNOCKBACK, ATTACKING }
@@ -51,7 +52,11 @@ var base_hover_y: float = 0.0   # ← новое
 var shake_time: float = 0.0
 var shake_intensity: float = 0.0
 
+var is_dead: bool = false
+
 func _ready():
+	health = max_health
+	GlobalUI.show_boss_health(self)
 	if not player:
 		player = get_tree().get_first_node_in_group("player")
 	
@@ -186,7 +191,15 @@ func apply_knockback(direction: Vector2, strength: float = 400.0):
 	current_state = State.KNOCKBACK
 
 func take_damage(damage: int, hit_direction: Vector2 = Vector2.ZERO, apply_kb: bool = true):
+	
+	if is_dead or health <= 0:
+		return  # ← сразу выходим, если уже мёртв
+	
 	health -= damage
+	if health < 0:
+		health = 0
+	
+	GlobalUI.update_health()
 	
 	start_hit_shake(damage * 0.15)
 	
@@ -194,15 +207,25 @@ func take_damage(damage: int, hit_direction: Vector2 = Vector2.ZERO, apply_kb: b
 		if apply_kb:
 			apply_knockback(hit_direction, 380)
 		else:
-			# лёгкий импульс даже без полного knockback
 			velocity += hit_direction * 120.0
 	elif player:
 		var dir = (global_position - player.global_position).normalized()
 		apply_knockback(dir, 280)
-
-	if health <= 0:
+	
+	if health <= 0 and not is_dead:
+		is_dead = true
+		GlobalUI.hide_boss_health()
 		die()
+
 
 func die():
 	print("Босс повержен!")
+	GlobalUI.hide_boss_health()
+	
+	# Отключаем все коллизии, чтобы больше не получал урон
+	set_collision_layer_value(1, false)   # подставь правильный слой босса
+	set_collision_mask_value(1, false)
+	
+	await get_tree().create_timer(1.0).timeout  # даём время на анимацию смерти
+	
 	queue_free()

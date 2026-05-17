@@ -13,11 +13,13 @@ config_version=5
 config/name="хакатон"
 run/main_scene="uid://5d5ipxubg1cc"
 config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/bg_color=Color(0.073923, 0.18161374, 0.29528278, 1)
 config/icon="res://icon.svg"
 
 [autoload]
 
 DialogueManager="*uid://c3rodes2l3gxb"
+GlobalUI="*uid://cbq7osbjnkquk"
 
 [dialogic]
 
@@ -81,6 +83,7 @@ enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
 [global_group]
 
 player=""
+enemy=""
 
 [input]
 
@@ -141,4 +144,3 @@ locale/translations_pot_files=PackedStringArray("res://Dialogues/intro_dio.dialo
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
-2d/snap/snap_2d_transforms_to_pixel=true

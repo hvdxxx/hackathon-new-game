@@ -19,13 +19,14 @@ extends CharacterBody2D
 
 var attack_timer: float = 0.0
 
-var health: int = 200
-var max_health: int = 200
+var health: int = 100
+var max_health: int = 100
 var dog = null
 
 var walk_anim = ["walk_d", "walk_ds", "walk_s", "walk_sa", "walk_a", "walk_aw", "walk_w", "walk_wd"]
 var idle_anim = ["idle_d", "idle_ds", "idle_s", "idle_sa", "idle_a", "idle_aw", "idle_w", "idle_wd"]
 var run_anim = ["run_d", "run_ds", "run_s", "run_sa", "run_a", "run_aw", "run_w", "run_wd"]
+var melee_anim = ["melee_d", "melee_ds", "melee_s", "melee_sa", "melee_a", "melee_aw", "melee_w", "melee_wd"]
 
 var last_direction_index: int = 0
 
@@ -38,6 +39,8 @@ var absorb_cooldown_timer: float = 0.0
 var footstep_timer: float = 0.0
 var is_moving: bool = false
 var current_speed_for_steps: float = 0.0
+
+var is_attacking: bool = false   # Добавь эту строку
 
 # Настройка интервалов между шагами (в секундах)
 @export var walk_step_interval: float = 0.45
@@ -115,6 +118,12 @@ func _physics_process(delta: float) -> void:
 	if attack_timer > 0:
 		attack_timer -= delta
 
+# ←←← НОВОЕ: Блокируем движение во время атаки
+	if is_attacking:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
+
 	# === ДВИЖЕНИЕ ===
 	var input := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var is_running = Input.is_action_pressed("run")
@@ -146,6 +155,9 @@ func _physics_process(delta: float) -> void:
 
 
 func update_animation(running: bool = false):
+	if is_attacking:
+		return   # ← важно! не перебивать melee анимацию
+	
 	if velocity.length() > 10:
 		var angle = velocity.angle()
 		var angle_normalized = fposmod(angle, TAU)
@@ -192,20 +204,40 @@ func shoot_power_slash() -> void:
 	if not power_slash_scene:
 		push_warning("Power Slash scene не назначена!")
 		return
-	
+
+	if is_attacking:
+		return
+
+	# === НАПРАВЛЕНИЕ УДАРА ===
+	var mouse_dir = (get_global_mouse_position() - global_position).normalized()
+	var angle = mouse_dir.angle()
+	var angle_normalized = fposmod(angle, TAU)
+	var dir_index = int(snapped(angle_normalized, TAU / 8) / (TAU / 8)) % 8
+
+	var anim_name = melee_anim[dir_index]
+
+	# === БЛОКИРУЕМ ИГРОКА ===
+	is_attacking = true
+	velocity = Vector2.ZERO
+
+	# === АНИМАЦИЯ ===
+	sprite.play(anim_name)
+
+	# === ЖДЁМ КОНЕЦ ===
+	await sprite.animation_finished
+
+	# === СОЗДАЁМ ВОЛНУ ===
 	var slash = power_slash_scene.instantiate()
 	get_parent().add_child(slash)
-	
-	# Спавним немного перед игроком
-	var spawn_offset = Vector2.RIGHT.rotated(velocity.angle())
+
+	var spawn_offset = mouse_dir * 40
 	spawn_offset.y -= 30
-	
+
 	slash.global_position = global_position + spawn_offset
-	
-	# Направление в сторону мыши
-	var mouse_dir = (get_global_mouse_position() - global_position).normalized()
-	
-	# Вызываем setup
-	slash.setup(mouse_dir, int(wave_damage), self)   # ← передаём себя как shooter
-	
+	slash.setup(mouse_dir, int(wave_damage), self)
+
+	# === РАЗБЛОКИРОВКА ===
+	is_attacking = false
+
+	# === КУЛДАУН ===
 	attack_timer = attack_cooldown

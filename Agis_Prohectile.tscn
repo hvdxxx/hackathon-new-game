@@ -98,6 +98,8 @@ initial_velocity_max = 80.0
 gravity = Vector3(0, 0, 0)
 
 [node name="Area2D" type="Area2D" unique_id=358943245]
+collision_layer = 8
+collision_mask = 2
 script = ExtResource("1_xj1rt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2100385838]

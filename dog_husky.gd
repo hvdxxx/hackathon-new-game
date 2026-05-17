@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var interaction_area: Area2D = $InteractionArea  # ← добавь эту Area2D
+@onready var button_area: Area2D = $Button/ButtonArea  # ← добавь эту Area2D
+@onready var prompt: Sprite2D = $Button
 
 @export var max_speed: float = 180.0
 @export var acceleration: float = 800.0
@@ -15,6 +17,8 @@ var is_absorbed: bool = false  # Собака сейчас внутри игро
 var walk_anim = ["walk_d", "walk_ds", "walk_s", "walk_sa", "walk_a", "walk_aw", "walk_w", "walk_wd"]
 var idle_anim = ["idle_d", "idle_ds", "idle_s", "idle_sa", "idle_a", "idle_aw", "idle_w", "idle_wd"]
 var last_direction_index: int = 0
+
+var player_in_range = false
 
 signal absorbed  # Сигнал, когда игрок "вобрал" собаку
 
@@ -33,6 +37,13 @@ func _ready() -> void:
 	if interaction_area:
 		interaction_area.body_entered.connect(_on_hit_area_body_entered)
 		interaction_area.body_exited.connect(_on_hit_area_body_exited)
+		
+	if button_area:
+		button_area.body_entered.connect(_on_button_area_body_entered)
+		button_area.body_exited.connect(_on_button_area_body_exited)
+		
+	if prompt:
+		prompt.visible = false
 
 func find_player() -> void:
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
@@ -70,6 +81,16 @@ func _on_hit_area_body_entered(body: Node2D) -> void:
 func _on_hit_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		body.can_absorb_dog = false
+		
+func _on_button_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		player_in_range = true
+		prompt.visible = true
+
+func _on_button_area_body_exited(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		player_in_range = false
+		prompt.visible = false
 
 # Вызывается из скрипта игрока
 func absorb() -> void:
@@ -86,7 +107,3 @@ func reappear(new_position: Vector2) -> void:
 	set_physics_process(true)
 
 # ==================== АНИМАЦИЯ =================
-
-
-func _on_hit_area_body_shape_exited(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
-	pass # Replace with function body.

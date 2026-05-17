@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dfy5o3pnnqxrv"]
+
+[ext_resource type="Texture2D" uid="uid://cujbkswpdiamh" path="res://Assets/Sprites/Tree/seasonal sample (winter).png" id="1_brfkd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnvrw"]
+atlas = ExtResource("1_brfkd")
+region = Rect2(177, 0, 79, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvmkm"]
+size = Vector2(74, 36)
+
+[node name="Tree" type="StaticBody2D" unique_id=963661446]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1087596095]
+scale = Vector2(3, 3)
+texture = SubResource("AtlasTexture_nnvrw")
+offset = Vector2(0, -46.925)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2046041653]
+position = Vector2(-2, -4)
+shape = SubResource("RectangleShape2D_gvmkm")
