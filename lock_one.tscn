@@ -16,8 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://u0nxg470r1op" path="res://dog_husky.tscn" id="10_pu2d0"]
 [ext_resource type="Texture2D" uid="uid://buddwndkypvib" path="res://Assets/Sprites/ostanovka/Sprite-0001.png" id="11_lbp2f"]
 [ext_resource type="PackedScene" uid="uid://cn20433w5e674" path="res://enemy_one.tscn" id="14_d5ec3"]
-[ext_resource type="PackedScene" uid="uid://u81pgmgxwhtu" path="res://Agis_Prohectile.tscn" id="15_r7igj"]
 [ext_resource type="PackedScene" uid="uid://dfy5o3pnnqxrv" path="res://tree.tscn" id="18_famhr"]
+[ext_resource type="PackedScene" uid="uid://bp7f4i4cewyem" path="res://dog_two.tscn" id="19_aqisp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dnxor"]
 texture = ExtResource("1_ins1s")
@@ -916,6 +916,8 @@ tile_set = SubResource("TileSet_8fer4")
 occlusion_enabled = false
 collision_enabled = false
 
+[node name="ShaderGlobalsOverride" type="ShaderGlobalsOverride" parent="." unique_id=1629774133]
+
 [node name="Tile" type="TileMapLayer" parent="." unique_id=324118062]
 z_index = -2
 y_sort_enabled = true
@@ -961,6 +963,7 @@ position = Vector2(166, 2)
 
 [node name="Tree9" parent="Tree" unique_id=1696623553 instance=ExtResource("18_famhr")]
 position = Vector2(-225, -39)
+scale = Vector2(0.7, 0.7)
 
 [node name="Tree3" parent="Tree" unique_id=200074132 instance=ExtResource("18_famhr")]
 position = Vector2(-285, -10)
@@ -1070,8 +1073,7 @@ position = Vector2(0, -28.333332)
 [node name="LittleDog_one" parent="." unique_id=1660775309 groups=["dog"] instance=ExtResource("10_pu2d0")]
 y_sort_enabled = true
 position = Vector2(148, 189)
-max_speed = 140.0
-follow_distance = 50.0
+follow_distance = 80.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="LittleDog_one" unique_id=1801141321]
 occluder = SubResource("OccluderPolygon2D_lbp2f")
@@ -1081,7 +1083,9 @@ position = Vector2(1, -1)
 stream = ExtResource("3_mvlso")
 volume_db = -10.691
 
-[node name="ShaderGlobalsOverride" type="ShaderGlobalsOverride" parent="." unique_id=1629774133]
+[node name="LittleDog_two" parent="." unique_id=285673954 groups=["dog"] instance=ExtResource("19_aqisp")]
+position = Vector2(162, 241)
+follow_distance = 50.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1074620981]
 color = Color(0.23078632, 0.23133186, 0.438262, 1)
@@ -1099,21 +1103,31 @@ smoothing_speed = 5.0
 [node name="MapZone" type="StaticBody2D" parent="." unique_id=1629981965]
 position = Vector2(-36, 177)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MapZone" unique_id=466929793]
+[node name="Line1" type="CollisionShape2D" parent="MapZone" unique_id=466929793]
 shape = SubResource("SegmentShape2D_famhr")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="MapZone" unique_id=1877564452]
+[node name="Line2" type="CollisionShape2D" parent="MapZone" unique_id=1877564452]
 shape = SubResource("SegmentShape2D_aqisp")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="MapZone" unique_id=2127681708]
+[node name="Line3" type="CollisionShape2D" parent="MapZone" unique_id=2127681708]
 shape = SubResource("SegmentShape2D_1xiwm")
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="MapZone" unique_id=1415315751]
+[node name="Line4" type="CollisionShape2D" parent="MapZone" unique_id=1415315751]
 shape = SubResource("SegmentShape2D_cglxt")
 
-[node name="Enemy" parent="." unique_id=2036560719 node_paths=PackedStringArray("player") groups=["enemy"] instance=ExtResource("14_d5ec3")]
+[node name="Enemy" parent="." unique_id=2036560719 groups=["enemy"] instance=ExtResource("14_d5ec3")]
 y_sort_enabled = true
 position = Vector2(-36, 177)
-player = NodePath("../MainHero")
-max_speed = 0.0
-projectile_scene = ExtResource("15_r7igj")
+max_speed = 120.0
+acceleration = 650.0
+knockback_friction = 1800.0
+ideal_distance = 190.0
+min_distance = 130.0
+orbit_speed_multiplier = 0.85
+hover_amplitude = 0.0
+hover_speed = 0.0
+hit_shake_intensity = 8.0
+hit_shake_duration = 0.35
+attack_cooldown = 2.5
+attack_distance = 220.0
+max_health = 800

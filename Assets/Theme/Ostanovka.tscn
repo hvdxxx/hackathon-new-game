@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dmv3j8rb76g7r"]
+
+[ext_resource type="Texture2D" uid="uid://tr5aeck7uhdc" path="res://Assets/Sprites/ostanovka.png" id="1_u31pf"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_u31pf"]
+
+[node name="StaticBody2D" type="StaticBody2D" unique_id=1148764767]
+physics_material_override = SubResource("PhysicsMaterial_u31pf")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=814785673]
+position = Vector2(2.3841858e-07, 3.5762787e-07)
+scale = Vector2(0.19727178, 0.19727176)
+texture = ExtResource("1_u31pf")
+offset = Vector2(-87.445, -146.505)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2069655675]
+position = Vector2(-133, 60)
+polygon = PackedVector2Array(154, 10, 155, 18, 207, -11, 207, -36, 81, -86, 77, -81, 21, -54, 25, -47, 78, -71, 152, -32)

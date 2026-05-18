@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c2h32phbnn62l" path="res://Assets/Sprites/Projectiles/power_slash.png" id="2_b02ml"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g5uuv"]
-radius = 17.029387
+radius = 13.038404
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v34dv"]
 atlas = ExtResource("2_b02ml")

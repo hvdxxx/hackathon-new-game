@@ -4,9 +4,8 @@
 [ext_resource type="Script" uid="uid://bv4un53l0quux" path="res://enemy_one.gd" id="1_xku0h"]
 [ext_resource type="AudioStream" uid="uid://2cw6chv4mr4h" path="res://Assets/Audio/Agic_projectile.mp3" id="3_5htc5"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_py3q2"]
-radius = 21.0
-height = 66.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_5htc5"]
+radius = 17.029387
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xku0h"]
 atlas = ExtResource("1_g0dpv")
@@ -121,15 +120,32 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=2036560719 groups=["enemy"]]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5htc5"]
+radius = 17.0
+height = 172.0
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=2036560719]
 collision_layer = 4
 collision_mask = 11
 script = ExtResource("1_xku0h")
+max_speed = null
+acceleration = null
+knockback_friction = null
+ideal_distance = null
+min_distance = null
+orbit_speed_multiplier = null
+hover_amplitude = null
+hover_speed = null
+hit_shake_intensity = null
+hit_shake_duration = null
+attack_cooldown = null
+attack_distance = null
+max_health = null
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=790780227 groups=["enemy"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=790780227]
 y_sort_enabled = true
-position = Vector2(1, -20)
-shape = SubResource("CapsuleShape2D_py3q2")
+position = Vector2(1, -3)
+shape = SubResource("CircleShape2D_5htc5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=45955265]
 y_sort_enabled = true
@@ -141,3 +157,17 @@ offset = Vector2(0, -97.055)
 stream = ExtResource("3_5htc5")
 volume_db = -14.579
 pitch_scale = 1.26
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1040042542 groups=["enemy"]]
+collision_layer = 4
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=683093687]
+position = Vector2(1, -72)
+shape = SubResource("CapsuleShape2D_5htc5")
+
+[node name="AbilityTimer" type="Timer" parent="." unique_id=744682754]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="AbilityTimer" to="." method="_on_ability_timer_timeout"]

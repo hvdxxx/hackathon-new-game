@@ -15,13 +15,21 @@ func show_boss_health(boss_node: Node):
 
 func hide_boss_health():
 	if boss_health_bar:
+		# 1. Пробуем скрыть корень (на всякий случай)
 		boss_health_bar.visible = false
-		print("✅ Boss HP Bar скрыт")
 		
-		# Дополнительная защита
-		var progress = boss_health_bar.get_node_or_null("TextureProgressBar")
-		if progress:
-			progress.value = 0
+		# 2. Ищем CanvasLayer внутри UI сцены и принудительно тушим его
+		var canvas = boss_health_bar.get_node_or_null("CanvasLayer")
+		if canvas:
+			canvas.visible = false
+			
+		# 3. На всякий случай ищем сам Control
+		var control = boss_health_bar.get_node_or_null("CanvasLayer/Control")
+		if control:
+			control.visible = false
+			
+		print("✅ Полноценное скрытие UI вызвано")
+		
 	current_boss = null
 
 func update_health():

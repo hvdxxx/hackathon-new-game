@@ -1,7 +1,6 @@
 extends Area2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var collision: CollisionShape2D = $CollisionShape2D
 
 @export var speed: float = 650.0
 @export var lifetime: float = 0.25
@@ -10,23 +9,26 @@ extends Area2D
 var direction: Vector2 = Vector2.ZERO
 var has_hit: bool = false
 var shooter: Node2D = null
+var time_alive: float = 0.0  # Будем безопасно считать время жизни пули здесь
 
 func _ready() -> void:
-
-	if not body_entered.is_connected(_on_body_entered):
-		body_entered.connect(_on_body_entered)
-	
+	# 1. Подключаем правильный сигнал AREA_ENTERED вместо body_entered.
+	# Это позволит пуле находить зону Hurtbox внутри босса.
+	if not area_entered.is_connected(_on_area_entered):
+		area_entered.connect(_on_area_entered)
+		
 	sprite.play("default")
-	
-	# Автоудаление
-	await get_tree().create_timer(lifetime).timeout
-	queue_free()
-
 
 func _physics_process(delta: float) -> void:
+	# Безопасный таймер автоудаления без await
+	time_alive += delta
+	if time_alive >= lifetime:
+		queue_free()
+		return # Выходим из функции, так как пули больше нет
+
+	# Движение пули
 	if direction != Vector2.ZERO and not has_hit:
 		position += direction * speed * delta
-
 
 # === Основная функция вызова из игрока ===
 func setup(dir: Vector2, dmg: int = -1, player_node: Node2D = null) -> void:
@@ -39,23 +41,25 @@ func setup(dir: Vector2, dmg: int = -1, player_node: Node2D = null) -> void:
 	rotation = direction.angle()
 	scale = Vector2(1.4, 0.7)
 
-func _on_body_entered(body: Node2D) -> void:
+# Переименовали в _on_area_entered, так как ловим Hurtbox (Area2D) босса
+func _on_area_entered(area: Area2D) -> void:
 	if has_hit:
 		return
-	if body == shooter:
+		
+	# Защита: если пуля коснулась Hurtbox-а того, кто её выпустил (игрока) — игнорируем
+	if area.get_parent() == shooter:
 		return
 	
-	print("Волна ударила: ", body.name, " | Группы: ", body.get_groups())  # ← для отладки
+	print("Волна пересекла зону: ", area.name, " у объекта: ", area.get_parent().name)
 	
-	if body.is_in_group("enemy") or body.is_in_group("boss"):
-		if body.has_method("take_damage"):
-			body.take_damage(damage, direction, false)   # false = без knockback
-			print("Урон ", damage, " нанесён по ", body.name)
+	# Проверяем группу на самой зоне Hurtbox (как мы настраивали у босса)
+	if area.is_in_group("enemy") or area.is_in_group("boss"):
+		# Урон наносим родителю зоны (самому боссу CharacterBody2D)
+		var target = area.get_parent()
+		if target.has_method("take_damage"):
+			target.take_damage(damage, direction, false) # Без knockback
+			print("Урон ", damage, " нанесён по ", target.name)
 			has_hit = true
-			queue_free()
+			queue_free() # Удаляем пулю, она выполнила цель
 		else:
-			print("У врага нет метода take_damage!")
-	else:
-		# Если попало во что-то другое
-		has_hit = true
-		queue_free()
+			print("У объекта ", target.name, " нет метода take_damage!")

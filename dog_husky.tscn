@@ -490,7 +490,7 @@ script = ExtResource("1_2cys5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1906402616]
 sprite_frames = SubResource("SpriteFrames_sgeyn")
-animation = &"walk_wd"
+animation = &"idle_a"
 
 [node name="HitArea" type="Area2D" parent="." unique_id=1858379651]
 collision_mask = 3

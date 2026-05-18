@@ -1,0 +1,4 @@
+[wait_input hide_text="false"]
+MainHero: Холодно... [speed=1]
+MainHero: Автобуса всё нет. Уже полчаса жду... [speed=1]
+MainHero: Опять я одна. Как всегда. [speed=1]
