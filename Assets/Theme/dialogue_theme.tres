@@ -1,6 +1,0 @@
-[gd_resource type="Theme" format=3 uid="uid://bb30d0qs5rkxe"]
-
-[ext_resource type="FontFile" uid="uid://pw81o4lcxm20" path="res://fonts/FirstTimeWriting!.ttf" id="1_ilmk6"]
-
-[resource]
-default_font = ExtResource("1_ilmk6")
