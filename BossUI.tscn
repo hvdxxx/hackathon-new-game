@@ -27,11 +27,14 @@ offset_right = -271.0
 offset_bottom = 67.0
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer/Control" unique_id=1574103448]
-layout_mode = 0
-offset_left = -429.0
-offset_top = -35.0
-offset_right = 632.0
-offset_bottom = 66.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.6250001
+anchor_top = 6.925
+anchor_right = 24.900002
+anchor_bottom = 9.450001
+offset_right = -6.1035156e-05
+offset_bottom = -3.0517578e-05
 max_value = 800.0
 value = 50.0
 nine_patch_stretch = true
@@ -39,10 +42,13 @@ texture_under = ExtResource("1_a0vjj")
 texture_progress = ExtResource("2_prhoy")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=541856581]
-layout_mode = 0
-offset_left = 1.0
-offset_top = -89.0
-offset_right = 202.0
-offset_bottom = -40.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 9.225
+anchor_top = 5.4500003
+anchor_right = 14.250001
+anchor_bottom = 6.675
+offset_top = -1.5258789e-05
+offset_right = -6.1035156e-05
 text = "Boss Health"
 label_settings = SubResource("LabelSettings_a0vjj")

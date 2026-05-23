@@ -11,8 +11,6 @@ shader_parameter/shadow_color = Color(0.0059240083, 0.06616841, 0.10998061, 1)
 
 [sub_resource type="Theme" id="Theme_jfp5o"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_5bls8"]
-
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jfp5o"]
 particle_flag_disable_z = true
 emission_shape_scale = Vector3(4.265, 0.745, 1)
@@ -40,13 +38,12 @@ script = ExtResource("1_5bls8")
 
 [node name="Background" type="TextureRect" parent="." unique_id=837236998]
 material = SubResource("ShaderMaterial_c7h2q")
+offset_left = -1.0
+offset_top = -2.0
 offset_right = 1920.0
 offset_bottom = 1080.0
 theme = SubResource("Theme_jfp5o")
 texture = ExtResource("2_uq1bg")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1608952198]
-sprite_frames = SubResource("SpriteFrames_5bls8")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1693829646]
 
@@ -61,35 +58,40 @@ process_material = SubResource("ParticleProcessMaterial_jfp5o")
 [node name="Control" type="Control" parent="." unique_id=1968325903]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1917.0
-offset_bottom = 1085.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 
 [node name="ColorRect" type="ColorRect" parent="Control" unique_id=2008989181]
 visible = false
 layout_mode = 0
-offset_right = 1919.0
-offset_bottom = 1087.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 color = Color(0.022983227, 0.007323423, 0.012566676, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=103511965]
 layout_mode = 0
 offset_left = 2.0
 offset_top = 1.0
-offset_right = 1922.0
-offset_bottom = 1083.0
+offset_right = 1920.0
+offset_bottom = 1079.0
 
 [node name="Label" type="Label" parent="Control/MarginContainer" unique_id=1797400956]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_5847j")
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Text" type="Label" parent="." unique_id=670132845]
-offset_left = 1481.0
-offset_top = 26.0
-offset_right = 1848.685
-offset_bottom = 75.0
-text = "Большой поток мыслей трахните меня в уши пж"
+offset_left = 1508.0
+offset_top = 28.0
+offset_right = 1875.685
+offset_bottom = 269.0
+text = "Нажимайте \"SPACE\" для пропуска"
 label_settings = SubResource("LabelSettings_jfp5o")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=337072624]
+position = Vector2(960.00006, 540)
+scale = Vector2(7.7685304, 1)

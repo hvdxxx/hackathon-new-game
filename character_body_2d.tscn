@@ -34,6 +34,8 @@
 [ext_resource type="Texture2D" uid="uid://cptkvfavf8b01" path="res://Assets/GirlWalk/GirlSample_Walk_Up.png" id="24_75u2t"]
 [ext_resource type="Texture2D" uid="uid://bw7fl8mt3cgll" path="res://Assets/GirlWalk/GirlSample_Walk_UpRight.png" id="24_oxcm1"]
 [ext_resource type="AudioStream" uid="uid://rtomucg3pcew" path="res://Assets/Audio/walk sound/snow2.wav" id="26_7qa1u"]
+[ext_resource type="AudioStream" uid="uid://dlwlrpglvccbt" path="res://Assets/Audio/attack sound/powerslash.wav" id="35_1rslu"]
+[ext_resource type="AudioStream" uid="uid://dex1dtsxb5877" path="res://Assets/Audio/attack sound/star.wav" id="36_3uyxa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_75u2t"]
 radius = 17.088007
@@ -2102,7 +2104,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_a",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 0.6,
@@ -2134,7 +2136,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_aw",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 0.6,
@@ -2166,7 +2168,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_d",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 0.6,
@@ -2198,7 +2200,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_ds",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 0.6,
@@ -2230,7 +2232,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_s",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 0.6,
@@ -2262,7 +2264,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_sa",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 0.6,
@@ -2294,7 +2296,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_w",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 0.6,
@@ -2326,7 +2328,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_wd",
-"speed": 5.0
+"speed": 8.0
 }]
 
 [sub_resource type="Gradient" id="Gradient_75u2t"]
@@ -2369,19 +2371,22 @@ collision_mask = 21
 script = ExtResource("1_f50pn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1058259293]
-position = Vector2(1, -13)
+position = Vector2(1, -1)
 shape = SubResource("CircleShape2D_75u2t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1938494257]
 position = Vector2(2, -5)
 sprite_frames = SubResource("SpriteFrames_76bt2")
-animation = &"melee_wd"
-offset = Vector2(0, -2.425)
+animation = &"idle_sa"
+frame = 8
+frame_progress = 0.9603936
+offset = Vector2(0, -5.34)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1546842461]
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=69707274]
-position = Vector2(1.9999999, -10)
+y_sort_enabled = true
+position = Vector2(0, -22)
 scale = Vector2(0.7, 0.7)
 amount = 30
 texture = SubResource("GradientTexture2D_7qa1u")
@@ -2394,3 +2399,11 @@ stream = ExtResource("26_7qa1u")
 volume_db = -30.13
 pitch_scale = 1.52
 max_polyphony = 2
+
+[node name="PowerSlashAudio" type="AudioStreamPlayer2D" parent="." unique_id=1925917527]
+stream = ExtResource("35_1rslu")
+volume_db = -15.552
+
+[node name="StarAudio" type="AudioStreamPlayer2D" parent="." unique_id=610292271]
+stream = ExtResource("36_3uyxa")
+volume_db = -10.692

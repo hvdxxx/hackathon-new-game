@@ -494,6 +494,7 @@ sprite_frames = SubResource("SpriteFrames_ng0eh")
 animation = &"idle_d"
 
 [node name="HitArea" type="Area2D" parent="." unique_id=9100442]
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea" unique_id=1722273249]
 shape = SubResource("CircleShape2D_xiptr")

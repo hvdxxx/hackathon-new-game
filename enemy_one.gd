@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var attack_sound: AudioStreamPlayer2D = $AttackSound
-@onready var hit_area: Area2D = $HitArea
+@onready var attack_sound: AudioStreamPlayer2D = $Blast
+@onready var hit_area: Area2D = $Hurtbox
 @onready var proj_sound: AudioStreamPlayer2D = $Blast
 @onready var ability_timer: Timer = $AbilityTimer
 

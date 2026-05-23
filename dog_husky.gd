@@ -1,10 +1,12 @@
 extends CharacterBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var interaction_area: Area2D = $InteractionArea  # ← добавь эту Area2D
+@onready var interaction_area: Area2D = get_node_or_null("HitArea") as Area2D
 @onready var button_area: Area2D = $Button/ButtonArea  # ← добавь эту Area2D
 @onready var prompt: Sprite2D = $Button
 
+@export var follow_offset: Vector2 = Vector2.ZERO # Смещение относительно игрока
+@export var ability_id: StringName = &"wave"
 @export var max_speed: float = 180.0
 @export var acceleration: float = 800.0
 @export var friction: float = 1200.0
@@ -23,7 +25,7 @@ var player_in_range = false
 signal absorbed  # Сигнал, когда игрок "вобрал" собаку
 
 func update_animation() -> void:
-	if velocity.length() > 15:
+	if velocity.length() > 50:
 		var angle = velocity.angle()
 		var angle_normalized = fposmod(angle, TAU)
 		last_direction_index = int(snapped(angle_normalized, TAU / 8) / (TAU / 8)) % 8
@@ -49,6 +51,11 @@ func find_player() -> void:
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 
 func _physics_process(delta: float) -> void:
+	if get_tree().get_first_node_in_group("dialogue_balloon"): 
+		velocity = Vector2.ZERO
+		# Тут включай анимацию покоя (idle)
+		move_and_slide()
+		return
 	if is_absorbed or not player or not is_instance_valid(player):
 		if not player or not is_instance_valid(player):
 			find_player()
@@ -62,15 +69,34 @@ func _physics_process(delta: float) -> void:
 	global_position = global_position.round()
 
 func follow_player(delta: float) -> void:
-	var dir = player.global_position - global_position
+	var target_pos = player.global_position + follow_offset
+	var dir = target_pos - global_position
 	var dist = dir.length()
 	
-	if dist < follow_distance:
-		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
-	else:
+	var desired_velocity = Vector2.ZERO
+	var dead_zone = 5.0 # Дистанция, на которой собака полностью останавливается (чтобы не топтаться)
+	
+	if dist > dead_zone:
 		var move_dir = dir.normalized()
 		move_dir = Vector2(move_dir.x, move_dir.y * y_squash).normalized()
-		velocity = velocity.move_toward(move_dir * max_speed, acceleration * delta)
+		
+		# По умолчанию стремимся к максимальной скорости
+		var target_speed = max_speed
+		
+		# Если собака вошла в радиус follow_distance, плавно сбрасываем скорость
+		if dist < follow_distance:
+			# Вычисляем коэффициент от 0 до 1 (0 - у цели, 1 - на границе follow_distance)
+			var slow_factor = (dist - dead_zone) / (follow_distance - dead_zone)
+			target_speed = max_speed * slow_factor
+			
+		desired_velocity = move_dir * target_speed
+
+	# Если нам нужно остановиться (мы в мертвой зоне), используем трение (friction)
+	# Иначе используем обычное ускорение (acceleration) для набора/сброса скорости
+	var current_accel = acceleration if desired_velocity != Vector2.ZERO else friction
+	
+	# Плавно интерполируем текущую скорость к желаемой
+	velocity = velocity.move_toward(desired_velocity, current_accel * delta)
 
 # ==================== ВЗАИМОДЕЙСТВИЕ ====================
 func _on_hit_area_body_entered(body: Node2D) -> void:

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cbehld8ont7cl"]
+
+[ext_resource type="Texture2D" uid="uid://whu4515m11s3" path="res://Assets/Sprites/ostanovka/большие мусорки.png" id="1_fwwwu"]
+
+[sub_resource type="ConcavePolygonShape2D" id="ConcavePolygonShape2D_ih2om"]
+segments = PackedVector2Array(-6.333332, 132.33333, -209.66666, 12.333332, -203, 5.666664, -99.666664, -24.333336, -96.33333, -21, 73.666664, 79, -2.9999986, 129, 210.33333, 189, 80.33333, 72.33333, 237, 25.666664, 213.66666, 185.66666, 243.66666, 32.333332)
+
+[node name="Node2D" type="Node2D" unique_id=1129667789]
+scale = Vector2(0.3, 0.3)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1240245517]
+texture = ExtResource("1_fwwwu")
+offset = Vector2(-159.035, -161.105)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1441476003]
+position = Vector2(-90, -156.66666)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1575749763]
+position = Vector2(93, 81)
+shape = SubResource("ConcavePolygonShape2D_ih2om")

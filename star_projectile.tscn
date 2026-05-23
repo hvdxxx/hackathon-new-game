@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://d3bgkdvf6gd6l"]
+
+[ext_resource type="Script" uid="uid://c8ke2xmd4m5g0" path="res://star_projectile.gd" id="1_star"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_star"]
+radius = 9.0
+
+[sub_resource type="Gradient" id="Gradient_o7kb0"]
+offsets = PackedFloat32Array(0, 0.6807229)
+colors = PackedColorArray(0.92197585, 0.85732454, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j6b3f"]
+gradient = SubResource("Gradient_o7kb0")
+fill = 1
+fill_from = Vector2(0.51304346, 0.4695652)
+fill_to = Vector2(0.6304348, 0.3478261)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8h5rp"]
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+angle_min = 1.0728835e-05
+angle_max = 1.0728835e-05
+spread = 87.353
+flatness = 0.515
+initial_velocity_min = 48.55
+initial_velocity_max = 123.24
+angular_velocity_min = -1.6093254e-05
+angular_velocity_max = -1.6093254e-05
+orbit_velocity_min = 9.49949e-08
+orbit_velocity_max = 9.49949e-08
+radial_velocity_min = -2.2351742e-05
+radial_velocity_max = -2.2351742e-05
+gravity = Vector3(0, 0, 0)
+damping_max = 1.074
+attractor_interaction_enabled = false
+scale_max = 2.0
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.12999998
+
+[sub_resource type="Gradient" id="Gradient_j6b3f"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_q0fvq"]
+gradient = SubResource("Gradient_j6b3f")
+fill = 1
+fill_from = Vector2(0.526087, 0.4826087)
+fill_to = Vector2(0.6434783, 0.33913043)
+
+[node name="StarProjectile" type="Area2D" unique_id=89313604]
+y_sort_enabled = true
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_star")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=641391968]
+color = Color(1, 0.86, 0.18, 1)
+polygon = PackedVector2Array(0, -12, 3, -4, 11, -4, 5, 1, 7, 10, 0, 5, -7, 10, -5, 1, -11, -4, -3, -4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=881453890]
+shape = SubResource("CircleShape2D_star")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=866541349]
+amount = 40
+amount_ratio = 0.514
+texture = SubResource("GradientTexture2D_j6b3f")
+process_material = SubResource("ParticleProcessMaterial_8h5rp")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=429320353]
+texture = SubResource("GradientTexture2D_q0fvq")

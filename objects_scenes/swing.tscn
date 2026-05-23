@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://6hpim6w1ohm1"]
+
+[ext_resource type="Texture2D" uid="uid://d0rc2cl8rr05e" path="res://Assets/Sprites/construction/swing.png" id="1_6jopd"]
+
+[sub_resource type="ConcavePolygonShape2D" id="ConcavePolygonShape2D_o3efj"]
+segments = PackedVector2Array(-290, -23, 108, 195, -286, -25, -98, -160, -99, -158, 288, 75, 110, 194, 284, 78)
+
+[node name="Swing" type="Node2D" unique_id=1978020630]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=117302536]
+texture = ExtResource("1_6jopd")
+offset = Vector2(0, -138.685)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2052439282]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1532234636]
+shape = SubResource("ConcavePolygonShape2D_o3efj")

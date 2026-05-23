@@ -1,6 +1,10 @@
 extends CharacterBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var attack_wave: AudioStreamPlayer2D = $PowerSlashAudio
+@onready var attack_star: AudioStreamPlayer2D = $StarAudio
+
+@export var dialogue_resource: DialogueResource
 
 @export var max_speed: float = 120.0
 @export var run_speed: float = 220.0
@@ -9,13 +13,20 @@ extends CharacterBody2D
 @export var y_squash: float = 0.5
 
 @export var power_slash_scene: PackedScene     # ← drag & drop сцену power_slash сюда
+@export var star_projectile_scene: PackedScene
 @export var attack_cooldown: float = 0.35      # время между атаками (в секундах)
 
 @export var wave_damage: float = 80.0
 @export var wave_duration: float = 10.0
+@export var star_damage: int = 45
+@export var star_duration: float = 10.0
 @export var absorb_cooldown: float = 20.0
 
 @onready var footstep_player: AudioStreamPlayer2D = $footstep
+
+var can_move: bool = true
+
+const Balloon = preload("res://DialogueBalloon/balloon.tscn")
 
 var attack_timer: float = 0.0
 
@@ -32,8 +43,11 @@ var last_direction_index: int = 0
 
 var can_absorb_dog: bool = false
 var nearby_dog = null
+var active_dog = null
 var is_wave_active: bool = false
 var wave_timer: float = 0.0
+var is_star_active: bool = false
+var star_timer: float = 0.0
 var absorb_cooldown_timer: float = 0.0
 
 var footstep_timer: float = 0.0
@@ -92,10 +106,14 @@ func take_damage(damage: int, hit_direction: Vector2 = Vector2.ZERO):
 		die()
 
 func _ready():
+	#var balloon: Node = Balloon.instantiate()
 	add_to_group("player")
 	dog = get_tree().get_first_node_in_group("dog")
 	if not dog:
 		push_warning("Собака не найдена! Добавь её в группу 'dog'")
+	
+	#get_tree().current_scene.add_child(balloon)
+	#DialogueManager.show_dialogue_balloon(dialogue_resource, "start")
 
 # ←←← ВСЁ УПРАВЛЕНИЕ КЛИКАМИ ТОЛЬКО ЗДЕСЬ
 func _input(event: InputEvent) -> void:
@@ -103,9 +121,12 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("active"):
 		try_absorb_dog()
 	
-	# Атака магической волной (ЛКМ)
-	if event.is_action_pressed("attack") and is_wave_active and attack_timer <= 0:
-		shoot_power_slash()
+	# Атака активной способностью (ЛКМ)
+	if event.is_action_pressed("attack") and attack_timer <= 0:
+		if is_wave_active:
+			shoot_power_slash()
+		elif is_star_active:
+			shoot_star()
 
 func _physics_process(delta: float) -> void:
 	# === ТАЙМЕРЫ ===
@@ -115,8 +136,22 @@ func _physics_process(delta: float) -> void:
 		wave_timer -= delta
 		if wave_timer <= 0:
 			end_wave()
+	if is_star_active:
+		star_timer -= delta
+		if star_timer <= 0:
+			end_star()
 	if attack_timer > 0:
 		attack_timer -= delta
+
+	# === БЛОКИРОВКИ ДВИЖЕНИЯ ===
+	# Если can_move равен false (например, идёт диалог) или мы атакуем — стоим на месте
+	if not can_move or is_attacking:
+		velocity = Vector2.ZERO
+		is_moving = false
+		$GPUParticles2D.emitting = false
+		update_animation(false) # Включаем анимацию покоя
+		move_and_slide()
+		return
 
 # ←←← НОВОЕ: Блокируем движение во время атаки
 	if is_attacking:
@@ -175,7 +210,16 @@ func absorb_dog() -> void:
 		return
 	
 	nearby_dog.absorb()
-	start_wave_ability()
+	active_dog = nearby_dog
+	var ability_id: StringName = &"wave"
+	var dog_ability = nearby_dog.get("ability_id")
+	if dog_ability != null:
+		ability_id = StringName(str(dog_ability))
+	
+	if ability_id == &"star":
+		start_star_ability()
+	else:
+		start_wave_ability()
 	absorb_cooldown_timer = absorb_cooldown
 
 func start_wave_ability() -> void:
@@ -187,15 +231,31 @@ func start_wave_ability() -> void:
 func end_wave() -> void:
 	is_wave_active = false
 	# Возвращаем собаку рядом с игроком
-	if nearby_dog:
+	var dog_to_return = active_dog if active_dog else nearby_dog
+	if dog_to_return and is_instance_valid(dog_to_return):
 		var spawn_pos = global_position + Vector2(randf_range(-40, 40), randf_range(-30, 30))
-		nearby_dog.reappear(spawn_pos)
+		dog_to_return.reappear(spawn_pos)
+	active_dog = null
 	print("Способность закончилась, собака вернулась")
+
+func start_star_ability() -> void:
+	is_star_active = true
+	star_timer = star_duration
+	print("Собака поглощена! Звездная стрельба активирована")
+
+func end_star() -> void:
+	is_star_active = false
+	var dog_to_return = active_dog if active_dog else nearby_dog
+	if dog_to_return and is_instance_valid(dog_to_return):
+		var spawn_pos = global_position + Vector2(randf_range(-40, 40), randf_range(-30, 30))
+		dog_to_return.reappear(spawn_pos)
+	active_dog = null
+	print("Звездная способность закончилась")
 	
 func try_absorb_dog() -> void:
-	if can_absorb_dog and nearby_dog and not is_wave_active and absorb_cooldown_timer <= 0:
+	if can_absorb_dog and nearby_dog and not is_wave_active and not is_star_active and absorb_cooldown_timer <= 0:
 		absorb_dog()
-	elif is_wave_active:
+	elif is_wave_active or is_star_active:
 		print("Способность уже активна!")
 	elif absorb_cooldown_timer > 0:
 		print("Подожди, кулдаун ещё ", snapped(absorb_cooldown_timer, 0.1), " секунд")
@@ -235,9 +295,38 @@ func shoot_power_slash() -> void:
 
 	slash.global_position = global_position + spawn_offset
 	slash.setup(mouse_dir, int(wave_damage), self)
-
+	
+	if attack_wave:
+		attack_wave.volume_db = randf_range(-22,-10)
+		attack_wave.pitch_scale = randf_range(0.9, 1.1)
+		attack_wave.play()
+	
 	# === РАЗБЛОКИРОВКА ===
 	is_attacking = false
 
 	# === КУЛДАУН ===
 	attack_timer = attack_cooldown
+
+func shoot_star() -> void:
+	if not star_projectile_scene:
+		push_warning("Star projectile scene не назначена!")
+		return
+
+	var mouse_dir = (get_global_mouse_position() - global_position).normalized()
+	if mouse_dir == Vector2.ZERO:
+		mouse_dir = Vector2.RIGHT
+
+	var star = star_projectile_scene.instantiate()
+	get_parent().add_child(star)
+	star.global_position = global_position + mouse_dir * 36 + Vector2(0, -24)
+
+	if star.has_method("setup"):
+		star.setup(mouse_dir, star_damage, self)
+	
+	if attack_star:
+		attack_star.volume_db = randf_range(-22,-10)
+		attack_star.pitch_scale = randf_range(0.9, 1.1)
+		attack_star.play()
+	
+	attack_timer = attack_cooldown
+	

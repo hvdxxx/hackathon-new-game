@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cqr52bh7525kp"]
+
+[ext_resource type="Texture2D" uid="uid://b1v0jeeg5tglf" path="res://Assets/Sprites/construction/build2.png" id="1_h3w65"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u010m"]
+atlas = ExtResource("1_h3w65")
+region = Rect2(305, 253, 2506, 2034)
+
+[sub_resource type="ConcavePolygonShape2D" id="ConcavePolygonShape2D_0ex8i"]
+segments = PackedVector2Array(-354, -156, -236, -218, -351, -156, 263, 163, 378, 103, 266, 164, -234, -218, 376, 101)
+
+[node name="build_one" type="Node2D" unique_id=1059642404]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1861998313]
+position = Vector2(30.091, -80.75)
+scale = Vector2(0.3, 0.276)
+texture = SubResource("AtlasTexture_u010m")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=466640797]
+position = Vector2(21, -35)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=646171243]
+position = Vector2(-19, 60)
+shape = SubResource("ConcavePolygonShape2D_0ex8i")
