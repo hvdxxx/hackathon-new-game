@@ -15,10 +15,11 @@ segments = PackedVector2Array(-354, -156, -236, -218, -351, -156, 263, 163, 378,
 position = Vector2(30.091, -80.75)
 scale = Vector2(0.3, 0.276)
 texture = SubResource("AtlasTexture_u010m")
+offset = Vector2(-270.75, -636.57)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=466640797]
 position = Vector2(21, -35)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=646171243]
-position = Vector2(-19, 60)
+position = Vector2(-90, -109)
 shape = SubResource("ConcavePolygonShape2D_0ex8i")

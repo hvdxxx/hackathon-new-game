@@ -1,8 +1,8 @@
 extends Area2D
 
-@onready var blur_background = $%BlurBackground
+@onready var blur_background = $%ManiacBackground
 @export var my_dialogue: DialogueResource
-@export var dialogue_title: String = "after_znak"
+@export var dialogue_title: String = "after_board"
 
 var is_player_inside: bool = false
 var is_image_open: bool = false

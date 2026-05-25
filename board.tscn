@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://nrq1ajub7o3j"]
+
+[ext_resource type="Texture2D" uid="uid://dmqg6jb208xen" path="res://Assets/Sprites/construction/board.png" id="1_p0ybc"]
+
+[sub_resource type="ConcavePolygonShape2D" id="ConcavePolygonShape2D_p0ybc"]
+segments = PackedVector2Array(-126, -19, 95, 100, -90, -35, 110, 74)
+
+[node name="Board" type="Node2D" unique_id=1672565787]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1332105700]
+texture = ExtResource("1_p0ybc")
+offset = Vector2(0, -174.875)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1975139281]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=573303156]
+shape = SubResource("ConcavePolygonShape2D_p0ybc")

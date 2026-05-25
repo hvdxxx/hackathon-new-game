@@ -1,20 +1,54 @@
 [gd_scene format=3 uid="uid://dfy5o3pnnqxrv"]
 
-[ext_resource type="Texture2D" uid="uid://cujbkswpdiamh" path="res://Assets/Sprites/Tree/seasonal sample (winter).png" id="1_brfkd"]
+[ext_resource type="Texture2D" uid="uid://ca4e7yx4iqvgk" path="res://Assets/Sprites/Tree/дерево1.1.png" id="1_d2g23"]
+[ext_resource type="Texture2D" uid="uid://p7wjn3uve2fw" path="res://Assets/Sprites/Tree/дерево1.2.png" id="2_44ud8"]
+[ext_resource type="Texture2D" uid="uid://dtu2rvv1pvrh3" path="res://Assets/Sprites/Tree/дерево1.3.png" id="3_ind6k"]
+[ext_resource type="Texture2D" uid="uid://c7qv7agyv5wtc" path="res://Assets/Sprites/Tree/дерево1.png" id="4_6vbnm"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nnvrw"]
-atlas = ExtResource("1_brfkd")
-region = Rect2(177, 0, 79, 112)
+[sub_resource type="SpriteFrames" id="SpriteFrames_bcqui"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_d2g23")
+}],
+"loop": true,
+"name": &"1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_44ud8")
+}],
+"loop": true,
+"name": &"2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ind6k")
+}],
+"loop": true,
+"name": &"3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_6vbnm")
+}],
+"loop": true,
+"name": &"4",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gvmkm"]
 size = Vector2(74, 36)
 
 [node name="Tree" type="StaticBody2D" unique_id=963661446]
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1087596095]
-scale = Vector2(3, 3)
-texture = SubResource("AtlasTexture_nnvrw")
-offset = Vector2(0, -46.925)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1583292730]
+sprite_frames = SubResource("SpriteFrames_bcqui")
+animation = &"1"
+offset = Vector2(-9.88, -227.03)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2046041653]
 position = Vector2(-2, -4)

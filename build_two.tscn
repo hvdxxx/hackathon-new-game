@@ -10,9 +10,10 @@ segments = PackedVector2Array(-88, -23, 57, 46, -87, -23, -23, -45, -23, -45, 12
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=304200352]
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("1_px0ds")
-offset = Vector2(43.005, -202.065)
+offset = Vector2(-27.085, -259.665)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1019783486]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=148015415]
+position = Vector2(-29, -24)
 shape = SubResource("ConcavePolygonShape2D_dsrr5")

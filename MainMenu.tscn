@@ -1,19 +1,20 @@
 [gd_scene format=3 uid="uid://kwxufi8efva6"]
 
 [ext_resource type="Script" uid="uid://bmkp5610qpjj5" path="res://main_menu.gd" id="1_eiy7p"]
-[ext_resource type="FontFile" uid="uid://pw81o4lcxm20" path="res://fonts/FirstTimeWriting!.ttf" id="1_i26rj"]
 [ext_resource type="Shader" uid="uid://uslludtylji8" path="res://MainMenu.gdshader" id="2_qoqlk"]
 [ext_resource type="Texture2D" uid="uid://cbyob0korin1u" path="res://Assets/Theme/abussbackground.jpg" id="3_iwfq2"]
+[ext_resource type="FontFile" uid="uid://bll3lsgrlbphi" path="res://fonts/SatyrSP Basic.otf" id="4_e2xy7"]
 [ext_resource type="AudioStream" uid="uid://bkbs4tyq82p02" path="res://Assets/Audio/menu/select_play.wav" id="5_7r1g0"]
 [ext_resource type="AudioStream" uid="uid://chu5tflylboy1" path="res://Assets/Audio/menu/select_others.wav" id="6_cqjrg"]
 [ext_resource type="AudioStream" uid="uid://tvxoij5fvd8n" path="res://Assets/Audio/menu/scroling.wav" id="7_cqjrg"]
+[ext_resource type="AudioStream" uid="uid://dr8vv5ddn7cwv" path="res://Assets/Audio/ost/menu ost.wav" id="8_e2xy7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7r1g0"]
 shader = ExtResource("2_qoqlk")
 shader_parameter/shadow_color = Color(0.23753911, 0.23753914, 0.23753911, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_eiy7p"]
-font = ExtResource("1_i26rj")
+font = ExtResource("4_e2xy7")
 font_size = 25
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 3
@@ -22,7 +23,7 @@ stacked_outline_count = 1
 stacked_outline_0/size = 8
 
 [sub_resource type="LabelSettings" id="LabelSettings_i26rj"]
-font = ExtResource("1_i26rj")
+font = ExtResource("4_e2xy7")
 font_size = 160
 outline_color = Color(0, 0, 0, 1)
 stacked_outline_count = 1
@@ -33,8 +34,8 @@ script = ExtResource("1_eiy7p")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2037292758]
 material = SubResource("ShaderMaterial_7r1g0")
-position = Vector2(960.99994, 540.5)
-scale = Vector2(2.3974998, 1.7983333)
+position = Vector2(960.00006, 541)
+scale = Vector2(2.4, 1.7983333)
 texture = ExtResource("3_iwfq2")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2055794127]
@@ -78,11 +79,7 @@ anchor_left = 0.87200004
 anchor_top = -0.067
 anchor_right = 1.95
 anchor_bottom = 0.165
-offset_left = 0.27996826
-offset_top = -0.21199799
-offset_right = -0.25
-offset_bottom = -0.060005188
-theme_override_fonts/font = ExtResource("1_i26rj")
+theme_override_fonts/font = ExtResource("4_e2xy7")
 theme_override_font_sizes/font_size = 80
 button_mask = 3
 text = "Начать новую игру"
@@ -98,7 +95,7 @@ offset_left = 0.23999023
 offset_top = -0.10800934
 offset_right = 0.15490723
 offset_bottom = 0.11199951
-theme_override_fonts/font = ExtResource("1_i26rj")
+theme_override_fonts/font = ExtResource("4_e2xy7")
 theme_override_font_sizes/font_size = 55
 text = "Настройки"
 
@@ -113,7 +110,7 @@ offset_left = -0.29003906
 offset_top = -0.1920166
 offset_right = -0.30004883
 offset_bottom = -0.07598877
-theme_override_fonts/font = ExtResource("1_i26rj")
+theme_override_fonts/font = ExtResource("4_e2xy7")
 theme_override_font_sizes/font_size = 50
 text = "Выйти
 "
@@ -129,6 +126,11 @@ volume_db = -10.692
 [node name="scrolling" type="AudioStreamPlayer2D" parent="." unique_id=1847123797]
 stream = ExtResource("7_cqjrg")
 volume_db = -7.776
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1883135349]
+stream = ExtResource("8_e2xy7")
+volume_db = -16.733
+autoplay = true
 
 [connection signal="mouse_entered" from="Control/Play" to="." method="_on_play_mouse_entered"]
 [connection signal="pressed" from="Control/Play" to="." method="_on_play_pressed"]

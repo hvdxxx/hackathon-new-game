@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c4but73wb1pse"]
+
+[ext_resource type="Texture2D" uid="uid://c22w12t6uio77" path="res://Assets/Sprites/construction/упав дерево.png" id="1_e5for"]
+
+[sub_resource type="ConcavePolygonShape2D" id="ConcavePolygonShape2D_44dom"]
+segments = PackedVector2Array(-182, -62, 144, 97, -177, -61, -120, -82, -118, -81, 183, 73, 144, 96, 185, 74)
+
+[node name="old wood" type="Node2D" unique_id=487047482]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1060665771]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_e5for")
+offset = Vector2(0, -39.3)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1994419731]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1521687011]
+shape = SubResource("ConcavePolygonShape2D_44dom")

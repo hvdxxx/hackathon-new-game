@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bn1eegs3ofste"]
+
+[ext_resource type="Texture2D" uid="uid://l0dcoe3hjt7q" path="res://Assets/Sprites/construction/кузов.png" id="1_7822p"]
+
+[sub_resource type="ConcavePolygonShape2D" id="ConcavePolygonShape2D_uoj53"]
+segments = PackedVector2Array(-84, -31, 62, 44, -85, -32, -21, -57, -20, -57, 111, 8, 63, 45, 110, 9)
+
+[node name="car" type="Node2D" unique_id=93712800]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1725633746]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_7822p")
+offset = Vector2(57.115, -77.08)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=381375094]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1209874403]
+shape = SubResource("ConcavePolygonShape2D_uoj53")
