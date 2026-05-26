@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite: AnimatedSprite2D = $dog_two_anime
 @onready var interaction_area: Area2D = get_node_or_null("HitArea") as Area2D
 @onready var button_area: Area2D = $Button/ButtonArea  # ← добавь эту Area2D
 @onready var prompt: Sprite2D = $Button

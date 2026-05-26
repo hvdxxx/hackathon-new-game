@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://m7yxkc65j2tn" path="res://hub_one.gd" id="1_7xwdp"]
 [ext_resource type="Texture2D" uid="uid://7cy0jefgr62w" path="res://Assets/Sprites/Tileset/hub_one_tileset.png" id="1_vswtt"]
 [ext_resource type="Texture2D" uid="uid://bty563iejcvy" path="res://Assets/Sprites/Tileset/Spritesheets/Effects-Overlays_SpriteSheet.png" id="2_jrtmm"]
+[ext_resource type="Texture2D" uid="uid://byydknun8gm56" path="res://Assets/Sprites/Backgrounds/warning.png" id="2_pwl4i"]
 [ext_resource type="PackedScene" uid="uid://bo63hnjbk06rb" path="res://character_body_2d.tscn" id="3_qulsf"]
 [ext_resource type="Texture2D" uid="uid://05ln73sspab2" path="res://Assets/Sprites/Tileset/our_tileset.png" id="4_qm6n0"]
 [ext_resource type="Script" uid="uid://8r75c7au5qik" path="res://CameraFollow.gd" id="5_7xwdp"]
@@ -23,6 +24,11 @@
 [ext_resource type="PackedScene" uid="uid://bn1eegs3ofste" path="res://car.tscn" id="21_n4j6p"]
 [ext_resource type="PackedScene" uid="uid://c4but73wb1pse" path="res://old_wood.tscn" id="22_d5r4w"]
 [ext_resource type="PackedScene" uid="uid://dfy5o3pnnqxrv" path="res://tree.tscn" id="23_fvk7q"]
+[ext_resource type="Texture2D" uid="uid://bx0u63f24w0w0" path="res://Assets/Sprites/construction/abuss_logo.png" id="24_w22lq"]
+[ext_resource type="Script" uid="uid://vwr4rbkk81j4" path="res://znak_area.gd" id="25_37usr"]
+[ext_resource type="Resource" uid="uid://tp38s0lxq7ys" path="res://cut_scene.dialogue" id="26_pwl4i"]
+[ext_resource type="PackedScene" uid="uid://nrq1ajub7o3j" path="res://board.tscn" id="27_ks5a0"]
+[ext_resource type="Script" uid="uid://d2p586y1fqndn" path="res://hub_board.gd" id="28_37usr"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pu5o0"]
 particle_flag_disable_z = true
@@ -181,9 +187,43 @@ blend_mode = 1
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5d24t"]
 blend_mode = 1
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmgms"]
+atlas = ExtResource("24_w22lq")
+region = Rect2(533, 364, 136, 487)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3cgdk"]
+size = Vector2(24.5, 16.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xl2le"]
+size = Vector2(78, 65)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w22lq"]
+radius = 109.20163
+
 [node name="HubLocation" type="Node2D" unique_id=1909228133]
 y_sort_enabled = true
 script = ExtResource("1_7xwdp")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=314634386]
+
+[node name="BoardBackground" type="ColorRect" parent="UI" unique_id=301778920]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.50980395)
+
+[node name="ManiacPoster" type="TextureRect" parent="UI/BoardBackground" unique_id=1701934240]
+layout_mode = 0
+offset_left = 605.99994
+offset_top = 82.99999
+offset_right = 2526.0
+offset_bottom = 2383.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_pwl4i")
 
 [node name="SnowParticles" type="GPUParticles2D" parent="." unique_id=1882524817]
 light_mask = 1023
@@ -266,13 +306,13 @@ position = Vector2(227, -70.00002)
 scale = Vector2(0.2, 0.2)
 
 [node name="Perila2" parent="." unique_id=1210427656 instance=ExtResource("13_fmr5b")]
-position = Vector2(-35, -60)
+position = Vector2(-37, -56)
 
 [node name="Perila3" parent="." unique_id=1377546238 instance=ExtResource("13_fmr5b")]
-position = Vector2(59, -13)
+position = Vector2(53, -10)
 
 [node name="Perila5" parent="." unique_id=1455513289 instance=ExtResource("13_fmr5b")]
-position = Vector2(-395, -240)
+position = Vector2(-413, -244)
 
 [node name="Perila6" parent="." unique_id=811620777 instance=ExtResource("13_fmr5b")]
 position = Vector2(-554, -323)
@@ -294,7 +334,7 @@ position = Vector2(-54, -207)
 position = Vector2(-311, -327)
 
 [node name="StaticBody2D" parent="." unique_id=1148764767 instance=ExtResource("17_t62ac")]
-position = Vector2(-197, -170)
+position = Vector2(-192, -172)
 
 [node name="Light2" parent="." unique_id=274235495 instance=ExtResource("5_pu5o0")]
 position = Vector2(246, 4)
@@ -313,7 +353,7 @@ position = Vector2(-853, -100)
 position = Vector2(-248, -448)
 
 [node name="old wood" parent="." unique_id=487047482 instance=ExtResource("22_d5r4w")]
-position = Vector2(182, -290)
+position = Vector2(180, -291)
 
 [node name="Tree3" parent="." unique_id=963661446 instance=ExtResource("23_fvk7q")]
 position = Vector2(-723, -736)
@@ -322,4 +362,51 @@ position = Vector2(-723, -736)
 position = Vector2(-499, -690)
 
 [node name="Tree" parent="." unique_id=2117974656 instance=ExtResource("23_fvk7q")]
-position = Vector2(-302, -540)
+position = Vector2(-277, -555)
+
+[node name="znak" type="StaticBody2D" parent="." unique_id=902420290]
+y_sort_enabled = true
+position = Vector2(-326, -208)
+scale = Vector2(0.2, 0.2)
+
+[node name="Sprite2D" type="Sprite2D" parent="znak" unique_id=2015523339]
+y_sort_enabled = true
+texture = SubResource("AtlasTexture_tmgms")
+offset = Vector2(0, -225.085)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="znak" unique_id=752619676]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_3cgdk")
+
+[node name="Area2D" type="Area2D" parent="znak" unique_id=95709034]
+collision_layer = 64
+collision_mask = 2
+script = ExtResource("25_37usr")
+my_dialogue = ExtResource("26_pwl4i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="znak/Area2D" unique_id=1492576166]
+light_mask = 1023
+visibility_layer = 1023
+position = Vector2(2, 0)
+shape = SubResource("RectangleShape2D_xl2le")
+
+[node name="Board" parent="." unique_id=1672565787 instance=ExtResource("27_ks5a0")]
+position = Vector2(-89, -132.99998)
+scale = Vector2(0.2, 0.2)
+
+[node name="Area2D" type="Area2D" parent="Board" unique_id=306170423]
+collision_layer = 64
+collision_mask = 2
+script = ExtResource("28_37usr")
+my_dialogue = ExtResource("26_pwl4i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Area2D" unique_id=1445889568]
+position = Vector2(-44.999996, 59.99992)
+shape = SubResource("CircleShape2D_w22lq")
+
+[connection signal="body_entered" from="znak/Area2D" to="znak/Area2D" method="_on_body_entered"]
+[connection signal="body_exited" from="znak/Area2D" to="znak/Area2D" method="_on_body_exited"]
+[connection signal="body_entered" from="Board/Area2D" to="Board/Area2D" method="_on_body_entered"]
+[connection signal="body_exited" from="Board/Area2D" to="Board/Area2D" method="_on_body_exited"]

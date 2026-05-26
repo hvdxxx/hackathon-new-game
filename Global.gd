@@ -1,6 +1,10 @@
-extends Node2D
+extends Node
 
 @export var dialogue_resource: DialogueResource
+
+@onready var check_trash = 0
+@onready var check_znak = 0
+@onready var check_board = 0
 
 @onready var fade_rect: ColorRect = $Control/ColorRect
 
@@ -9,41 +13,50 @@ const Balloon = preload("res://DialogueBalloon/balloon.tscn")
 @onready var main_hero: AnimatedSprite2D = $%gg_anime
 @onready var dog_one: AnimatedSprite2D = $%dog_one_anime
 @onready var dog_two: AnimatedSprite2D = $%dog_two_anime
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	if check_trash == 1:
+		
+		if check_trash == 1:
+			
+			if check_trash == 1:
+				main_hero.play("idle_sa")
+	
+				# 1. Находим игрока и собак
+				var dogs = get_tree().get_nodes_in_group("dog")
+				var player = get_tree().get_first_node_in_group("player")
+					
+				# 2. Выключаем управление перед сценой
+				if player and player.has_method("set_physics_process"):
+					player.set_physics_process(false)
+				for dog in dogs:
+					dog.set_physics_process(false)
+		
+					# 3. Ждем окончания эффекта появления (fade)
+				await fade(1.0, 0.0, 2.0)
+					
+					# 4. Создаем и показываем диалог
+				var balloon: Node = Balloon.instantiate()
+				get_tree().current_scene.add_child(balloon)
+				DialogueManager.show_dialogue_balloon(dialogue_resource, "dogs")
+					
+					# 5. МАГИЯ: Говорим коду ЖДАТЬ, пока DialogueManager не подаст сигнал "диалог окончен"
+				await DialogueManager.dialogue_ended
+					
+					# 6. Только ТЕПЕРЬ, когда диалог закрылся, возвращаем управление
+				if player and player.has_method("set_physics_process"):
+					player.set_physics_process(true)
+				for dog in dogs:
+					dog.set_physics_process(true) # Собаке тоже возвращаем физику!
 
 func fade(from: float, to: float, duration: float):
 	var t = create_tween()
 	t.tween_property(fade_rect, "modulate:a", to, duration).from(from)
 	await t.finished
-
-func _ready():
-	main_hero.play("idle_sa")
-	
-	# 1. Находим игрока и собак
-	var dogs = get_tree().get_nodes_in_group("dog")
-	var player = get_tree().get_first_node_in_group("player")
-	
-	# 2. Выключаем управление перед сценой
-	if player and player.has_method("set_physics_process"):
-		player.set_physics_process(false)
-	for dog in dogs:
-		dog.set_physics_process(false)
-		
-	# 3. Ждем окончания эффекта появления (fade)
-	await fade(1.0, 0.0, 2.0)
-	
-	# 4. Создаем и показываем диалог
-	var balloon: Node = Balloon.instantiate()
-	get_tree().current_scene.add_child(balloon)
-	DialogueManager.show_dialogue_balloon(dialogue_resource, "start")
-	
-	# 5. МАГИЯ: Говорим коду ЖДАТЬ, пока DialogueManager не подаст сигнал "диалог окончен"
-	await DialogueManager.dialogue_ended
-	
-	# 6. Только ТЕПЕРЬ, когда диалог закрылся, возвращаем управление
-	if player and player.has_method("set_physics_process"):
-		player.set_physics_process(true)
-	for dog in dogs:
-		dog.set_physics_process(true) # Собаке тоже возвращаем физику!
 
 func dogs_eating():
 	var dogs = get_tree().get_nodes_in_group("dog")

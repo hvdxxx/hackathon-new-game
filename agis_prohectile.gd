@@ -40,7 +40,7 @@ func launch(new_direction: Vector2, _target = null):
 # ====================== СТОЛКНОВЕНИЯ ======================
 func _on_body_entered(body: Node2D):
 	if body.is_in_group("player"):
-		print("Снаряд попал в игрока!")
+		print("попал")
 		
 		if body.has_method("take_damage"):
 			body.take_damage(damage)   # ← наносим урон

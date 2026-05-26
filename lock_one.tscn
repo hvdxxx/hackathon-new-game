@@ -7,10 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://diiijdnu2m0yi" path="res://Assets/Sprites/Backgrounds/nosignal.png" id="3_4pm83"]
 [ext_resource type="PackedScene" uid="uid://bo63hnjbk06rb" path="res://character_body_2d.tscn" id="3_8fer4"]
 [ext_resource type="AudioStream" uid="uid://djpxpagdub1rx" path="res://Assets/Audio/GavDog.wav" id="3_mvlso"]
+[ext_resource type="Texture2D" uid="uid://cpcukpb4lh8jg" path="res://Assets/Sprites/Backgrounds/объявление.png" id="4_0d3bx"]
 [ext_resource type="Texture2D" uid="uid://7cy0jefgr62w" path="res://Assets/Sprites/Tileset/hub_one_tileset.png" id="4_1xiwm"]
-[ext_resource type="Texture2D" uid="uid://byydknun8gm56" path="res://Assets/Sprites/Backgrounds/warning.png" id="4_lr1np"]
 [ext_resource type="Texture2D" uid="uid://calrb03gfq6a" path="res://Assets/Sprites/winterassphalt.png" id="4_opdir"]
 [ext_resource type="Texture2D" uid="uid://7l64x362ufma" path="res://Assets/Sprites/Tileset/lock_one_tileset.png" id="5_qgen4"]
+[ext_resource type="Texture2D" uid="uid://bf5sfcm4rsj0t" path="res://Assets/Sprites/Backgrounds/концк.png" id="5_tlpn0"]
 [ext_resource type="Script" uid="uid://8r75c7au5qik" path="res://CameraFollow.gd" id="6_47c1j"]
 [ext_resource type="PackedScene" uid="uid://b5op4jpnepvsb" path="res://trashbox.tscn" id="6_fpulj"]
 [ext_resource type="PackedScene" uid="uid://dmv3j8rb76g7r" path="res://Assets/Theme/Ostanovka.tscn" id="6_opdir"]
@@ -23,6 +24,7 @@
 [ext_resource type="Resource" uid="uid://tp38s0lxq7ys" path="res://cut_scene.dialogue" id="11_1xiwm"]
 [ext_resource type="PackedScene" uid="uid://d3bgkdvf6gd6l" path="res://star_projectile.tscn" id="11_star"]
 [ext_resource type="Script" uid="uid://vwr4rbkk81j4" path="res://znak_area.gd" id="12_4pm83"]
+[ext_resource type="Script" uid="uid://bq175bv7h8ot3" path="res://trashbox_dialogue.gd" id="14_svehk"]
 [ext_resource type="PackedScene" uid="uid://dfy5o3pnnqxrv" path="res://tree.tscn" id="18_famhr"]
 [ext_resource type="PackedScene" uid="uid://bp7f4i4cewyem" path="res://dog_two.tscn" id="19_aqisp"]
 [ext_resource type="PackedScene" uid="uid://nrq1ajub7o3j" path="res://board.tscn" id="23_dnnaw"]
@@ -352,12 +354,11 @@ gravity = Vector3(-20, 40, 0)
 scale_max = 5.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lr1np"]
-radius = 115.10867
+radius = 119.99997
 
 [node name="Node2D" type="Node2D" unique_id=1695581342]
 y_sort_enabled = true
 script = ExtResource("1_mvlso")
-dialogue_resource = ExtResource("11_1xiwm")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1398331462]
 
@@ -370,7 +371,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 0.8039216)
+color = Color(0, 0, 0, 0.50980395)
 
 [node name="DisplayImage" type="TextureRect" parent="UI/BlurBackground" unique_id=1829211669]
 layout_mode = 0
@@ -380,7 +381,7 @@ offset_right = 1538.0
 offset_bottom = 725.0
 texture = ExtResource("3_4pm83")
 
-[node name="ManiacBackground" type="ColorRect" parent="UI" unique_id=2128700797]
+[node name="GroomBackground" type="ColorRect" parent="UI" unique_id=2128700797]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 15
@@ -388,16 +389,35 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0.50980395)
 
-[node name="ManiacPoster" type="TextureRect" parent="UI/ManiacBackground" unique_id=1711939267]
+[node name="GroomPoster" type="TextureRect" parent="UI/GroomBackground" unique_id=1711939267]
 layout_mode = 0
-offset_left = 604.00006
-offset_top = 82.0
-offset_right = 2524.0
-offset_bottom = 2382.0
+offset_left = 371.0
+offset_top = 76.0
+offset_right = 3340.9995
+offset_bottom = 2376.0
 scale = Vector2(0.4, 0.4)
-texture = ExtResource("4_lr1np")
+texture = ExtResource("4_0d3bx")
+
+[node name="GroupBackground" type="ColorRect" parent="UI" unique_id=338149342]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.50980395)
+
+[node name="GroupPoster" type="TextureRect" parent="UI/GroupBackground" unique_id=1904749735]
+layout_mode = 0
+offset_left = 706.0
+offset_top = 194.0
+offset_right = 2626.0
+offset_bottom = 2494.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_tlpn0")
 
 [node name="MainTile" type="TileMapLayer" parent="." unique_id=1083554837]
 z_index = -2
@@ -417,6 +437,10 @@ position = Vector2(322, 194)
 scale = Vector2(0.6, 0.6)
 
 [node name="Area2D" type="Area2D" parent="Trashbox" unique_id=475516440]
+collision_layer = 64
+collision_mask = 2
+script = ExtResource("14_svehk")
+my_dialogue = ExtResource("11_1xiwm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Trashbox/Area2D" unique_id=1046067891]
 position = Vector2(-2.5, -8.333282)
@@ -430,7 +454,7 @@ scale = Vector2(1.1, 1.1)
 
 [node name="znak" type="StaticBody2D" parent="." unique_id=772890856]
 y_sort_enabled = true
-position = Vector2(266, 251)
+position = Vector2(281, 262)
 
 [node name="Sprite2D" type="Sprite2D" parent="znak" unique_id=1803959405]
 y_sort_enabled = true
@@ -480,28 +504,28 @@ position = Vector2(-207, -225)
 position = Vector2(-37, -98)
 
 [node name="Tree6" parent="Tree" unique_id=1621257214 instance=ExtResource("18_famhr")]
-position = Vector2(122, 15)
+position = Vector2(134, -73)
 
 [node name="Tree7" parent="Tree" unique_id=1258843915 instance=ExtResource("18_famhr")]
-position = Vector2(199, 54)
+position = Vector2(232, 79)
 
 [node name="Tree8" parent="Tree" unique_id=464821073 instance=ExtResource("18_famhr")]
-position = Vector2(295, 64)
+position = Vector2(314, -53)
 
 [node name="Tree10" parent="Tree" unique_id=920211453 instance=ExtResource("18_famhr")]
-position = Vector2(340, 132)
+position = Vector2(400, 87)
 
 [node name="Tree11" parent="Tree" unique_id=436822957 instance=ExtResource("18_famhr")]
-position = Vector2(426, 163)
+position = Vector2(605, 25)
 
 [node name="Tree12" parent="Tree" unique_id=963661446 instance=ExtResource("18_famhr")]
-position = Vector2(502, 203)
+position = Vector2(440, 201)
 
 [node name="Tree13" parent="Tree" unique_id=1777456024 instance=ExtResource("18_famhr")]
 position = Vector2(619, 273)
 
 [node name="Tree14" parent="Tree" unique_id=1763326569 instance=ExtResource("18_famhr")]
-position = Vector2(608, 424)
+position = Vector2(655, 432)
 
 [node name="Tree15" parent="Tree" unique_id=1568062078 instance=ExtResource("18_famhr")]
 position = Vector2(856, 297)
@@ -510,10 +534,10 @@ position = Vector2(856, 297)
 position = Vector2(818, 409)
 
 [node name="Tree18" parent="Tree" unique_id=643699572 instance=ExtResource("18_famhr")]
-position = Vector2(390, 769)
+position = Vector2(415, 787)
 
 [node name="Tree19" parent="Tree" unique_id=644938482 instance=ExtResource("18_famhr")]
-position = Vector2(226, 715)
+position = Vector2(224, 844)
 
 [node name="Tree20" parent="Tree" unique_id=1321358246 instance=ExtResource("18_famhr")]
 position = Vector2(68, 763)
@@ -522,10 +546,10 @@ position = Vector2(68, 763)
 position = Vector2(-59, 832)
 
 [node name="Tree22" parent="Tree" unique_id=2022383383 instance=ExtResource("18_famhr")]
-position = Vector2(-171, 624)
+position = Vector2(-240, 651)
 
 [node name="Tree23" parent="Tree" unique_id=556039306 instance=ExtResource("18_famhr")]
-position = Vector2(-366, 658)
+position = Vector2(-392, 699)
 
 [node name="Tree24" parent="Tree" unique_id=1567711470 instance=ExtResource("18_famhr")]
 position = Vector2(-613, 627)
@@ -669,6 +693,8 @@ my_dialogue = ExtResource("11_1xiwm")
 position = Vector2(-39.999958, 59.999992)
 shape = SubResource("CircleShape2D_lr1np")
 
+[connection signal="body_entered" from="Trashbox/Area2D" to="Trashbox/Area2D" method="_on_body_entered"]
+[connection signal="body_exited" from="Trashbox/Area2D" to="Trashbox/Area2D" method="_on_body_exited"]
 [connection signal="body_entered" from="znak/Area2D" to="znak/Area2D" method="_on_body_entered"]
 [connection signal="body_exited" from="znak/Area2D" to="znak/Area2D" method="_on_body_exited"]
 [connection signal="body_entered" from="Board/Area2D" to="Board/Area2D" method="_on_body_entered"]

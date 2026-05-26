@@ -1,8 +1,8 @@
 extends Area2D
 
-@onready var blur_background = $%GroomBackground
+@onready var blur_background = $%GroupBackground
 @export var my_dialogue: DialogueResource
-@export var dialogue_title: String = "after_groom"
+@export var dialogue_title: String = "after_trash"
 
 var is_player_inside: bool = false
 var is_image_open: bool = false
@@ -13,12 +13,15 @@ func _ready():
 	if blur_background:
 		blur_background.visible = false
 
+# Полностью убираем _process! Вместо него используем чистый ввод:
 func _input(event):
 	# Если проигрывается диалог — игнорируем любые нажатия на Е
 	if is_dialogue_playing: 
 		return
 		
+	# Используем встроенное действие (или замени на Input.is_key_just_pressed(KEY_E))
 	if is_player_inside and Input.is_action_just_pressed("active"):
+		# Чтобы движок не обрабатывал это нажатие где-то ещё в этот кадр
 		get_viewport().set_input_as_handled() 
 		
 		if not is_image_open:
@@ -53,16 +56,23 @@ func close_image() -> void:
 		blur_background.visible = false
 		is_image_open = false
 		
+		Global.check_trash = 1
+		
+		# Защита: если забыли перетащить файл диалога в инспектор
 		if my_dialogue == null:
 			if player_ref and "can_move" in player_ref:
 				player_ref.can_move = true
 			return
 			
+		# Включаем режим диалога, чтобы нельзя было спамить кнопку "Е"
 		is_dialogue_playing = true
 		
+		# Запускаем глобальный диалог и ЖДЁМ, пока он полностью закончится
 		await GlobalDialogues.start_dialogue(my_dialogue, dialogue_title)
 		
+		# Диалог завершился! Выключаем режим диалога
 		is_dialogue_playing = false
 		
+		# Возвращаем контроль игроку (хотя глобальный скрипт его тоже включит, для надёжности)
 		if player_ref and "can_move" in player_ref:
 			player_ref.can_move = true

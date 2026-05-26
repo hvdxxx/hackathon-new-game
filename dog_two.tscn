@@ -488,7 +488,7 @@ light_mask = 1023
 visibility_layer = 1023
 script = ExtResource("1_sa1ye")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=946484777]
+[node name="dog_two_anime" type="AnimatedSprite2D" parent="." unique_id=946484777]
 modulate = Color(0.960859, 0.68450034, 0.29027486, 1)
 sprite_frames = SubResource("SpriteFrames_ng0eh")
 animation = &"idle_d"
