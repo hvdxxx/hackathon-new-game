@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://gbdo8067fe4l"
+path="res://.godot/imported/dogs_next_level.dialogue-f62114b447ccf097c3ea57a32e828145.tres"
+
+[deps]
+
+source_file="res://dogs_next_level.dialogue"
+dest_files=["res://.godot/imported/dogs_next_level.dialogue-f62114b447ccf097c3ea57a32e828145.tres"]
+
+[params]
+
+defaults=true

@@ -1,6 +1,6 @@
 extends Area2D
 
-@onready var blur_background = $%BoardBackground
+@onready var blur_background = $/root/HubLocation/UI/boardbckgrnd
 @export var my_dialogue: DialogueResource
 @export var dialogue_title: String = "after_maniac"
 
@@ -14,7 +14,7 @@ func _ready():
 		blur_background.visible = false
 
 # Полностью убираем _process! Вместо него используем чистый ввод:
-func _input(event):
+func _input(_event):
 	# Если проигрывается диалог — игнорируем любые нажатия на Е
 	if is_dialogue_playing: 
 		return

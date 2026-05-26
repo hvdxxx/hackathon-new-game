@@ -106,7 +106,7 @@ func take_damage(damage: int, hit_direction: Vector2 = Vector2.ZERO):
 		die()
 
 func _ready():
-	#var balloon: Node = Balloon.instantiate()
+	Global.main_hero = sprite
 	add_to_group("player")
 	dog = get_tree().get_first_node_in_group("dog")
 	if not dog:

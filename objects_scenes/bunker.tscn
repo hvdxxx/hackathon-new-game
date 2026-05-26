@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://r44mky6wewyh"]
+
+[ext_resource type="Texture2D" uid="uid://mgcxq3dtxffr" path="res://Assets/Sprites/Builds/вход в бункер.png" id="1_ct1ue"]
+
+[sub_resource type="ConcavePolygonShape2D" id="ConcavePolygonShape2D_ij3nl"]
+segments = PackedVector2Array(-203, 3, -45, 77, -45, 79, 189, -45, 188, -44, 34, -100, -201, 2, 32, -100)
+
+[node name="bunker" type="Node2D" unique_id=649914836]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1774262488]
+texture = ExtResource("1_ct1ue")
+offset = Vector2(0, -155.295)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1728145026]
+shape = SubResource("ConcavePolygonShape2D_ij3nl")

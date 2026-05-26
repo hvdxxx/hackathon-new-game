@@ -62,7 +62,6 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 
 [node name="ColorRect" type="ColorRect" parent="Control" unique_id=2008989181]
-visible = false
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0

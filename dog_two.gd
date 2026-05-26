@@ -35,7 +35,7 @@ func update_animation() -> void:
 
 func _ready() -> void:
 	find_player()
-	
+	Global.dog_two = $dog_two_anime
 	if interaction_area:
 		interaction_area.body_entered.connect(_on_hit_area_body_entered)
 		interaction_area.body_exited.connect(_on_hit_area_body_exited)

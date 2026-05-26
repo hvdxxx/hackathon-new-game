@@ -474,14 +474,17 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xiptr"]
-radius = 9.0
+radius = 14.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nypm0"]
 atlas = ExtResource("2_sa1ye")
 region = Rect2(65, 0, 13, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3t708"]
-size = Vector2(39, 35)
+size = Vector2(49, 37)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sa1ye"]
+size = Vector2(17, 8)
 
 [node name="Dog_two" type="CharacterBody2D" unique_id=285673954]
 light_mask = 1023
@@ -492,11 +495,14 @@ script = ExtResource("1_sa1ye")
 modulate = Color(0.960859, 0.68450034, 0.29027486, 1)
 sprite_frames = SubResource("SpriteFrames_ng0eh")
 animation = &"idle_d"
+offset = Vector2(0, -7.55)
 
 [node name="HitArea" type="Area2D" parent="." unique_id=9100442]
+position = Vector2(-2, -4)
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea" unique_id=1722273249]
+position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_xiptr")
 
 [node name="Button" type="Sprite2D" parent="." unique_id=1696985414]
@@ -512,5 +518,10 @@ collision_layer = 0
 collision_mask = 255
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Button/ButtonArea" unique_id=1188794484]
-position = Vector2(0.5, 21.5)
+position = Vector2(-1, 13)
 shape = SubResource("RectangleShape2D_3t708")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2070919618]
+position = Vector2(-1, -3)
+shape = SubResource("RectangleShape2D_sa1ye")
+debug_color = Color(1, 0, 0.16078432, 0.47058824)

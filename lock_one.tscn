@@ -29,6 +29,7 @@
 [ext_resource type="PackedScene" uid="uid://bp7f4i4cewyem" path="res://dog_two.tscn" id="19_aqisp"]
 [ext_resource type="PackedScene" uid="uid://nrq1ajub7o3j" path="res://board.tscn" id="23_dnnaw"]
 [ext_resource type="Script" uid="uid://bxqhiuf50lfrs" path="res://board_area.gd" id="25_x64a2"]
+[ext_resource type="Script" uid="uid://dgxqndd5fl3m6" path="res://color_rect_lock_one.gd" id="28_aa62f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dnxor"]
 texture = ExtResource("1_ins1s")
@@ -359,6 +360,7 @@ radius = 119.99997
 [node name="Node2D" type="Node2D" unique_id=1695581342]
 y_sort_enabled = true
 script = ExtResource("1_mvlso")
+dialogue_resource = ExtResource("11_1xiwm")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1398331462]
 
@@ -678,6 +680,7 @@ offset_top = -707.0
 offset_right = 1712.0
 offset_bottom = 1039.0
 color = Color(0, 0, 0, 1)
+script = ExtResource("28_aa62f")
 
 [node name="Board" parent="." unique_id=1672565787 instance=ExtResource("23_dnnaw")]
 position = Vector2(87.99999, 110)

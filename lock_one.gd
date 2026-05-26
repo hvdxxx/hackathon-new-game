@@ -6,9 +6,9 @@ extends Node2D
 
 const Balloon = preload("res://DialogueBalloon/balloon.tscn")
 
-@onready var main_hero: AnimatedSprite2D = $%gg_anime
-@onready var dog_one: AnimatedSprite2D = $%dog_one_anime
-@onready var dog_two: AnimatedSprite2D = $%dog_two_anime
+@onready var main_hero: AnimatedSprite2D = $MainHero/gg_anime
+@onready var dog_one: AnimatedSprite2D = $LittleDog_one/dog_one_anime
+@onready var dog_two: AnimatedSprite2D = $LittleDog_two/dog_two_anime
 
 func fade(from: float, to: float, duration: float):
 	var t = create_tween()

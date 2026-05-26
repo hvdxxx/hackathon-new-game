@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://djy3c5s3qh2w6" path="res://Assets/Sprites/construction/light.png" id="1_gqs4f"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_50xyb"]
-radius = 27.0
 
 [node name="LightStolb" type="Node2D" unique_id=2031897534]
 
@@ -15,4 +14,5 @@ offset = Vector2(-223.325, -444.25)
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1671703157]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=541326496]
+position = Vector2(0, 2)
 shape = SubResource("CircleShape2D_50xyb")

@@ -35,14 +35,15 @@ func update_animation() -> void:
 
 func _ready() -> void:
 	find_player()
+	Global.dog_one = $dog_one_anime
 	
-	if interaction_area:
-		interaction_area.body_entered.connect(_on_hit_area_body_entered)
-		interaction_area.body_exited.connect(_on_hit_area_body_exited)
+	#if interaction_area:
+		#interaction_area.body_entered.connect(_on_hit_area_body_entered)
+		#interaction_area.body_exited.connect(_on_hit_area_body_exited)
 		
-	if button_area:
-		button_area.body_entered.connect(_on_button_area_body_entered)
-		button_area.body_exited.connect(_on_button_area_body_exited)
+	#if button_area:
+		#button_area.body_entered.connect(_on_button_area_body_entered)
+		#button_area.body_exited.connect(_on_button_area_body_exited)
 		
 	if prompt:
 		prompt.visible = false
