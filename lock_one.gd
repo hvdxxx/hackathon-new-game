@@ -67,6 +67,42 @@ func dogs_eating():
 		dog_two.play("idle_wd")
 	)
 	
+func dogs_run_to_player():
+	var player = get_tree().get_first_node_in_group("player")
+	var dogs = get_tree().get_nodes_in_group("dog")
+	
+	if not player or dogs.is_empty():
+		push_error("Невозможно пригнать собак: нет игрока или собак на сцене")
+		return
+
+	# 1. Выключаем физику/управление собакам, чтобы они не сопротивлялись Твину
+	for dog in dogs:
+		dog.set_physics_process(false)
+
+		# 2. Включаем анимацию бега/ходьбы для собак
+	dog_one.play("walk_ds") # Если есть анимация бега, замени на "run_..."
+	dog_two.play("walk_ds")
+
+	# 3. Создаем параллельный Твин, чтобы обе собаки побежали ОДНОВРЕМЕННО
+	var run_tween = create_tween().set_parallel(true)
+		
+	for dog in dogs:
+			# Делаем случайное смещение вокруг игрока, чтобы собаки не встали «друг в друга»
+		var dog_offset = Vector2(randf_range(-50, -20), randf_range(-20, 20))
+		var target_position = player.global_position + dog_offset
+			
+			# Запускаем движение (3.0 — это время бега в секундах, можно настроить)
+		run_tween.tween_property(dog, "global_position", target_position, 2.5)
+		
+		# 4. Когда Твин закончится, переключаем собак в idle
+	run_tween.chain().tween_callback(func():
+		dog_one.play("idle_wd")
+		dog_two.play("idle_wd")
+		# Если нужно, чтобы после прибегания собаки снова начали ходить за игроком:
+		# for dog in dogs:
+		#     dog.set_physics_process(true)
+	)
+	
 func start_epic_escape():
 	var player = get_tree().get_first_node_in_group("player")
 	var dogs = get_tree().get_nodes_in_group("dog")
@@ -103,8 +139,14 @@ func start_epic_escape():
 	dog_one.play("walk_ds")
 	dog_two.play("walk_ds")
 	
-	if player.has_method("set_physics_process"):
-		player.set_physics_process(true)
+	escape_tween.chain().tween_callback(func():
+		# Включаем ввод обратно (на случай, если хаб использует этот же скрипт, 
+		# хотя при смене сцены это всё равно сбросится)
+		set_process_unhandled_input(true) 
+		
+		# Вызываем переход в хаб
+		change_to_hub()
+	)
 
 func change_to_hub():
 	print("Переходим в хаб!")

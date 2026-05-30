@@ -1,5 +1,8 @@
 extends Node2D
 
+@export var my_dialogue: DialogueResource
+@export var dialogue_title: String = "lock_two"
+
 @onready var fade_rect: ColorRect = $Control/ColorRect
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://u0nxg470r1op"]
 
-[ext_resource type="Script" uid="uid://ba1c6abc6d8g2" path="res://dog_husky.gd" id="1_2cys5"]
+[ext_resource type="Script" uid="uid://cijoyhoucolj8" path="res://dog_one_final.gd" id="1_0sntt"]
 [ext_resource type="Texture2D" uid="uid://l87bar1ibeng" path="res://Assets/Sprites/dogs/juski.png" id="1_yuda6"]
 [ext_resource type="Texture2D" uid="uid://te331ta06hp4" path="res://Assets/Sprites/Keyboard/keyboard.png" id="3_0sntt"]
 
@@ -481,15 +481,15 @@ atlas = ExtResource("3_0sntt")
 region = Rect2(65, 0, 13, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i21jb"]
-size = Vector2(53, 36.5)
+size = Vector2(58, 41.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0sntt"]
-radius = 6.0827627
+radius = 4.1231055
 
-[node name="Dog_one" type="CharacterBody2D" unique_id=1660775309]
-collision_layer = 255
-collision_mask = 255
-script = ExtResource("1_2cys5")
+[node name="Dog_one" type="CharacterBody2D" unique_id=1660775309 groups=["dog"]]
+collision_layer = 512
+collision_mask = 253
+script = ExtResource("1_0sntt")
 
 [node name="dog_one_anime" type="AnimatedSprite2D" parent="." unique_id=1906402616]
 sprite_frames = SubResource("SpriteFrames_sgeyn")
@@ -516,13 +516,13 @@ collision_layer = 0
 collision_mask = 255
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Button/ButtonArea" unique_id=497968575]
-position = Vector2(0.5, 10.75)
+position = Vector2(0, 13.25)
 shape = SubResource("RectangleShape2D_i21jb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1065453525]
-position = Vector2(0, -3)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=337659444]
+position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_0sntt")
-debug_color = Color(0.9614722, 0.19909272, 5.7756904e-07, 0.41960785)
+debug_color = Color(0.97466356, 0, 0.428587, 0.41960785)
 
 [connection signal="area_entered" from="HitArea" to="." method="_on_hit_area_area_entered"]
 [connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]

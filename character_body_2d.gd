@@ -22,7 +22,27 @@ extends CharacterBody2D
 @export var star_duration: float = 10.0
 @export var absorb_cooldown: float = 20.0
 
+# === НАСТРОЙКИ JUICE ДЛЯ АТАКЫ ===
+@export var attack_dash_force: float = 400.0   # Сила рывка вперед при ударе
+@export var hitstop_duration: float = 0.05     # Длительность микро-паузы при ударе
+# === ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ (КАМЕРА) ===
+@export var zoom_on_attack: float = 1.15      # Насколько сильно приближать камеру (если дефолт 1.0, то 1.15 — легкий зум)
+@export var zoom_duration_in: float = 0.08    # Время приближения (в сек)
+@export var zoom_duration_out: float = 0.18   # Время возврата камеры (в сек)
+
+# === I-FRAMES НАСТРОЙКИ ===
+@export var iframes_duration: float = 0.7 # Длительность бессмертия в секундах
+@export var blink_interval: float = 0.1 # Интервал мерцания спрайта
+var is_invincible: bool = false
+var iframes_timer: float = 0.0
+var blink_timer: float = 0.0
+var was_visible: bool = true # Для запоминания состояния видимости
+
+var default_camera_zoom: Vector2 = Vector2.ONE
+
 @onready var footstep_player: AudioStreamPlayer2D = $footstep
+
+var camera_node: Camera2D
 
 var can_move: bool = true
 
@@ -54,7 +74,9 @@ var footstep_timer: float = 0.0
 var is_moving: bool = false
 var current_speed_for_steps: float = 0.0
 
-var is_attacking: bool = false   # Добавь эту строку
+var is_attacking: bool = false  
+
+var _current_attack_dir: Vector2 = Vector2.ZERO
 
 # Настройка интервалов между шагами (в секундах)
 @export var walk_step_interval: float = 0.45
@@ -83,24 +105,31 @@ func handle_footsteps(delta: float, is_running: bool) -> void:
 		footstep_timer = 0.0
 
 func die():
-	print("ИГРОК ПОГИБ!")
 	# queue_free() или переход на Game Over
-	# get_tree().reload_current_scene() — для теста
+	get_tree().reload_current_scene()
 
 func take_damage(damage: int, hit_direction: Vector2 = Vector2.ZERO):
+	if is_invincible:
+		return
+	
 	health -= damage
-	print("Игрок получил ", damage, " урона! HP: ", health, "/", max_health)
+	GlobalUI.update_player_health()
+	
+	# === ЗАПУСК I-FRAMES ===
+	is_invincible = true
+	iframes_timer = iframes_duration
+	blink_timer = 0.0
+	was_visible = sprite.visible # Запоминаем, что спрайт был видим
 	
 	# === ТРЯСКА КАМЕРЫ ===
-	var camera = get_viewport().get_camera_2d()   # находим камеру
+	var camera = get_viewport().get_camera_2d()
 	if camera and camera.has_method("shake"):
-		# Сильнее трясёт при большем уроне
-		var intensity = 6.0 + (damage * 0.35)
+		var intensity = 6.0 + (damage * 0.45)
 		camera.shake(intensity, 14.0)
 	
-	# Можно добавить knockback потом
+	# === KNOCKBACK (опционально) ===
 	if hit_direction != Vector2.ZERO:
-		velocity += hit_direction * 250   # пример отталкивания
+		velocity += hit_direction * 250
 	
 	if health <= 0:
 		die()
@@ -111,9 +140,14 @@ func _ready():
 	dog = get_tree().get_first_node_in_group("dog")
 	if not dog:
 		push_warning("Собака не найдена! Добавь её в группу 'dog'")
-	
+	camera_node = get_viewport().get_camera_2d() as Camera2D
 	#get_tree().current_scene.add_child(balloon)
 	#DialogueManager.show_dialogue_balloon(dialogue_resource, "start")
+	camera_node = get_viewport().get_camera_2d() as Camera2D
+	
+	# Запоминаем дефолтный зум твоей камеры
+	if camera_node:
+		default_camera_zoom = camera_node.zoom
 
 # ←←← ВСЁ УПРАВЛЕНИЕ КЛИКАМИ ТОЛЬКО ЗДЕСЬ
 func _input(event: InputEvent) -> void:
@@ -143,19 +177,37 @@ func _physics_process(delta: float) -> void:
 	if attack_timer > 0:
 		attack_timer -= delta
 
+# === ОБРАБОТКА I-FRAMES ===
+	if is_invincible:
+		iframes_timer -= delta
+		blink_timer += delta
+		
+		# Мерцание спрайта
+		if blink_timer >= blink_interval:
+			sprite.visible = !sprite.visible
+			blink_timer = 0.0
+		
+		# Конец неуязвимости
+		if iframes_timer <= 0:
+			is_invincible = false
+			sprite.visible = true # Гарантируем видимость
+
 	# === БЛОКИРОВКИ ДВИЖЕНИЯ ===
 	# Если can_move равен false (например, идёт диалог) или мы атакуем — стоим на месте
-	if not can_move or is_attacking:
+	if not can_move:
 		velocity = Vector2.ZERO
 		is_moving = false
 		$GPUParticles2D.emitting = false
-		update_animation(false) # Включаем анимацию покоя
+		update_animation(false)
 		move_and_slide()
 		return
 
 # ←←← НОВОЕ: Блокируем движение во время атаки
 	if is_attacking:
-		velocity = Vector2.ZERO
+		is_moving = false
+		$GPUParticles2D.emitting = false
+		# Плавно гасим рывок от атаки трением
+		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 		move_and_slide()
 		return
 
@@ -269,43 +321,36 @@ func shoot_power_slash() -> void:
 		return
 
 	# === НАПРАВЛЕНИЕ УДАРА ===
-	var mouse_dir = (get_global_mouse_position() - global_position).normalized()
-	var angle = mouse_dir.angle()
+	_current_attack_dir = (get_global_mouse_position() - global_position).normalized()
+	if _current_attack_dir == Vector2.ZERO:
+		_current_attack_dir = Vector2.RIGHT
+		
+	var angle = _current_attack_dir.angle()
 	var angle_normalized = fposmod(angle, TAU)
 	var dir_index = int(snapped(angle_normalized, TAU / 8) / (TAU / 8)) % 8
 
 	var anim_name = melee_anim[dir_index]
 
-	# === БЛОКИРУЕМ ИГРОКА ===
+	# === АКТИВАЦИЯ АТАК И РЫВОК (JUICE) ===
 	is_attacking = true
-	velocity = Vector2.ZERO
+	velocity = _current_attack_dir * attack_dash_force
 
-	# === АНИМАЦИЯ ===
+	# === ВИЗУАЛЬНЫЙ ТВИН СУЖЕНИЯ СПРАЙТА ===
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(sprite, "scale", Vector2(1.2, 0.8), 0.1).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	
+	# === НОВОЕ: ПРИБЛИЖЕНИЕ КАМЕРЫ ===
+	if camera_node:
+		var target_zoom = default_camera_zoom * zoom_on_attack
+		# Плавно зумим камеру за доли секунды до удара
+		create_tween().tween_property(camera_node, "zoom", target_zoom, zoom_duration_in)\
+			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	
+	# === ВИЗУАЛ ===
 	sprite.play(anim_name)
 
-	# === ЖДЁМ КОНЕЦ ===
-	await sprite.animation_finished
-
-	# === СОЗДАЁМ ВОЛНУ ===
-	var slash = power_slash_scene.instantiate()
-	get_parent().add_child(slash)
-
-	var spawn_offset = mouse_dir * 40
-	spawn_offset.y -= 30
-
-	slash.global_position = global_position + spawn_offset
-	slash.setup(mouse_dir, int(wave_damage), self)
-	
-	if attack_wave:
-		attack_wave.volume_db = randf_range(-22,-10)
-		attack_wave.pitch_scale = randf_range(0.9, 1.1)
-		attack_wave.play()
-	
-	# === РАЗБЛОКИРОВКА ===
-	is_attacking = false
-
-	# === КУЛДАУН ===
-	attack_timer = attack_cooldown
+	var attack_duration: float = 0.15 
+	get_tree().create_timer(attack_duration).timeout.connect(_spawn_power_slash_wave)
 
 func shoot_star() -> void:
 	if not star_projectile_scene:
@@ -330,3 +375,60 @@ func shoot_star() -> void:
 	
 	attack_timer = attack_cooldown
 	
+# Этот метод вызывается автоматически по таймеру или сигналу окончания атаки
+func _spawn_power_slash_wave() -> void:
+	if not is_attacking:
+		# Если атаку прервали, возвращаем камеру назад
+		if camera_node:
+			create_tween().tween_property(camera_node, "zoom", default_camera_zoom, zoom_duration_out)\
+				.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		return
+
+	# === СОЗДАЁМ ВОЛНУ ===
+	var slash = power_slash_scene.instantiate()
+	get_parent().add_child(slash)
+
+	var spawn_offset = _current_attack_dir * 32
+	spawn_offset.y -= 16
+
+	slash.global_position = global_position + spawn_offset
+	slash.setup(_current_attack_dir, int(wave_damage), self)
+	
+	if "rotation" in slash:
+		slash.rotation = _current_attack_dir.angle()
+	
+	# === ЭФФЕКТЫ УДАРА (JUICE) ===
+	
+	# 1. Возвращаем форму спрайта назад
+	var tween = create_tween()
+	tween.tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	
+	# 2. Тряска камеры при самом ударе
+	if camera_node and camera_node.has_method("shake"):
+		camera_node.shake(4.0, 10.0)
+		
+	# 3. НОВОЕ: ОТДАЛЕНИЕ КАМЕРЫ НАЗАД ===
+	if camera_node:
+		# Плавно возвращаем зум к обычному значению
+		create_tween().tween_property(camera_node, "zoom", default_camera_zoom, zoom_duration_out)\
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT) # TRANS_BACK даст легкий пружинящий эффект назад
+	
+	# 4. Эффект хитстопа (заморозка)
+	trigger_hitstop(hitstop_duration)
+	
+	# === ЗВУК ===
+	if attack_wave:
+		attack_wave.volume_db = randf_range(-18, -8)
+		attack_wave.pitch_scale = randf_range(0.85, 1.15)
+		attack_wave.play()
+	
+	# === РАЗБЛОКИРОВКА И КУЛДАУН ===
+	is_attacking = false
+	attack_timer = attack_cooldown
+	
+	# Функция для кратковременной остановки времени
+func trigger_hitstop(duration: float) -> void:
+	if duration <= 0: return
+	Engine.time_scale = 0.05 # Почти полная остановка мира
+	await get_tree().create_timer(duration * 0.05, true, false, true).timeout # Таймер, игнорирующий time_scale
+	Engine.time_scale = 1.0

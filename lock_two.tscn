@@ -1,0 +1,255 @@
+[gd_scene format=4 uid="uid://dnk4g8v11qenx"]
+
+[ext_resource type="Script" uid="uid://dyub2y68kvwvn" path="res://lock_two.gd" id="1_x4ksd"]
+[ext_resource type="Texture2D" uid="uid://bt375slmxibvq" path="res://Assets/Sprites/Tileset/bunker/ground.png" id="2_c2gn5"]
+[ext_resource type="PackedScene" uid="uid://bo63hnjbk06rb" path="res://character_body_2d.tscn" id="2_t2yi3"]
+[ext_resource type="Resource" uid="uid://tp38s0lxq7ys" path="res://cut_scene.dialogue" id="3_4c433"]
+[ext_resource type="PackedScene" uid="uid://7vpopep3w8de" path="res://power_slash.tscn" id="3_gj2i1"]
+[ext_resource type="Texture2D" uid="uid://hmp7bll7ef2n" path="res://Assets/Sprites/Tileset/bunker/пол 256 128.png" id="3_y8yu3"]
+[ext_resource type="PackedScene" uid="uid://d3bgkdvf6gd6l" path="res://star_projectile.tscn" id="4_4c433"]
+[ext_resource type="Texture2D" uid="uid://cxgn17iimnre6" path="res://Assets/Sprites/Tileset/bunker/угол1.png" id="5_qkg1k"]
+[ext_resource type="PackedScene" uid="uid://u0nxg470r1op" path="res://dog_husky.tscn" id="5_sf1m5"]
+[ext_resource type="PackedScene" uid="uid://bp7f4i4cewyem" path="res://dog_two.tscn" id="6_c2gn5"]
+[ext_resource type="Texture2D" uid="uid://ddsnxe1hvjsxh" path="res://Assets/Sprites/Tileset/bunker/стена2.png" id="6_qdcwj"]
+[ext_resource type="PackedScene" uid="uid://bbob84lmv4htn" path="res://first_boss.tscn" id="8_sf1m5"]
+[ext_resource type="PackedScene" uid="uid://banqciabtl8nd" path="res://light.tscn" id="8_wl6vr"]
+[ext_resource type="Script" uid="uid://8r75c7au5qik" path="res://CameraFollow.gd" id="9_sf1m5"]
+[ext_resource type="PackedScene" uid="uid://caoilsettdqlp" path="res://light_dogs.tscn" id="10_deu1x"]
+[ext_resource type="PackedScene" uid="uid://b05lwtap0uy1q" path="res://boss_light.tscn" id="13_7pr5t"]
+[ext_resource type="PackedScene" uid="uid://b4isifr7cbwqk" path="res://boss_one_projectile.tscn" id="13_deu1x"]
+[ext_resource type="AudioStream" uid="uid://drqvtcx1a4s4h" path="res://Assets/Audio/boss_one/4 boss 1 sarang.wav" id="18_qkg1k"]
+[ext_resource type="Script" uid="uid://1mbwyvi6gt13" path="res://trigger_zone.gd" id="19_qdcwj"]
+[ext_resource type="PackedScene" uid="uid://cshpj83w12lb4" path="res://objects_scenes/bochka.tscn" id="20_4x1dl"]
+[ext_resource type="PackedScene" uid="uid://do716panyqbk2" path="res://objects_scenes/trash.tscn" id="21_8wg04"]
+[ext_resource type="Texture2D" uid="uid://bvcnqistaw565" path="res://Assets/Sprites/Builds/bunker/угол4.png" id="22_vx00o"]
+[ext_resource type="Texture2D" uid="uid://b1w7bsaxqqtqp" path="res://Assets/Sprites/Builds/bunker/угол3,2.png" id="23_b5hs6"]
+[ext_resource type="Texture2D" uid="uid://cchrcdmpo3x2p" path="res://Assets/Sprites/Builds/bunker/угол2,1.png" id="24_4kk5v"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vx00o"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_uxvxc"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4x1dl"]
+texture = ExtResource("3_y8yu3")
+texture_region_size = Vector2i(256, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x4ksd"]
+texture = ExtResource("2_c2gn5")
+texture_region_size = Vector2i(256, 128)
+0:0/0 = 0
+1:0/size_in_atlas = Vector2i(1, 3)
+1:0/0 = 0
+2:0/size_in_atlas = Vector2i(1, 3)
+2:0/0 = 0
+3:0/size_in_atlas = Vector2i(1, 3)
+3:0/next_alternative_id = 2
+3:0/0 = 0
+3:0/1 = 1
+4:0/size_in_atlas = Vector2i(1, 3)
+4:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8wg04"]
+texture = ExtResource("5_qkg1k")
+texture_region_size = Vector2i(294, 145)
+0:0/size_in_atlas = Vector2i(2, 4)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 94)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-256.15894, -467.30243, -271.16406, -68.594864, 264.73325, 197.2102, 267.3504, 19.733002, 281.882, -207.92816)
+0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-259.37427, -233.43686, -248.99933, 181.56204, 2.2979279, 65.43271, 259.37433, 194.53073, 259.37433, -212.68692)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vx00o"]
+texture = ExtResource("6_qdcwj")
+texture_region_size = Vector2i(320, 138)
+0:0/size_in_atlas = Vector2i(2, 5)
+0:0/next_alternative_id = 2
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 157)
+0:0/0/z_index = 1
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-256.15894, -467.30243, -271.16406, -68.594864, 264.73325, 197.2102, 267.3504, 19.733002, 281.882, -207.92816)
+0:0/1 = 1
+0:0/1/flip_h = true
+0:0/1/texture_origin = Vector2i(0, 155)
+0:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-256.15894, -467.30243, -271.16406, -68.594864, 264.73325, 197.2102, 267.3504, 19.733002, 281.882, -207.92816)
+
+[sub_resource type="TileSet" id="TileSet_0ifdx"]
+tile_shape = 1
+tile_size = Vector2i(256, 128)
+physics_layer_0/collision_layer = 1
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_vx00o")
+physics_layer_1/collision_layer = 1
+physics_layer_1/physics_material = SubResource("PhysicsMaterial_uxvxc")
+sources/1 = SubResource("TileSetAtlasSource_x4ksd")
+sources/0 = SubResource("TileSetAtlasSource_4x1dl")
+sources/2 = SubResource("TileSetAtlasSource_8wg04")
+sources/3 = SubResource("TileSetAtlasSource_vx00o")
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_4x1dl"]
+a = Vector2(-421, -163)
+b = Vector2(-173, -290)
+
+[sub_resource type="ConcavePolygonShape2D" id="ConcavePolygonShape2D_b5hs6"]
+segments = PackedVector2Array(-230, 155, 12, 273, 15, 273, 255, 150)
+
+[sub_resource type="ConcavePolygonShape2D" id="ConcavePolygonShape2D_4kk5v"]
+segments = PackedVector2Array(-182, -27, 66, 101, -172, -26, 57, -154)
+
+[node name="lock_two" type="Node2D" unique_id=28059193]
+y_sort_enabled = true
+script = ExtResource("1_x4ksd")
+my_dialogue = ExtResource("3_4c433")
+
+[node name="Color" type="CanvasModulate" parent="." unique_id=2058705498 groups=["map_light"]]
+position = Vector2(577, 109.666664)
+scale = Vector2(0.4, 0.4)
+color = Color(0.23137255, 0.23137255, 0.4392157, 1)
+
+[node name="Soundtrack" type="AudioStreamPlayer2D" parent="." unique_id=1326676873]
+position = Vector2(324, 26)
+stream = ExtResource("18_qkg1k")
+volume_db = -21.178
+autoplay = true
+max_distance = 800.0
+attenuation = 2.0705304
+
+[node name="MainTile" type="TileMapLayer" parent="." unique_id=1762361876]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(-40, -36)
+tile_map_data = PackedByteArray("AAD///r/AwAAAAAAAAD9//b/AwAAAAAAAAD7//L/AwAAAAAAAAD5/+7/AwAAAAAAAAABAPr/AgAAAAAAAAACAP3/AwAAAAAAAAD4/+7/AAAAAAAAAAD3/+//AAAAAAAAAAD4//D/AAAAAAAAAAD4//H/AAAAAAAAAAD5//L/AAAAAAAAAAD5//P/AAAAAAAAAAD6//T/AAAAAAAAAAD6//X/AAAAAAAAAAD7//b/AAAAAAAAAAD7//f/AAAAAAAAAAD8//j/AAAAAAAAAAD8//n/AAAAAAAAAAD9//r/AAAAAAAAAAD9//v/AAAAAAAAAAD+//z/AAAAAAAAAAD+//3/AAAAAAAAAAD4/+//AAAAAAAAAAD5//D/AAAAAAAAAAD5//H/AAAAAAAAAAD6//L/AAAAAAAAAAD6//P/AAAAAAAAAAD7//T/AAAAAAAAAAD7//X/AAAAAAAAAAD8//b/AAAAAAAAAAD8//f/AAAAAAAAAAD9//j/AAAAAAAAAAD9//n/AAAAAAAAAAD+//r/AAAAAAAAAAD+//v/AAAAAAAAAAD///z/AAAAAAAAAAD///7/AAAAAAAAAAD/////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAACAAQAAAAAAAAAAAACAAUAAAAAAAAAAAADAAYAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAgAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAoAAAAAAAAAAAAFAAkAAAAAAAAAAAAFAAgAAAAAAAAAAAAEAAcAAAAAAAAAAAAEAAYAAAAAAAAAAAADAAUAAAAAAAAAAAADAAQAAAAAAAAAAAACAAMAAAAAAAAAAAACAAIAAAAAAAAAAAABAAEAAAAAAAAAAAABAAAAAAAAAAAAAAAAAP//AAAAAAAAAAAAAP7/AAAAAAAAAAD///3/AAAAAAAAAAD+/wEAAAAAAAAAAAD//wAAAAAAAAAAAAAAAP3/AAAAAAAAAAABAPz/AAAAAAAAAAABAP3/AAAAAAAAAAACAP7/AAAAAAAAAAACAP//AAAAAAAAAAADAAAAAAAAAAAAAAACAAEAAAAAAAAAAAABAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wIAAAAAAAAAAAD//wMAAAAAAAAAAAAAAAQAAAAAAAAAAAACAAAAAAAAAAAAAAABAP//AAAAAAAAAAABAP7/AAAAAAAAAAD4/+z/AgAAAAAAAAA=")
+tile_set = SubResource("TileSet_0ifdx")
+x_draw_order_reversed = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=514192940]
+position = Vector2(-1977, -1097)
+zoom = Vector2(2, 2)
+limit_enabled = false
+position_smoothing_enabled = true
+position_smoothing_speed = 50.0
+script = ExtResource("9_sf1m5")
+smoothing_speed = 15.0
+
+[node name="MainHero" parent="." unique_id=526832582 instance=ExtResource("2_t2yi3")]
+z_index = 1
+position = Vector2(-1887.0001, -1036)
+scale = Vector2(0.6, 0.6)
+collision_layer = 1
+collision_mask = 1
+dialogue_resource = ExtResource("3_4c433")
+power_slash_scene = ExtResource("3_gj2i1")
+star_projectile_scene = ExtResource("4_4c433")
+
+[node name="Light" parent="MainHero" unique_id=2027389087 instance=ExtResource("8_wl6vr")]
+
+[node name="Dog_one" parent="." unique_id=1660775309 instance=ExtResource("5_sf1m5")]
+y_sort_enabled = true
+position = Vector2(-1873, -1099)
+collision_layer = 128
+collision_mask = 2
+follow_offset = Vector2(-35, 4)
+
+[node name="light_dogs" parent="Dog_one" unique_id=1526211216 instance=ExtResource("10_deu1x")]
+
+[node name="Dog_two" parent="." unique_id=285673954 instance=ExtResource("6_c2gn5")]
+light_mask = 1
+visibility_layer = 1
+y_sort_enabled = true
+position = Vector2(-2005, -1047)
+collision_layer = 128
+collision_mask = 2
+follow_offset = Vector2(35, 5)
+
+[node name="light_dogs" parent="Dog_two" unique_id=1970455434 instance=ExtResource("10_deu1x")]
+
+[node name="First_boss" parent="." unique_id=1110139180 instance=ExtResource("8_sf1m5")]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(351, 46)
+collision_mask = 4
+melee_damage = 15.0
+line_damage = 5.0
+burst_damage = 10.0
+ultimate_damage = 15.0
+projectile_scene = ExtResource("13_deu1x")
+
+[node name="BossLight" parent="First_boss" unique_id=1271051030 instance=ExtResource("13_7pr5t")]
+
+[node name="Control" type="Control" parent="." unique_id=1343658186]
+z_index = 4
+y_sort_enabled = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1770822322]
+visible = false
+layout_mode = 0
+offset_left = -2673.0
+offset_top = -1679.0
+offset_right = -1259.0
+offset_bottom = -597.0
+color = Color(0, 0, 0, 1)
+
+[node name="TriggerZone" type="Area2D" parent="." unique_id=1261590767 node_paths=PackedStringArray("boss")]
+script = ExtResource("19_qdcwj")
+boss = NodePath("../First_boss")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerZone" unique_id=651836600]
+shape = SubResource("SegmentShape2D_4x1dl")
+
+[node name="Bochka" parent="." unique_id=853205045 instance=ExtResource("20_4x1dl")]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(92, -162)
+scale = Vector2(0.2, 0.2)
+
+[node name="Bochka2" parent="." unique_id=695688282 instance=ExtResource("20_4x1dl")]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(243.00002, -208)
+scale = Vector2(0.2, 0.2)
+
+[node name="Trash" parent="." unique_id=2089551661 instance=ExtResource("21_8wg04")]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(-236, 120)
+
+[node name="Trash2" parent="." unique_id=1140600201 instance=ExtResource("21_8wg04")]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(351, -214)
+scale = Vector2(0.6, 0.6)
+
+[node name="Угол4" type="Sprite2D" parent="." unique_id=1382417790]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(209, 392)
+texture = ExtResource("22_vx00o")
+offset = Vector2(0, -256.66)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Угол4" unique_id=1592498218]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Угол4/StaticBody2D" unique_id=1674162424]
+position = Vector2(-4, -258)
+shape = SubResource("ConcavePolygonShape2D_b5hs6")
+
+[node name="Угол3,2" type="Sprite2D" parent="." unique_id=383373704]
+z_index = 2
+y_sort_enabled = true
+position = Vector2(-288, 141)
+texture = ExtResource("23_b5hs6")
+offset = Vector2(0, -205.195)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Угол3,2" unique_id=1575345963]
+position = Vector2(53, -21)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Угол3,2/StaticBody2D" unique_id=391774720]
+shape = SubResource("ConcavePolygonShape2D_4kk5v")
+
+[node name="Угол2,1" type="Sprite2D" parent="." unique_id=1423633785]
+z_index = 2
+position = Vector2(859, -127)
+texture = ExtResource("24_4kk5v")
+
+[connection signal="body_entered" from="TriggerZone" to="TriggerZone" method="_on_body_entered"]

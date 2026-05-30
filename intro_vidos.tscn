@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cal8a4xobj7rk"]
+
+[ext_resource type="Script" uid="uid://dhf8lh52qhq35" path="res://intro_vidos.gd" id="1_8bsab"]
+[ext_resource type="VideoStream" uid="uid://j3xb2m1qo3ns" path="res://Assets/Intro/intro.ogv" id="1_haepa"]
+
+[node name="intro_vidos" type="Node2D" unique_id=1991542069]
+script = ExtResource("1_8bsab")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1598897646]
+offset_right = 40.0
+offset_bottom = 40.0
+stream = ExtResource("1_haepa")
+volume_db = -25.51
+autoplay = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1750765954]
+position = Vector2(960, 540)
+
+[node name="Control" type="Control" parent="." unique_id=99412074]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=379880029]
+layout_mode = 0
+offset_right = 1935.0
+offset_bottom = 1107.0
+color = Color(0, 0, 0, 1)
+
+[connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]

@@ -2,6 +2,16 @@
 
 [ext_resource type="Texture2D" uid="uid://ch5rpf8aknmv" path="res://Assets/Sprites/HP_Bar/bg.png" id="1_a0vjj"]
 [ext_resource type="Texture2D" uid="uid://dy2smta03tv3" path="res://Assets/Sprites/HP_Bar/red.png" id="2_prhoy"]
+[ext_resource type="Texture2D" uid="uid://knc1deik8nbn" path="res://Assets/Sprites/HP_Bar/empty_bar.png" id="3_1pdos"]
+[ext_resource type="Texture2D" uid="uid://bhiy1sagcqjp" path="res://Assets/Sprites/HP_Bar/health_bar.png" id="4_f8as4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_prtyw"]
+atlas = ExtResource("3_1pdos")
+region = Rect2(0, 0, 98, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc2nv"]
+atlas = ExtResource("4_f8as4")
+region = Rect2(0, 0, 98, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_a0vjj"]
 font_size = 35
@@ -12,11 +22,14 @@ font_size = 35
 
 [node name="Control" type="Control" parent="CanvasLayer" unique_id=1192353182]
 layout_mode = 3
-anchors_preset = 0
-offset_left = 532.0
-offset_top = 701.0
-offset_right = 572.0
-offset_bottom = 741.0
+anchor_left = 0.277
+anchor_top = 0.92200005
+anchor_right = 0.758
+anchor_bottom = 0.97900003
+offset_left = 0.15997314
+offset_top = -294.76007
+offset_right = -883.36
+offset_bottom = -316.32007
 
 [node name="Panel" type="Panel" parent="CanvasLayer/Control" unique_id=244738053]
 visible = false
@@ -41,7 +54,26 @@ nine_patch_stretch = true
 texture_under = ExtResource("1_a0vjj")
 texture_progress = ExtResource("2_prhoy")
 
+[node name="PlayerProgressBar" type="TextureProgressBar" parent="CanvasLayer/Control" unique_id=396181425]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.6250001
+anchor_top = 6.925
+anchor_right = 24.900002
+anchor_bottom = 9.450001
+offset_left = -404.0
+offset_top = -932.0
+offset_right = -1081.0
+offset_bottom = -972.0
+max_value = 800.0
+value = 50.0
+nine_patch_stretch = true
+texture_under = SubResource("AtlasTexture_prtyw")
+texture_progress = SubResource("AtlasTexture_rc2nv")
+
 [node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=541856581]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 9.225

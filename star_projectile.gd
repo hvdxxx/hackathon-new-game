@@ -51,6 +51,6 @@ func _hit_target(target: Node) -> void:
 	if has_hit:
 		return
 	if target and target.has_method("take_damage"):
-		target.take_damage(damage, direction, false)
+		target.take_damage(damage)
 	has_hit = true
 	queue_free()

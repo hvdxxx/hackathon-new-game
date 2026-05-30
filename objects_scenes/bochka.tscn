@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cshpj83w12lb4"]
+
+[ext_resource type="Texture2D" uid="uid://bnyete7idup02" path="res://Assets/Sprites/Builds/bunker/бочки.png" id="1_0ebdu"]
+
+[sub_resource type="ConcavePolygonShape2D" id="ConcavePolygonShape2D_amd2o"]
+segments = PackedVector2Array(-132, -37, -77, 1, -75, 1, -11, -1, -11, -1, 26, 42, 26, 41, 101, 47, -123, -38, -56, -61, -51, -59, 130, 9, 130, 12, 104, 45, 105, 20, -69, -40)
+
+[node name="Bochka" type="Node2D" unique_id=853205045]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1181800172]
+texture = ExtResource("1_0ebdu")
+offset = Vector2(0, -99.36)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2075398996]
+position = Vector2(-5, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=393639235]
+shape = SubResource("ConcavePolygonShape2D_amd2o")

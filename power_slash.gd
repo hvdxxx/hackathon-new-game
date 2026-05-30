@@ -57,7 +57,7 @@ func _on_area_entered(area: Area2D) -> void:
 		# Урон наносим родителю зоны (самому боссу CharacterBody2D)
 		var target = area.get_parent()
 		if target.has_method("take_damage"):
-			target.take_damage(damage, direction, false) # Без knockback
+			target.take_damage(damage) # Без knockback
 			print("Урон ", damage, " нанесён по ", target.name)
 			has_hit = true
 			queue_free() # Удаляем пулю, она выполнила цель

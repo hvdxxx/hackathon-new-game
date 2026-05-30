@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://co13wq4j30l0m"]
+
+[ext_resource type="Script" uid="uid://p7cu38vsvanc" path="res://hero_ui.gd" id="1_46hat"]
+[ext_resource type="Texture2D" uid="uid://knc1deik8nbn" path="res://Assets/Sprites/HP_Bar/empty_bar.png" id="1_qti35"]
+[ext_resource type="Texture2D" uid="uid://bhiy1sagcqjp" path="res://Assets/Sprites/HP_Bar/health_bar.png" id="2_46hat"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmye4"]
+atlas = ExtResource("1_qti35")
+region = Rect2(0, 0, 98, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ifiki"]
+atlas = ExtResource("2_46hat")
+region = Rect2(0, 0, 98, 16)
+
+[node name="HeroUI" type="Node2D" unique_id=1910478972]
+script = ExtResource("1_46hat")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=39936712]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1863594555]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control" unique_id=71339538]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer/Control" unique_id=516986935]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.1500001
+anchor_top = 2.15
+anchor_right = 4.6000004
+anchor_bottom = 2.5500002
+offset_right = 415.0
+offset_bottom = 65.0
+nine_patch_stretch = true
+texture_under = SubResource("AtlasTexture_rmye4")
+texture_progress = SubResource("AtlasTexture_ifiki")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=41799718]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

@@ -21,18 +21,18 @@ region = Rect2(872, 0, 436, 1024)
 [sub_resource type="SpriteFrames" id="SpriteFrames_nwm0c"]
 animations = [{
 "frames": [{
-"duration": 0.3,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_v34dv")
 }, {
-"duration": 0.5,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_g5uuv")
 }, {
-"duration": 0.3,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_nwm0c")
 }],
 "loop": true,
 "name": &"default",
-"speed": 7.0
+"speed": 10.0
 }]
 
 [sub_resource type="Gradient" id="Gradient_xj1rt"]
@@ -80,7 +80,6 @@ sprite_frames = SubResource("SpriteFrames_nwm0c")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=385957851]
 amount = 70
-amount_ratio = 0.5981
 texture = SubResource("GradientTexture2D_6xyfi")
 lifetime = 0.71
 process_material = SubResource("ParticleProcessMaterial_83w4c")

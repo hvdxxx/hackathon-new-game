@@ -29,7 +29,7 @@ func play_scroling_sound() -> void:
 
 func _on_play_pressed() -> void:
 	play_audio()
-	get_tree().change_scene_to_file("res://intro_sequence.tscn")
+	get_tree().change_scene_to_file("res://intro_vidos.tscn")
 
 func _on_exit_pressed() -> void:
 	others_audio()

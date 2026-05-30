@@ -1,66 +1,103 @@
 # global_ui.gd
 extends Node
 
-var boss_health_bar: Node = null
+# Ссылка на общую сцену интерфейса (бывшая BossUI)
+var ui_instance: Node = null
+
+# Ссылки на текущие объекты для обновления данных
 var current_boss = null
+var current_player = null
+
+# Универсальная функция инициализации интерфейса
+func _ensure_ui_loaded():
+	if ui_instance == null:
+		ui_instance = preload("res://BossUI.tscn").instantiate()
+		add_child(ui_instance)
+
+# ====================== ЛОГИКА БОССА (Твой проверенный код) ======================
 
 func show_boss_health(boss_node: Node):
-	if boss_health_bar == null:
-		boss_health_bar = preload("res://BossUI.tscn").instantiate()
-		add_child(boss_health_bar)  # добавляем на глобальный уровень
-	
+	_ensure_ui_loaded()
 	current_boss = boss_node
-	boss_health_bar.visible = true
+	
+	var canvas = ui_instance.get_node_or_null("CanvasLayer")
+	if canvas: canvas.visible = true
+	
+	var boss_bar = ui_instance.get_node_or_null("CanvasLayer/Control/TextureProgressBar")
+	if boss_bar: 
+		boss_bar.visible = true
+		
+		# === НОВОЕ: Динамическая настройка максимального HP ===
+		# Проверяем, есть ли вообще у этого босса переменная max_health, чтобы игра не вылетала
+		if "max_health" in boss_node:
+			boss_bar.max_value = boss_node.max_health
+		else:
+			# На всякий случай дефолтное значение, если забыли указать в боссе
+			boss_bar.max_value = 100.0 
+	
+	var boss_text = ui_instance.get_node_or_null("CanvasLayer/Control/Label")
+	if boss_text: boss_text.visible = true
+	
 	update_health()
 
 func hide_boss_health():
-	if boss_health_bar:
-		# 1. Пробуем скрыть корень (на всякий случай)
-		boss_health_bar.visible = false
+	if ui_instance:
+		var boss_bar = ui_instance.get_node_or_null("CanvasLayer/Control/TextureProgressBar")
+		var boss_text = ui_instance.get_node_or_null("CanvasLayer/Control/Label")
 		
-		# 2. Ищем CanvasLayer внутри UI сцены и принудительно тушим его
-		var canvas = boss_health_bar.get_node_or_null("CanvasLayer")
-		if canvas:
-			canvas.visible = false
-			
-		# 3. На всякий случай ищем сам Control
-		var control = boss_health_bar.get_node_or_null("CanvasLayer/Control")
-		if control:
-			control.visible = false
-			
-		print("✅ Полноценное скрытие UI вызвано")
+		if boss_bar: boss_bar.visible = false
+		if boss_text: boss_text.visible = false
 		
+		print("✅ ХП-бар босса скрыт")
 	current_boss = null
 
 func update_health():
-	if not boss_health_bar or not current_boss:
+	if not current_boss or not is_instance_valid(current_boss):
 		return
+		
+	var boss_bar = ui_instance.get_node_or_null("CanvasLayer/Control/TextureProgressBar")
+	if boss_bar and "current_health" in current_boss:
+		# Устанавливаем текущее здоровье босса на полоску
+		boss_bar.value = current_boss.current_health
+
+# ====================== ЛОГИКА ИГРОКА (Новая, точно такая же!) ======================
+
+func show_player_health(player_node: Node):
+	_ensure_ui_loaded()
+	current_player = player_node
 	
-	# ИЩЕМ TextureProgressBar
-	var progress_bar = boss_health_bar.get_node_or_null("CanvasLayer/Control/TextureProgressBar")
+	# Делаем видимым сам холст CanvasLayer, если он был выключен
+	var canvas = ui_instance.get_node_or_null("CanvasLayer")
+	if canvas: canvas.visible = true
 	
-	# Если не нашёл — попробуем другие популярные имена
-	if progress_bar == null:
-		progress_bar = boss_health_bar.get_node_or_null("CanvasLayer/Control/TextureProgressBar")
-	if progress_bar == null:
-		progress_bar = boss_health_bar.get_node_or_null("HealthBar")
-	if progress_bar == null:
-		progress_bar = boss_health_bar.get_node_or_null("ProgressBar")
+	# Ищем наш новый созданный в Шаге 1 бар игрока
+	var player_bar = ui_instance.get_node_or_null("CanvasLayer/Control/PlayerProgressBar")
+	if player_bar:
+		player_bar.visible = true
+	else:
+		print("❌ Ошибка: В BossUI.tscn не найден CanvasLayer/Control/PlayerProgressBar!")
+		
+	update_player_health()
+
+func hide_player_health():
+	if ui_instance:
+		var player_bar = ui_instance.get_node_or_null("CanvasLayer/Control/PlayerProgressBar")
+		if player_bar: player_bar.visible = false
+	current_player = null
+
+func update_player_health():
+	if not ui_instance or not current_player: return
 	
+	var progress_bar = ui_instance.get_node_or_null("CanvasLayer/Control/PlayerProgressBar")
 	if progress_bar == null:
-		print("❌ Не найден TextureProgressBar! Вот что есть в сцене:")
-		for child in boss_health_bar.get_children():
-			print("   → ", child.name, " (", child.get_class(), ")")
-			# проверяем детей второго уровня
-			for subchild in child.get_children():
-				print("      └─ ", subchild.name, " (", subchild.get_class(), ")")
+		print("❌ Не найден PlayerProgressBar для обновления ХП игрока!")
 		return
-	
-	# Безопасное получение max_health
-	var max_hp = current_boss.max_health if "max_health" in current_boss else current_boss.health
-	var cur_hp = current_boss.health if "health" in current_boss else 100
+		
+	# Вытаскиваем хп из игрока. 
+	# (Подставь имена переменных здоровья твоего игрока, если они отличаются, например hp и max_hp)
+	var max_hp = current_player.max_health if "max_health" in current_player else 100
+	var cur_hp = current_player.health if "health" in current_player else 100
 	
 	progress_bar.max_value = max_hp
 	progress_bar.value = cur_hp
-	
-	print("HP обновлён: ", current_boss.health, " / ", current_boss.max_health)  # для отладки
+	print("HP Игрока обновлён: ", cur_hp, " / ", max_hp)

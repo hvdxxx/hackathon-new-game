@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://do716panyqbk2"]
+
+[ext_resource type="Texture2D" uid="uid://b6hf5ipeiagky" path="res://Assets/Sprites/Builds/bunker/мусор.png" id="1_tc6kr"]
+
+[sub_resource type="ConcavePolygonShape2D" id="ConcavePolygonShape2D_07rq6"]
+segments = PackedVector2Array(-176, -35, 15, 67, 20, 67, 176, -18, -177, -35, 1, -84, 4, -83, 178, -19)
+
+[node name="Trash" type="Node2D" unique_id=2089551661]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=124947154]
+texture = ExtResource("1_tc6kr")
+offset = Vector2(0, -66.11)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1718598558]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1141938188]
+shape = SubResource("ConcavePolygonShape2D_07rq6")

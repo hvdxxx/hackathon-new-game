@@ -94,3 +94,7 @@ autowrap_mode = 2
 [node name="Camera2D" type="Camera2D" parent="." unique_id=337072624]
 position = Vector2(960.00006, 540)
 scale = Vector2(7.7685304, 1)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1604105977]
+offset_right = 40.0
+offset_bottom = 40.0

@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://7vpopep3w8de" path="res://power_slash.tscn" id="5_fmr5b"]
 [ext_resource type="PackedScene" uid="uid://banqciabtl8nd" path="res://light.tscn" id="5_pu5o0"]
 [ext_resource type="PackedScene" uid="uid://d3bgkdvf6gd6l" path="res://star_projectile.tscn" id="6_5d24t"]
+[ext_resource type="Texture2D" uid="uid://7l64x362ufma" path="res://Assets/Sprites/Tileset/lock_one_tileset.png" id="6_un0ve"]
+[ext_resource type="Texture2D" uid="uid://cahwg2qkx6mbs" path="res://Assets/Sprites/Tileset/new_tileset.png" id="7_xb8re"]
 [ext_resource type="PackedScene" uid="uid://bj1chsvio7kg8" path="res://campfire.tscn" id="8_h73n1"]
 [ext_resource type="PackedScene" uid="uid://u0nxg470r1op" path="res://dog_husky.tscn" id="10_svuix"]
 [ext_resource type="PackedScene" uid="uid://bp7f4i4cewyem" path="res://dog_two.tscn" id="11_g4aah"]
@@ -32,6 +34,8 @@
 [ext_resource type="PackedScene" uid="uid://nrq1ajub7o3j" path="res://board.tscn" id="27_ks5a0"]
 [ext_resource type="Script" uid="uid://d2p586y1fqndn" path="res://hub_board.gd" id="28_37usr"]
 [ext_resource type="PackedScene" uid="uid://r44mky6wewyh" path="res://objects_scenes/bunker.tscn" id="29_pwl4i"]
+[ext_resource type="Script" uid="uid://b6pk3864nfmm0" path="res://bunker_next_level.gd" id="33_xl2le"]
+[ext_resource type="AudioStream" uid="uid://d12qtt5rw0qo0" path="res://Assets/Audio/ost/hab1 ost.wav" id="34_h880j"]
 
 [sub_resource type="Environment" id="Environment_xl2le"]
 glow_enabled = true
@@ -181,15 +185,62 @@ texture_region_size = Vector2i(128, 64)
 6:7/0 = 0
 7:7/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ndm6l"]
+texture = ExtResource("6_un0ve")
+texture_region_size = Vector2i(128, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+4:4/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s2e6o"]
+texture = ExtResource("7_xb8re")
+texture_region_size = Vector2i(128, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+0:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_pu5o0"]
 tile_shape = 1
 tile_size = Vector2i(128, 64)
 sources/0 = SubResource("TileSetAtlasSource_d253l")
 sources/1 = SubResource("TileSetAtlasSource_qulsf")
 sources/2 = SubResource("TileSetAtlasSource_n4j6p")
+sources/3 = SubResource("TileSetAtlasSource_ndm6l")
+sources/4 = SubResource("TileSetAtlasSource_s2e6o")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pwl4i"]
-radius = 56.008926
+radius = 33.01515
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fmr5b"]
 blend_mode = 1
@@ -218,6 +269,7 @@ radius = 203.25476
 [node name="HubLocation" type="Node2D" unique_id=1909228133]
 y_sort_enabled = true
 script = ExtResource("1_7xwdp")
+my_dialogue = ExtResource("26_pwl4i")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=314634386]
 
@@ -268,7 +320,7 @@ tile_set = SubResource("TileSet_pu5o0")
 
 [node name="MainHero" parent="." unique_id=526832582 instance=ExtResource("3_qulsf")]
 z_index = 0
-position = Vector2(-402, -340)
+position = Vector2(-398, -319)
 scale = Vector2(0.6, 0.6)
 dialogue_resource = ExtResource("26_pwl4i")
 power_slash_scene = ExtResource("5_fmr5b")
@@ -279,7 +331,7 @@ position = Vector2(0, -28.333332)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=340574633]
 y_sort_enabled = true
-position = Vector2(115, 213)
+position = Vector2(-441, -364)
 zoom = Vector2(2, 2)
 limit_enabled = false
 position_smoothing_enabled = true
@@ -288,13 +340,15 @@ script = ExtResource("5_7xwdp")
 smoothing_speed = 5.0
 
 [node name="Control" type="Control" parent="." unique_id=512376923]
+visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -270.0
+offset_top = -264.0
+offset_right = -230.0
+offset_bottom = -224.0
 
 [node name="ColorRect" type="ColorRect" parent="Control" unique_id=525909731]
-visible = false
 z_index = 10
 y_sort_enabled = true
 layout_mode = 0
@@ -310,18 +364,21 @@ position = Vector2(128, -194)
 [node name="Light" parent="Campfire" unique_id=604922257 instance=ExtResource("5_pu5o0")]
 
 [node name="Area2D" type="Area2D" parent="Campfire" unique_id=1656924796]
+collision_layer = 64
+collision_mask = 2
 script = ExtResource("13_3cgdk")
+my_dialogue = ExtResource("26_pwl4i")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Campfire/Area2D" unique_id=1102287207]
 shape = SubResource("CircleShape2D_pwl4i")
 debug_color = Color(0, 0.64668494, 0.23854035, 0.41960785)
 
-[node name="Dog_one" parent="." unique_id=1660775309 groups=["dog"] instance=ExtResource("10_svuix")]
+[node name="Dog_one" parent="." unique_id=1660775309 instance=ExtResource("10_svuix")]
 material = SubResource("CanvasItemMaterial_fmr5b")
 position = Vector2(89, -270)
 script = ExtResource("14_tmgms")
 
-[node name="Dog_two" parent="." unique_id=285673954 groups=["dog"] instance=ExtResource("11_g4aah")]
+[node name="Dog_two" parent="." unique_id=285673954 instance=ExtResource("11_g4aah")]
 material = SubResource("CanvasItemMaterial_5d24t")
 position = Vector2(231, -209)
 script = ExtResource("16_3cgdk")
@@ -475,13 +532,23 @@ position = Vector2(486, -205)
 scale = Vector2(0.4, 0.4)
 
 [node name="Area2D" type="Area2D" parent="bunker" unique_id=1100023158]
+collision_layer = 524288
+collision_mask = 2
+script = ExtResource("33_xl2le")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bunker/Area2D" unique_id=1089943491]
 position = Vector2(-89.99999, 44.999996)
 shape = SubResource("CircleShape2D_h880j")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1995128083]
+stream = ExtResource("34_h880j")
+volume_db = -30.0
+autoplay = true
 
 [connection signal="body_entered" from="Campfire/Area2D" to="Campfire/Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="znak/Area2D" to="znak/Area2D" method="_on_body_entered"]
 [connection signal="body_exited" from="znak/Area2D" to="znak/Area2D" method="_on_body_exited"]
 [connection signal="body_entered" from="Board/Area2D" to="Board/Area2D" method="_on_body_entered"]
 [connection signal="body_exited" from="Board/Area2D" to="Board/Area2D" method="_on_body_exited"]
+[connection signal="area_entered" from="bunker/Area2D" to="bunker/Area2D" method="_on_area_entered"]
+[connection signal="body_entered" from="bunker/Area2D" to="bunker/Area2D" method="_on_body_entered"]

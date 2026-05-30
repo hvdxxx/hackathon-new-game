@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://b4isifr7cbwqk"]
+
+[ext_resource type="Script" uid="uid://cyur06gxwdyw8" path="res://boss_one_projectile.gd" id="1_otom7"]
+[ext_resource type="Texture2D" uid="uid://dehltnrsrf1e8" path="res://Assets/Sprites/Projectiles/boss_one/hearth.png" id="2_aceid"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jhwpf"]
+radius = 14.0
+
+[sub_resource type="Gradient" id="Gradient_aceid"]
+colors = PackedColorArray(0.5569036, 0, 0.31355155, 1, 0.29411766, 0.29411766, 0.29411766, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jhwpf"]
+gradient = SubResource("Gradient_aceid")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.7991266, 0.20087336)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aceid"]
+particle_flag_disable_z = true
+angle_min = -70.09999
+angle_max = 77.80001
+spread = 180.0
+initial_velocity_min = 10.809999
+initial_velocity_max = 178.37999
+gravity = Vector3(0, 0, 0)
+
+[node name="BossOneProjectile" type="Area2D" unique_id=561766788]
+script = ExtResource("1_otom7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1632231166]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_jhwpf")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=185109468]
+amount = 30
+texture = SubResource("GradientTexture2D_jhwpf")
+process_material = SubResource("ParticleProcessMaterial_aceid")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2071363485]
+texture = ExtResource("2_aceid")

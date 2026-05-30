@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://b05lwtap0uy1q"]
+
+[sub_resource type="Gradient" id="Gradient_x2bl6"]
+colors = PackedColorArray(1, 0.53273517, 0.59616345, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ev40g"]
+gradient = SubResource("Gradient_x2bl6")
+width = 256
+height = 256
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.510917, 0.48471615)
+fill_to = Vector2(0.930131, 0.082969435)
+
+[node name="BossLight" type="Node2D" unique_id=1271051030]
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1622208894]
+texture = SubResource("GradientTexture2D_ev40g")

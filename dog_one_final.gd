@@ -1,12 +1,12 @@
 extends CharacterBody2D
 
-@onready var sprite: AnimatedSprite2D = $dog_two_anime
+@onready var sprite: AnimatedSprite2D = $dog_one_anime
 @onready var interaction_area: Area2D = get_node_or_null("HitArea") as Area2D
 @onready var button_area: Area2D = $Button/ButtonArea  # ← добавь эту Area2D
 @onready var prompt: Sprite2D = $Button
 
 @export var follow_offset: Vector2 = Vector2.ZERO # Смещение относительно игрока
-@export var ability_id: StringName = &"star"
+@export var ability_id: StringName = &"wave"
 @export var max_speed: float = 180.0
 @export var acceleration: float = 800.0
 @export var friction: float = 1200.0
@@ -39,7 +39,8 @@ func update_animation() -> void:
 
 func _ready() -> void:
 	find_player()
-	Global.dog_two = $dog_two_anime
+	Global.dog_one = $dog_one_anime
+	
 	if interaction_area:
 		interaction_area.body_entered.connect(_on_hit_area_body_entered)
 		interaction_area.body_exited.connect(_on_hit_area_body_exited)
@@ -125,8 +126,7 @@ func follow_player(delta: float) -> void:
 	# Плавный разгон и торможение
 	var current_accel = acceleration if desired_velocity != Vector2.ZERO else friction
 	velocity = velocity.move_toward(desired_velocity, current_accel * delta)
-
-# Вспомогательная функция линейной интерполяции (в Godot 4 встроен lerp, но для float надежнее так)
+	
 func mix(a: float, b: float, t: float) -> float:
 	return a + (b - a) * t
 
@@ -163,5 +163,3 @@ func reappear(new_position: Vector2) -> void:
 	is_absorbed = false
 	show()
 	set_physics_process(true)
-
-# ==================== АНИМАЦИЯ =================
